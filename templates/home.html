@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block title %}Yacon Restaurant - Inicio{% endblock
+%} {% block content %}
+<h1 class="text-3xl font-bold mb-4">Bienvenido a Yacon Restaurant</h1>
+<p class="mb-4">Este es el contenido de la página de inicio.</p>
+
+<h2 class="text-2xl font-semibold mb-4">Productos</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {% for product in products %}
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-xl font-bold">{{ product.name }}</h3>
+    <p>{{ product.description }}</p>
+    <p class="font-semibold">${{ product.price }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

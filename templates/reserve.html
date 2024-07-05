@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block title %}Reservar - Yacon Restaurant{%
+endblock %} {% block content %}
+<h1 class="text-3xl font-bold mb-4">Reservar Mesa</h1>
+<form method="POST">
+  <div class="mb-4">
+    <label for="name" class="block text-gray-700 font-bold mb-2">Nombre:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Nombre completo"
+      required
+      class="px-3 py-2 border rounded-lg w-full"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="email" class="block text-gray-700 font-bold mb-2"
+      >Correo electrónico:</label
+    >
+    <input
+      type="email"
+      id="email"
+      name="email"
+      placeholder="Correo electrónico"
+      required
+      class="px-3 py-2 border rounded-lg w-full"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="date" class="block text-gray-700 font-bold mb-2">Fecha:</label>
+    <input
+      type="date"
+      id="date"
+      name="date"
+      required
+      min="{{ (now + timedelta(days=1)).date() }}"
+      max="{{ (now + timedelta(days=60)).date() }}"
+      class="px-3 py-2 border rounded-lg w-full"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="time" class="block text-gray-700 font-bold mb-2">Hora:</label>
+    <select
+      id="time"
+      name="time"
+      required
+      class="px-3 py-2 border rounded-lg w-full"
+    >
+      <option value="" disabled selected>Seleccione una hora</option>
+      {% for hour in range(13, 22) %} {% for minute in ['00', '30'] %} {% set
+      time = '%02d:%02d' % (hour, minute|int) %}
+      <option value="{{ time }}">{{ time }}</option>
+      {% endfor %} {% endfor %}
+    </select>
+  </div>
+  <div class="mb-4">
+    <label for="people" class="block text-gray-700 font-bold mb-2"
+      >Número de personas:</label
+    >
+    <input
+      type="number"
+      id="people"
+      name="people"
+      placeholder="Número de personas"
+      required
+      class="px-3 py-2 border rounded-lg w-full"
+    />
+  </div>
+  <div class="mb-4">
+    <label for="details" class="block text-gray-700 font-bold mb-2"
+      >Detalles adicionales:</label
+    >
+    <textarea
+      id="details"
+      name="details"
+      placeholder="Detalles adicionales"
+      class="px-3 py-2 border rounded-lg w-full"
+    ></textarea>
+  </div>
+  <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">
+    Reservar
+  </button>
+</form>
+{% endblock %}
