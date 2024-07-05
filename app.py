@@ -106,8 +106,11 @@ def load_user(user_id):
 # Definición de rutas y vistas
 @app.route('/')
 def home():
-    products = Product.query.all()
-    return render_template('home.html', products=products)
+    categories = Category.query.all()
+    products_by_category = {
+        category.name: category.products for category in categories}
+    print("Products by Category:", products_by_category)  # Debugging line
+    return render_template('home.html', products_by_category=products_by_category)
 
 # ruta nosotros, carta, promociones
 
