@@ -122,8 +122,11 @@ def nosotros():
 
 @app.route('/carta')
 def carta():
-    products = Product.query.all()
-    return render_template('menu/carta.html', products=products)
+    categories = Category.query.all()
+    products_by_category = {
+        category.name: category.products for category in categories}
+    print("Products by Category:", products_by_category)  # Debugging line
+    return render_template('menu/carta.html', products_by_category=products_by_category)
 
 
 @app.route('/promociones')

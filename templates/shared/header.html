@@ -1,0 +1,175 @@
+<div class="relative overflow-hidden bg-gray-900">
+  <!-- Carousel container -->
+  <div id="carousel" class="relative h-[500px]">
+    <!-- Flechas de navegación -->
+    <button
+      id="prevBtn"
+      class="absolute top-1/2 left-4 transform -translate-y-1/2 z-50 text-white focus:outline-none"
+      aria-label="Slide anterior"
+    >
+      <svg
+        class="w-8 h-8"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+    </button>
+    <button
+      id="nextBtn"
+      class="absolute top-1/2 right-4 transform -translate-y-1/2 z-50 text-white focus:outline-none"
+      aria-label="Siguiente slide"
+    >
+      <svg
+        class="w-8 h-8"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7"
+        />
+      </svg>
+    </button>
+
+    <!-- Imágenes de fondo -->
+    <div
+      class="carousel-image absolute inset-0 transition-opacity duration-1000 opacity-100 z-0 bg-cover bg-center"
+    ></div>
+    <div
+      class="carousel-image absolute inset-0 transition-opacity duration-1000 opacity-0 z-0 bg-cover bg-center"
+    ></div>
+    <div
+      class="carousel-image absolute inset-0 transition-opacity duration-1000 opacity-0 z-0 bg-cover bg-center"
+    ></div>
+
+    <!-- Contenido -->
+    <div
+      class="absolute  inset-0 flex flex-col items-center justify-center text-center text-white z-20"
+    >
+      <div class="div_carrousel mx-auto max-w-2xl">
+        <h2
+          id="carousel-title"
+          class="text-4xl font-bold tracking-tight sm:text-6xl"
+        >
+          Disfruta de Yaconsushi
+        </h2>
+        <p id="carousel-text" class="mt-6 text-lg leading-8">
+          Sumérgete en la mejor experiencia de sushi y comida peruana en
+          Yaconsushi. Ven y descubre nuestros sabores únicos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Indicadores de slide -->
+    <div class="absolute bottom-4 left-0 right-0 flex justify-center">
+      <div id="slideIndicators" class="flex space-x-2"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Configuración del carousel
+  const images = Array.from(document.querySelectorAll('.carousel-image'));
+  const titles = ["Disfruta de Yaconsushi", "Prueba Nuestros Platillos", "Descubre la Fusión"];
+  const texts = [
+      "Sumérgete en la mejor experiencia de sushi y comida peruana en Yaconsushi. Ven y descubre nuestros sabores únicos.",
+      "Disfruta de nuestros exquisitos platillos de sushi y comida peruana preparados con ingredientes frescos y de alta calidad.",
+      "Experimenta la fusión perfecta de la cocina japonesa y peruana en un ambiente acogedor y familiar."
+  ];
+  const imageUrls = [
+      'https://images.pexels.com/photos/1199980/pexels-photo-1199980.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      'https://images.pexels.com/photos/3147493/pexels-photo-3147493.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      'https://i.ytimg.com/vi/sWXRJbGi6yQ/maxresdefault.jpg'
+  ];
+  let currentSlide = 0;
+
+  function showSlide(slideIndex) {
+      images.forEach((image, index) => {
+          image.style.opacity = index === slideIndex ? '1' : '0';
+      });
+      document.getElementById('carousel-title').textContent = titles[slideIndex];
+      document.getElementById('carousel-text').textContent = texts[slideIndex];
+      updateIndicators(slideIndex);
+  }
+
+  function nextSlide() {
+      currentSlide = (currentSlide + 1) % images.length;
+      showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+      currentSlide = (currentSlide - 1 + images.length) % images.length;
+      showSlide(currentSlide);
+  }
+
+  function createIndicators() {
+      const indicatorsContainer = document.getElementById('slideIndicators');
+      images.forEach((_, index) => {
+          const indicator = document.createElement('button');
+          indicator.classList.add('w-3', 'h-3', 'rounded-full', 'bg-white', 'opacity-50');
+          indicator.addEventListener('click', () => showSlide(index));
+          indicatorsContainer.appendChild(indicator);
+      });
+  }
+
+  function updateIndicators(slideIndex) {
+      const indicators = document.querySelectorAll('#slideIndicators button');
+      indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('opacity-100', index === slideIndex);
+          indicator.classList.toggle('opacity-50', index !== slideIndex);
+      });
+  }
+
+  function preloadImages() {
+      imageUrls.forEach((url, index) => {
+          const img = new Image();
+          img.src = url;
+          img.onload = () => {
+              images[index].style.backgroundImage = `url('${url}')`;
+          };
+      });
+  }
+
+  let autoplayInterval;
+
+  function startAutoplay() {
+      autoplayInterval = setInterval(nextSlide, 5000); // Cambia de slide cada 5 segundos
+  }
+
+  function stopAutoplay() {
+      clearInterval(autoplayInterval);
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+      stopAutoplay();
+      nextSlide();
+      startAutoplay();
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+      stopAutoplay();
+      prevSlide();
+      startAutoplay();
+  });
+
+  document.getElementById('carousel').addEventListener('mouseenter', stopAutoplay);
+  document.getElementById('carousel').addEventListener('mouseleave', startAutoplay);
+
+  // Inicialización
+  createIndicators();
+  preloadImages();
+  showSlide(currentSlide);
+  startAutoplay();
+</script>

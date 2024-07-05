@@ -5,15 +5,25 @@ body {
   padding: 0;
   background-color: #f0f0f0;
 }
+.gradiente-fondo {
+  /* background: linear-gradient(to right, #d0723f, #764BA2, #8A2387); */
+  /* background: linear-gradient(135deg, #f08c33, #ffae42, #1a472a); */
+  /* background: linear-gradient(135deg, #f08c33, #3b83bd, #00bfa6); */
+  /* background: linear-gradient(135deg, #f08c33, #f06292, #8e24aa); */
+  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03);
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
+
+.div_carrousel {
+  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03);
+  border-radius: 15px; /* Ajusta el radio según tus necesidades */
+  padding: 20px; /* Ajusta el padding según tus necesidades */
+  opacity: 0.5; /* Ajusta la opacidad para hacer el fondo semi-transparente */
+  color: rgb(11, 43, 201);
+}
+
+
+
 
 nav ul {
   list-style-type: none;
@@ -41,7 +51,6 @@ footer {
   color: #fff;
   text-align: center;
   padding: 10px;
-  position: fixed;
   bottom: 0;
   width: 100%;
 }
