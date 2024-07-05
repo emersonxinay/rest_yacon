@@ -202,6 +202,34 @@ def order():
     return render_template('order.html')
 
 
+@app.route('/order_summary', methods=['POST'])
+def order_summary():
+    # Obtener los IDs de productos seleccionados desde el formulario
+    selected_product_ids = request.form.getlist('products[]')
+
+    # Obtener las cantidades de productos seleccionados desde el formulario
+    quantities = request.form.getlist('quantities[]')
+
+    # Consultar los productos seleccionados desde la base de datos
+    selected_products = {}
+    total_price = 0
+
+    # Iterar sobre los IDs y cantidades y consultar cada producto
+    for idx, product_id in enumerate(selected_product_ids):
+        quantity = int(quantities[idx])  # Convertir la cantidad a entero
+
+        product = Product.query.get(product_id)
+        if product:
+            # Agregar el producto con la cantidad
+            selected_products[product] = quantity
+
+    # Calcular el precio total del pedido
+    for product, quantity in selected_products.items():
+        total_price += product.price * quantity
+
+    return render_template('order_summary.html', selected_products=selected_products, total_price=total_price)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':

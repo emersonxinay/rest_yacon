@@ -8,22 +8,51 @@
 </p>
 
 <h2 class="text-3xl font-semibold mb-6">Nuestros Productos</h2>
-<div class="space-y-12">
-  {% for category, products in products_by_category.items() %}
-  <div>
-    <h3 class="text-2xl font-bold mb-4">{{ category }}</h3>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {% for product in products %}
-      <div
-        class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
-      >
-        <h4 class="text-xl font-bold mb-2">{{ product.name }}</h4>
-        <p class="text-gray-700 mb-2">{{ product.description }}</p>
-        <p class="text-lg font-semibold text-green-600">${{ product.price }}</p>
+
+<form action="{{ url_for('order_summary') }}" method="POST">
+  <div class="space-y-12">
+    {% for category, products in products_by_category.items() %}
+    <div>
+      <h3 class="text-2xl font-bold mb-4">{{ category }}</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for product in products %}
+        <div
+          class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+        >
+          <input
+            type="checkbox"
+            id="product_{{ product.id }}"
+            name="products[]"
+            value="{{ product.id }}"
+          />
+          <label for="product_{{ product.id }}">
+            <h4 class="text-xl font-bold mb-2">{{ product.name }}</h4>
+            <p class="text-gray-700 mb-2">{{ product.description }}</p>
+            <p class="text-lg font-semibold text-green-600">
+              ${{ product.price }}
+            </p>
+            <!-- Agregar input para la cantidad -->
+            <input
+              type="number"
+              id="quantity_{{ product.id }}"
+              name="quantities[]"
+              value="1"
+              min="1"
+              max="10"
+            />
+          </label>
+        </div>
+        {% endfor %}
       </div>
-      {% endfor %}
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
+
+  <button
+    type="submit"
+    class="mt-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+  >
+    Ver Resumen del Pedido
+  </button>
+</form>
 {% endblock %}
