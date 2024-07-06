@@ -1,8 +1,34 @@
-<nav class="bg-dark-600 text-white shadow p-4">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<nav class="nav1 bg-dark-600 text-white shadow p-4">
   <div class="container mx-auto flex justify-between items-center">
-    <a href="{{ url_for('home') }}" class="text-2xl font-bold"
-      >Yacon Restaurant</a
-    >
+    <!-- Sección de redes sociales izquierda -->
+    <div class="flex space-x-4">
+      <a href="tel:+1234567890" target="_blank" rel="noopener noreferrer" class="text-white">
+        <i class="fas fa-phone-alt"></i>
+      </a>
+      <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" class="text-white">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </div>
+
+    <!-- Sección de redes sociales derecha -->
+    <div class="flex space-x-4">
+      <a href="http://facebook.com" target="_blank" rel="noopener noreferrer" class="text-white">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="http://instagram.com" target="_blank" rel="noopener noreferrer" class="text-white">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+  </div>
+</nav>
+
+
+
+<nav id="mainNav" class="bg-dark-600 text-white shadow p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="{{ url_for('home') }}" class="text-2xl font-bold">Yacon Restaurant</a>
     <div class="hidden md:flex space-x-4">
       <a href="{{ url_for('home') }}" class="nav-link">Home</a>
       <a href="{{ url_for('nosotros') }}" class="nav-link">Nosotros</a>
@@ -11,12 +37,8 @@
     </div>
     <div class="hidden md:flex space-x-2">
       {% if current_user.is_authenticated %} {% if current_user.is_admin %}
-      <a href="{{ url_for('manage_products') }}" class="nav-link"
-        >Gestionar Productos</a
-      >
-      <a href="{{ url_for('manage_categories') }}" class="nav-link"
-        >Gestionar Categorías</a
-      >
+      <a href="{{ url_for('manage_products') }}" class="nav-link">Gestionar Productos</a>
+      <a href="{{ url_for('manage_categories') }}" class="nav-link">Gestionar Categorías</a>
       {% endif %}
       <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
       {% else %}
@@ -25,19 +47,8 @@
     </div>
     <div class="md:hidden">
       <button id="menuButton" class="text-white focus:outline-none">
-        <svg
-          class="w-6 h-6"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
@@ -46,16 +57,10 @@
     <a href="{{ url_for('home') }}" class="nav-link block">Home</a>
     <a href="{{ url_for('nosotros') }}" class="nav-link block">Nosotros</a>
     <a href="{{ url_for('carta') }}" class="nav-link block">Carta</a>
-    <a href="{{ url_for('promociones') }}" class="nav-link block"
-      >Promociones</a
-    >
+    <a href="{{ url_for('promociones') }}" class="nav-link block">Promociones</a>
     {% if current_user.is_authenticated %} {% if current_user.is_admin %}
-    <a href="{{ url_for('manage_products') }}" class="nav-link block"
-      >Gestionar Productos</a
-    >
-    <a href="{{ url_for('manage_categories') }}" class="nav-link block"
-      >Gestionar Categorías</a
-    >
+    <a href="{{ url_for('manage_products') }}" class="nav-link block">Gestionar Productos</a>
+    <a href="{{ url_for('manage_categories') }}" class="nav-link block">Gestionar Categorías</a>
     {% endif %}
     <a href="{{ url_for('logout') }}" class="nav-link block">Logout</a>
     {% else %}
@@ -102,6 +107,22 @@
     document.getElementById('menuButton').addEventListener('click', function () {
       const menu = document.getElementById('mobileMenu');
       menu.classList.toggle('hidden');
+    });
+  });
+
+  // fijar menu
+  document.addEventListener('DOMContentLoaded', function () {
+    const mainNav = document.getElementById('mainNav');
+    let isNavFixed = false;
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > mainNav.offsetTop && !isNavFixed) {
+        mainNav.classList.add('fixed-nav');
+        isNavFixed = true;
+      } else if (window.scrollY <= mainNav.offsetTop && isNavFixed) {
+        mainNav.classList.remove('fixed-nav');
+        isNavFixed = false;
+      }
     });
   });
 </script>
