@@ -15,12 +15,36 @@ body {
 }
 
 .div_carrousel {
-  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03);
   border-radius: 15px; /* Ajusta el radio según tus necesidades */
   padding: 20px; /* Ajusta el padding según tus necesidades */
-  opacity: 0.5; /* Ajusta la opacidad para hacer el fondo semi-transparente */
-  color: rgb(11, 43, 201);
 }
+.carousel-text1{
+  color: rgb(254, 254, 254);
+  font-size: 2em;
+  text-shadow: #ed9f04;
+}
+.indicator-button {
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.indicator-button:hover {
+  opacity: 0.75;
+}
+
+/* navbar */
+/* Tailwind CSS Personalizado */
+.bg-dark-600 {
+  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03); /* Color de fondo personalizado */
+}
+.bg-dark-700 {
+  background: linear-gradient(to right, #f12e03, #ed9f04, #f12e03); /* Color de fondo personalizado */
+}
+.bg-dark-800 {
+  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03); /* Color de fondo personalizado */
+}
+
+
 
 
 
