@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block title %}Editar Categoría - {{ category.name
+}}{% endblock %} {% block content %}
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold mb-6">Editar Categoría</h1>
+
+  <form method="POST">
+    <div class="mb-4">
+      <label for="name" class="block text-sm font-medium text-gray-700"
+        >Nombre de la Categoría</label
+      >
+      <input
+        type="text"
+        name="name"
+        id="name"
+        value="{{ category.name }}"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+      />
+    </div>
+
+    <div class="mb-4">
+      <button
+        type="submit"
+        class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      >
+        Guardar Cambios
+      </button>
+    </div>
+  </form>
+
+  <div class="mt-6">
+    <a
+      href="{{ url_for('manage_categories') }}"
+      class="text-blue-500 hover:underline"
+      >Volver a la Lista de Categorías</a
+    >
+  </div>
+</div>
+{% endblock %}

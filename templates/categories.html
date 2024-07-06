@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% block title %}Administrar Categorías{% endblock %}
 {% block content %}
 <h1 class="text-3xl font-bold mb-4">Administrar Categorías</h1>
+
 <form method="POST" action="{{ url_for('manage_categories') }}">
   <div class="mb-4">
     <label for="name" class="block text-sm font-medium text-gray-700"
@@ -19,10 +20,40 @@
     </button>
   </div>
 </form>
+
 <h2 class="text-2xl font-semibold mb-4">Categorías Existentes</h2>
-<ul class="list-disc list-inside">
+<ul class="space-y-2">
   {% for category in categories %}
-  <li>{{ category.name }}</li>
+  <li
+    class="flex justify-between items-center bg-white px-4 py-2 rounded-md shadow-md"
+  >
+    <span>{{ category.name }}</span>
+    <div class="flex space-x-2">
+      <form
+        action="{{ url_for('edit_category', id=category.id) }}"
+        method="GET"
+      >
+        <button
+          type="submit"
+          class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"
+        >
+          Editar
+        </button>
+      </form>
+      <form
+        action="{{ url_for('delete_category', id=category.id) }}"
+        method="POST"
+        onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?');"
+      >
+        <button
+          type="submit"
+          class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600"
+        >
+          Eliminar
+        </button>
+      </form>
+    </div>
+  </li>
   {% endfor %}
 </ul>
 {% endblock %}

@@ -283,8 +283,47 @@ def manage_categories():
         db.session.add(category)
         db.session.commit()
         flash('Categoría agregada!')
-    categories = Category.query.all()
-    return render_template('categories.html', categories=categories)
+        # Redirige después de la acción POST
+        return redirect(url_for('manage_categories'))
+
+    if request.method == 'GET':
+        categories = Category.query.all()
+        return render_template('categories.html', categories=categories)
+
+    # En caso de que no haya ninguna acción definida
+    return render_template('categories.html')
+
+
+@app.route('/categories/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_category(id):
+    if not current_user.is_admin:
+        flash('No tienes permiso para acceder a esta página.')
+        return redirect(url_for('home'))
+
+    category = Category.query.get_or_404(id)
+
+    if request.method == 'POST':
+        category.name = request.form['name']
+        db.session.commit()
+        flash('Categoría actualizada!')
+        return redirect(url_for('manage_categories'))
+
+    return render_template('edit_category.html', category=category)
+
+
+@app.route('/categories/delete/<int:id>', methods=['POST'])
+@login_required
+def delete_category(id):
+    if not current_user.is_admin:
+        flash('No tienes permiso para acceder a esta página.')
+        return redirect(url_for('home'))
+
+    category = Category.query.get_or_404(id)
+    db.session.delete(category)
+    db.session.commit()
+    flash('Categoría eliminada!')
+    return redirect(url_for('manage_categories'))
 
 
 @app.route('/products', methods=['GET', 'POST'])
@@ -321,6 +360,35 @@ def delete_product(id):
     db.session.commit()
     flash('Producto eliminado!')
     return redirect(url_for('manage_products'))
+
+# Ruta para editar un producto
+
+
+@app.route('/products/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_product(id):
+    if not current_user.is_admin:
+        flash('No tienes permiso para acceder a esta página.')
+        return redirect(url_for('home'))
+
+    product = Product.query.get_or_404(id)
+    categories = Category.query.all()
+
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.description = request.form['description']
+        product.price = request.form['price']
+        product.category_id = request.form['category_id']
+
+        try:
+            db.session.commit()
+            flash('Producto actualizado correctamente!')
+            return redirect(url_for('manage_products'))
+        except Exception as e:
+            db.session.rollback()
+            flash('Error al actualizar el producto. Inténtalo de nuevo.', 'error')
+
+    return render_template('edit_product.html', product=product, categories=categories)
 
 
 @app.route('/create-admin', methods=['GET', 'POST'])

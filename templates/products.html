@@ -1,73 +1,110 @@
 {% extends 'base.html' %} {% block title %}Administrar Productos{% endblock %}
 {% block content %}
-<h1 class="text-3xl font-bold mb-4">Administrar Productos</h1>
-<form method="POST" action="{{ url_for('manage_products') }}">
-  <div class="mb-4">
-    <label for="name" class="block text-sm font-medium text-gray-700"
-      >Nombre del Producto</label
-    >
-    <input
-      type="text"
-      name="name"
-      id="name"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-  </div>
-  <div class="mb-4">
-    <label for="description" class="block text-sm font-medium text-gray-700"
-      >Descripción</label
-    >
-    <textarea
-      name="description"
-      id="description"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    ></textarea>
-  </div>
-  <div class="mb-4">
-    <label for="price" class="block text-sm font-medium text-gray-700"
-      >Precio</label
-    >
-    <input
-      type="text"
-      name="price"
-      id="price"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-  </div>
-  <div class="mb-4">
-    <label for="category_id" class="block text-sm font-medium text-gray-700"
-      >Categoría</label
-    >
-    <select
-      name="category_id"
-      id="category_id"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    >
-      {% for category in categories %}
-      <option value="{{ category.id }}">{{ category.name }}</option>
-      {% endfor %}
-    </select>
-  </div>
-  <div class="mb-4">
-    <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">
-      Agregar Producto
-    </button>
-  </div>
-</form>
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+  <h1 class="text-3xl font-bold mb-6">Administrar Productos</h1>
 
-<h2 class="text-2xl font-semibold mb-4">Productos Existentes</h2>
-<ul class="list-disc list-inside">
-  {% for product in products %}
-  <li>
-    {{ product.name }} - {{ product.category.name }}
-    <form
-      method="POST"
-      action="{{ url_for('delete_product', id=product.id) }}"
-      style="display:inline;"
-    >
-      <button type="submit" class="text-red-500">Eliminar</button>
-    </form>
-  </li>
-  {% endfor %}
-</ul>
+  <!-- Formulario para agregar nuevo producto -->
+  <form method="POST" action="{{ url_for('manage_products') }}">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Campo: Nombre del Producto -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700"
+          >Nombre del Producto</label
+        >
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
+      <!-- Campo: Precio del Producto -->
+      <div>
+        <label for="price" class="block text-sm font-medium text-gray-700"
+          >Precio</label
+        >
+        <input
+          type="text"
+          name="price"
+          id="price"
+          class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+    </div>
+
+    <!-- Campo: Descripción del Producto -->
+    <div class="mt-4">
+      <label for="description" class="block text-sm font-medium text-gray-700"
+        >Descripción</label
+      >
+      <textarea
+        name="description"
+        id="description"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        rows="3"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Campo: Categoría del Producto -->
+    <div class="mt-4">
+      <label for="category_id" class="block text-sm font-medium text-gray-700"
+        >Categoría</label
+      >
+      <select
+        name="category_id"
+        id="category_id"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        required
+      >
+        <option value="" disabled selected>Selecciona una categoría</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <!-- Botón: Agregar Producto -->
+    <div class="mt-6">
+      <button
+        type="submit"
+        class="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
+      >
+        Agregar Producto
+      </button>
+    </div>
+  </form>
+
+  <!-- Listado de Productos Existentes -->
+  <h2 class="text-2xl font-semibold mt-8 mb-4">Productos Existentes</h2>
+  <ul class="divide-y divide-gray-200">
+    {% for product in products %}
+    <li class="py-4 flex items-center justify-between">
+      <div class="flex items-center">
+        <span class="font-semibold">{{ product.name }}</span>
+        <span class="ml-2 text-gray-500">- {{ product.category.name }}</span>
+      </div>
+      <div class="flex items-center">
+        <!-- Botón: Editar Producto -->
+        <a
+          href="{{ url_for('edit_product', id=product.id) }}"
+          class="text-indigo-600 hover:text-indigo-900 mr-2"
+          >Editar</a
+        >
+        <!-- Formulario: Eliminar Producto -->
+        <form
+          method="POST"
+          action="{{ url_for('delete_product', id=product.id) }}"
+          style="display:inline;"
+        >
+          <button type="submit" class="text-red-500">Eliminar</button>
+        </form>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock %}

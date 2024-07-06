@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Producto{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-6">Editar Producto</h1>
+
+    <!-- Formulario para editar el producto -->
+    <form method="POST" action="{{ url_for('edit_product', id=product.id) }}">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Campo: Nombre del Producto -->
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Nombre del Producto</label>
+                <input type="text" name="name" id="name" value="{{ product.name }}"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    required>
+            </div>
+
+            <!-- Campo: Precio del Producto -->
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-700">Precio</label>
+                <input type="text" name="price" id="price" value="{{ product.price }}"
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    required>
+            </div>
+        </div>
+
+        <!-- Campo: Descripción del Producto -->
+        <div class="mt-4">
+            <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
+            <textarea name="description" id="description"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                rows="3" required>{{ product.description }}</textarea>
+        </div>
+
+        <!-- Campo: Categoría del Producto -->
+        <div class="mt-4">
+            <label for="category_id" class="block text-sm font-medium text-gray-700">Categoría</label>
+            <select name="category_id" id="category_id"
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                required>
+                <option value="" disabled>Selecciona una categoría</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if category.id == product.category_id %}selected{% endif %}>
+                    {{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Botón: Guardar Cambios -->
+        <div class="mt-6">
+            <button type="submit"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Guardar Cambios
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
