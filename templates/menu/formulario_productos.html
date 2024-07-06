@@ -1,38 +1,50 @@
-<form action="{{ url_for('order_summary') }}" method="POST">
+<form id="product-form" action="{{ url_for('order_summary') }}" method="POST">
   <div class="space-y-12">
     {% for category, products in products_by_category.items() %}
     <div>
       <h3 class="text-2xl font-bold mb-4 text-white">{{ category }}</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+      >
         {% for product in products %}
         <div class="p-4 border rounded-lg bg-gray-50">
           <div class="flex justify-between items-center mb-2">
             <span class="font-semibold">{{ product.name }}</span>
-            <span class="line-through text-red-500"
-              >${{ product.price * 2 }}</span
-            >
-            <span class="text-orange-500">${{ product.price }}</span>
+            <div class="text-right">
+              <span class="line-through text-red-500"
+                >${{ product.price * 2 }}</span
+              >
+              <br />
+              <span class="text-orange-500">${{ product.price }}</span>
+            </div>
           </div>
           <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-          <input
-            type="checkbox"
-            id="product_{{ product.id }}"
-            name="products[]"
-            value="{{ product.id }}"
-            class="mr-2"
-          />
-          <label for="product_{{ product.id }}" class="cursor-pointer">
-            <!-- Agregar input para la cantidad -->
+          <div class="flex items-center mb-2">
             <input
-              type="number"
-              id="quantity_{{ product.id }}"
-              name="quantities[]"
-              value="1"
-              min="1"
-              max="10"
-              class="w-full border-gray-300 rounded-md mt-2"
+              type="checkbox"
+              id="product_{{ product.id }}"
+              name="products[]"
+              value="{{ product.id }}"
+              class="mr-2"
             />
-          </label>
+            <label for="product_{{ product.id }}" class="cursor-pointer"
+              >Seleccionar</label
+            >
+          </div>
+          <label
+            for="quantity_{{ product.id }}"
+            class="block text-sm font-medium text-gray-700"
+            >Cantidad</label
+          >
+          <input
+            type="number"
+            id="quantity_{{ product.id }}"
+            name="quantities[]"
+            value="1"
+            min="1"
+            max="10"
+            class="w-full border-gray-300 rounded-md mt-1"
+          />
         </div>
         {% endfor %}
       </div>
@@ -40,10 +52,68 @@
     {% endfor %}
   </div>
 
+  <!-- Floating Button -->
   <button
-    type="submit"
-    class="mt-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+    type="button"
+    id="view-summary"
+    class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
   >
     Ver Resumen del Pedido
   </button>
+
+  <!-- Modal -->
+  <div
+    id="summary-modal"
+    class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex justify-center items-center z-50"
+  >
+    <div class="bg-white rounded-lg p-8 max-w-3xl w-full">
+      <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
+      <div
+        id="summary-content"
+        class="space-y-4 max-h-96 overflow-y-auto"
+      ></div>
+      <div class="mt-6 flex justify-end">
+        <button
+          type="button"
+          id="close-summary"
+          class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Confirmar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
 </form>
+
+<script>
+  document.getElementById('view-summary').addEventListener('click', function() {
+    const products = document.querySelectorAll('input[name="products[]"]:checked');
+    const quantities = document.querySelectorAll('input[name="quantities[]"]');
+    const summaryContent = document.getElementById('summary-content');
+
+    summaryContent.innerHTML = '';
+
+    products.forEach((product, index) => {
+      const productName = product.nextElementSibling.textContent.trim();
+      const quantity = quantities[index].value;
+
+      const productSummary = document.createElement('div');
+      productSummary.classList.add('flex', 'justify-between');
+      productSummary.innerHTML = `<span>${productName}</span><span>${quantity}</span>`;
+
+      summaryContent.appendChild(productSummary);
+    });
+
+    document.getElementById('summary-modal').classList.remove('hidden');
+  });
+
+  document.getElementById('close-summary').addEventListener('click', function() {
+    document.getElementById('summary-modal').classList.add('hidden');
+  });
+</script>
