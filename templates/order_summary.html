@@ -1,26 +1,78 @@
 {% extends 'base.html' %} {% block title %}Resumen del Pedido{% endblock %} {%
 block content %}
-<h1 class="text-4xl font-extrabold mb-6 text-center">Resumen del Pedido</h1>
-
-<div class="space-y-12">
-  <h2 class="text-3xl font-semibold mb-6">Productos Seleccionados</h2>
-  <ul class="space-y-4">
-    {% for product, quantity in selected_products.items() %}
-    <li>
-      <h3 class="text-xl font-bold">{{ product.name }} x {{ quantity }}</h3>
-      <p class="text-gray-700">{{ product.description }}</p>
-      <p class="text-lg font-semibold text-green-600">
-        ${{ product.price }} por unidad
-      </p>
-      <p class="text-lg font-semibold text-green-600">
-        Total: ${{ product.price * quantity }}
-      </p>
-    </li>
-    {% endfor %}
-  </ul>
-
-  <div class="mt-8 text-xl font-semibold text-green-600">
-    Total: ${{ total_price }}
+<div
+  class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md border border-gray-200"
+>
+  <h1 class="text-3xl font-extrabold mb-6 text-center text-blue-600">
+    Resumen del Pedido
+  </h1>
+  <div class="space-y-8">
+    <h2 class="text-2xl font-semibold mb-4 text-gray-800">
+      Productos Seleccionados
+    </h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+              Nombre del Producto
+            </th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+              Cantidad
+            </th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+              Precio por Unidad
+            </th>
+            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
+              Precio Total
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          {% for product, quantity in selected_products.items() %}
+          <tr>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ product.name }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ quantity }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">
+              ${{ product.price }}
+            </td>
+            <td class="px-4 py-2 text-sm text-gray-800">
+              ${{ product.price * quantity }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-between text-xl font-semibold text-green-600">
+      <span>Total:</span>
+      <span>${{ total_price }}</span>
+    </div>
+    <div class="mt-6 flex justify-end space-x-4">
+      <button
+        onclick="window.print()"
+        class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+      >
+        Imprimir
+      </button>
+      <a
+        href="https://api.whatsapp.com/send?text={{ summary_text | urlencode }}"
+        target="_blank"
+        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded flex items-center"
+      >
+        <svg
+          class="w-6 h-6 mr-2"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M19.68 4.318A11.741 11.741 0 0012.065.001a11.825 11.825 0 00-7.719 2.946A11.73 11.73 0 000 10.823c0 2.074.558 4.1 1.617 5.866L.099 23.98l7.534-1.94a11.703 11.703 0 005.15 1.23h.001a11.721 11.721 0 008.269-3.447 11.73 11.73 0 003.465-8.323c0-3.136-1.22-6.09-3.414-8.181zm-1.516 14.932a9.568 9.568 0 01-6.749 2.788h-.001a9.588 9.588 0 01-4.203-.968l-4.498 1.159"
+          ></path>
+        </svg>
+        Enviar por WhatsApp
+      </a>
+    </div>
   </div>
 </div>
 {% endblock %}

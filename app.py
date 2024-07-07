@@ -226,11 +226,14 @@ def order_summary():
             # Agregar el producto con la cantidad
             selected_products[product] = quantity
 
-    # Calcular el precio total del pedido
+    # Calcular el precio total del pedido y generar el texto del resumen
+    summary_text = "Resumen del Pedido:\n"
     for product, quantity in selected_products.items():
         total_price += product.price * quantity
+        summary_text += f"{product.name} x {quantity} - ${product.price * quantity}\n"
+    summary_text += f"\nTotal: ${total_price}"
 
-    return render_template('order_summary.html', selected_products=selected_products, total_price=total_price)
+    return render_template('order_summary.html', selected_products=selected_products, total_price=total_price, summary_text=summary_text)
 
 
 @app.route('/login', methods=['GET', 'POST'])
