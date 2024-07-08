@@ -1,5 +1,46 @@
-{% extends 'base.html' %} {% block title %}Nosotros{% endblock %} {% block
-content %}
-<h1 class="text-3xl font-bold mb-4">Nosotros</h1>
-<p>Información sobre el restaurante...</p>
+{% extends 'base.html' %} {% block title %}Yacon | Nosotros{% endblock %} {%
+block content %}
+<div class="py-8 ">
+  <div class="max-w-4xl mx-auto px-6">
+    <h1 class="text-4xl font-bold text-center mb-8 text-gray-900">Nosotros</h1>
+    <div class="flex flex-wrap items-center justify-between">
+      <div class="w-full md:w-1/2 mb-4 md:mb-0">
+        <img
+          src="{{ url_for('static', filename='img/logofavicon.png') }}"
+          alt="Logo de Yacon"
+          class="rounded-lg shadow-md mb-4 bg-gray-100"
+        />
+        <img
+          src="{{ url_for('static', filename='img/cevicheroll-yacon.jpg') }}"
+          alt="Ceviche Roll"
+          class="rounded-lg shadow-md"
+        />
+      </div>
+      <div class="w-full md:w-1/2 md:pl-8">
+        <p class="text-lg leading-relaxed text-gray-800 text-justify">
+          En Yacon - Sushi y Comida Peruana, nos enorgullece ofrecer una
+          experiencia culinaria única que fusiona la delicadeza del sushi con la
+          riqueza y variedad de la cocina peruana. Nuestros platos están
+          elaborados con ingredientes frescos y auténticos, combinando sabores
+          tradicionales con presentaciones modernas para sorprender y satisfacer
+          a nuestros comensales.
+        </p>
+        <p class="text-lg leading-relaxed mt-4 text-gray-800 text-justify">
+          Nuestra misión es convertirnos en el destino preferido de quienes
+          buscan disfrutar de lo mejor de la gastronomía japonesa y peruana. Con
+          un servicio excepcional y un ambiente acogedor, queremos ser
+          reconocidos por nuestra pasión por la calidad y la innovación en cada
+          plato que servimos.
+        </p>
+        <p class="text-lg leading-relaxed mt-4 text-gray-800 text-justify">
+          Nos guía una visión de ser líderes en la industria restaurantera,
+          ofreciendo siempre una experiencia memorable que resalte por su
+          excelencia y creatividad. Bienvenidos a Yacon - Sushi y Comida
+          Peruana, donde cada visita es una experiencia gastronómica
+          inolvidable.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

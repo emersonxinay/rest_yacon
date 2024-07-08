@@ -129,9 +129,17 @@ def carta():
     return render_template('menu/carta.html', products_by_category=products_by_category)
 
 
+# Ruta para promociones
 @app.route('/promociones')
 def promociones():
-    return render_template('menu/promociones.html')
+    # Obtener la categoría de promociones (suponiendo que su nombre es 'Promociones')
+    categoria_promociones = Category.query.filter_by(
+        name='Promociones').first()
+
+    if not categoria_promociones:
+        return "Categoría de promociones no encontrada", 404
+
+    return render_template('menu/promociones.html', category=categoria_promociones)
 
 
 @app.context_processor

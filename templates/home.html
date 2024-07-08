@@ -1,12 +1,121 @@
-{% extends 'base.html' %} {% block title %}Yacon Restaurant - Inicio{% endblock
-%} {% block content %}
-<h1 class="text-4xl font-extrabold mb-6 text-center">
-  Bienvenido a Yacon Restaurant
-</h1>
-<p class="mb-6 text-lg text-center">
-  Disfruta de nuestros deliciosos platos de sushi y comida peruana.
-</p>
+{% extends 'base.html' %} {% block title %}Yacon | Inicio{% endblock %} {% block
+content %}
+<div
+  class="relative bg-cover bg-center h-screen"
+  style="background-image: url('{{ url_for('static', filename='img/hero-image.jpg') }}');"
+>
+  <div class="absolute inset-0 bg-black opacity-50"></div>
+  <div class="relative z-10 flex items-center justify-center h-full">
+    <div class="text-center text-white max-w-2xl px-6">
+      <h1 class="text-5xl font-bold mb-4">Bienvenido a Yacon</h1>
+      <h2 class="text-3xl font-light mb-8">Sushi y Comida Peruana</h2>
+      <p class="text-lg leading-relaxed mb-8">
+        Disfruta de nuestros deliciosos platos de sushi y comida peruana.
+        Nuestra cocina combina sabores tradicionales con presentaciones modernas
+        para ofrecerte una experiencia gastronómica única. Ven y descubre por
+        qué somos tu destino culinario preferido para disfrutar con amigos y
+        familiares.
+      </p>
+      <a
+        href="{{ url_for('carta') }}"
+        class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg"
+        >Ver Carta</a
+      >
+    </div>
+  </div>
+</div>
 
-<h2 class="text-3xl font-semibold mb-6">Nuestros Productos</h2>
-
+<div class="py-16 bg-gray-100">
+  <div class="max-w-7xl mx-auto px-6">
+    <h2 class="text-4xl font-bold text-center mb-8 text-gray-900">
+      Nuestros Destacados
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="{{ url_for('static', filename='img/cevicheroll-yacon.jpg') }}"
+          alt="Ceviche Roll"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-gray-900">Ceviche Roll</h3>
+          <p class="text-lg leading-relaxed text-gray-700">
+            Delicioso rollo de sushi con los sabores frescos del ceviche
+            peruano.
+          </p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="https://i.ytimg.com/vi/sWXRJbGi6yQ/maxresdefault.jpg"
+          alt="Lomo Saltado"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-gray-900">Lomo Saltado</h3>
+          <p class="text-lg leading-relaxed text-gray-700">
+            Clásico plato peruano con trozos de lomo salteados con cebolla,
+            tomate y papas fritas.
+          </p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="{{ url_for('static', filename='img/aji_de_gallina.jpg') }}"
+          alt="Ají de Gallina"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-gray-900">Ají de Gallina</h3>
+          <p class="text-lg leading-relaxed text-gray-700">
+            Exquisito guiso de pollo desmenuzado en una cremosa salsa de ají
+            amarillo.
+          </p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="{{ url_for('static', filename='img/40piezas.jpg') }}"
+          alt="40 Piezas Mixtas"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-gray-900">
+            40 Piezas Mixtas
+          </h3>
+          <p class="text-lg leading-relaxed text-gray-700">
+            Una variedad de 40 piezas de sushi mixto para disfrutar y compartir.
+          </p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="{{ url_for('static', filename='img/tempuras.jpg') }}"
+          alt="Roll Tempura"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-gray-900">Roll Tempura</h3>
+          <p class="text-lg leading-relaxed text-gray-700">
+            Crujiente rollo de sushi tempura con ingredientes frescos y
+            deliciosos.
+          </p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <img
+          src="{{ url_for('static', filename='img/sashimi.jpg') }}"
+          alt="Sashimi"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-6">
+          <h3 class="text-2xl font-bold mb-2 text-gray-900">Sashimi</h3>
+          <p class="text-lg leading-relaxed text-gray-700">
+            Fresco y delicado sashimi, ideal para los amantes del pescado crudo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
