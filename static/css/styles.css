@@ -5,6 +5,16 @@ body {
   padding: 0;
   background-color: #f0f0f0;
 }
+.logo_nav{
+  background-color: #fff;
+  border-radius: 0.3em;
+}
+/* sombreado de imagen */
+.img-with-shadow {
+  filter: drop-shadow(5px 0 10px rgba(248, 248, 248, 0.92)); /* Sombra difusa */
+  width: 3.9em;
+  height: 2.5em;
+}
 .gradiente-fondo {
   /* background: linear-gradient(to right, #d0723f, #764BA2, #8A2387); */
   /* background: linear-gradient(135deg, #f08c33, #ffae42, #1a472a); */

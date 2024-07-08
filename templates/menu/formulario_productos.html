@@ -13,8 +13,7 @@
             <div class="text-right">
               <span class="line-through text-red-500"
                 >${{ product.price * 2 }}</span
-              >
-              <br />
+              ><br />
               <span class="text-orange-500">${{ product.price }}</span>
             </div>
           </div>
@@ -43,7 +42,7 @@
             value="1"
             min="1"
             max="10"
-            class="w-full border-gray-300 rounded-md mt-1"
+            class="w-full border-gray-300 rounded-md mt-1 quantity-input"
           />
         </div>
         {% endfor %}
@@ -58,7 +57,7 @@
     id="view-summary"
     class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
   >
-    Ver Resumen del Pedido
+    Simula tu pedido
   </button>
 
   <!-- Modal -->
@@ -68,10 +67,43 @@
   >
     <div class="bg-white rounded-lg p-8 max-w-3xl w-full">
       <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
-      <div
-        id="summary-content"
-        class="space-y-4 max-h-96 overflow-y-auto"
-      ></div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Nombre del Producto
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Cantidad
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Precio por Unidad
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Precio Total
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            id="summary-content"
+            class="bg-white divide-y divide-gray-200"
+          ></tbody>
+        </table>
+      </div>
       <div class="mt-6 flex justify-end">
         <button
           type="button"
@@ -81,10 +113,18 @@
           Cancelar
         </button>
         <button
-          type="submit"
+          type="button"
+          id="print-summary"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Imprimir
+        </button>
+        <button
+          type="button"
+          id="send-whatsapp"
           class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
-          Confirmar Pedido
+          Enviar por WhatsApp
         </button>
       </div>
     </div>
@@ -94,26 +134,124 @@
 <script>
   document.getElementById('view-summary').addEventListener('click', function() {
     const products = document.querySelectorAll('input[name="products[]"]:checked');
-    const quantities = document.querySelectorAll('input[name="quantities[]"]');
     const summaryContent = document.getElementById('summary-content');
 
     summaryContent.innerHTML = '';
+    let total = 0;
+    let totalQuantity = 0;
 
-    products.forEach((product, index) => {
-      const productName = product.nextElementSibling.textContent.trim();
-      const quantity = quantities[index].value;
+    products.forEach(product => {
+      const productId = product.value;
+      const productElement = product.closest('.p-4');
+      const productName = productElement.querySelector('.font-semibold').textContent.trim();
+      const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
+      const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
+      let quantity = quantityInput && quantityInput.value.trim() !== '' ? parseInt(quantityInput.value) : 1;
 
-      const productSummary = document.createElement('div');
-      productSummary.classList.add('flex', 'justify-between');
-      productSummary.innerHTML = `<span>${productName}</span><span>${quantity}</span>`;
+      const totalPrice = productPrice * quantity;
+      total += totalPrice;
+      totalQuantity += quantity;
+
+      const productSummary = document.createElement('tr');
+      productSummary.innerHTML = `
+        <td class="px-4 py-2 text-sm text-gray-800">${productName}</td>
+        <td class="px-4 py-2 text-sm text-gray-800"><input type="number" value="${quantity}" min="1" max="10" class="w-16 border-gray-300 rounded-md text-center summary-quantity"></td>
+        <td class="px-4 py-2 text-sm text-gray-800">${productPrice.toFixed(2)}</td>
+        <td class="px-4 py-2 text-sm text-gray-800">${totalPrice.toFixed(2)}</td>
+        <td class="px-4 py-2">
+          <button type="button" class="text-red-500 hover:text-red-700 font-medium delete-product">Eliminar</button>
+        </td>
+      `;
 
       summaryContent.appendChild(productSummary);
     });
 
+    const totalElement = document.createElement('tr');
+    totalElement.classList.add('font-bold', 'mt-4');
+    totalElement.innerHTML = `
+      <td colspan="2" class="px-4 py-2 text-sm text-gray-800 text-right">Total:</td>
+      <td colspan="2" class="px-4 py-2 text-sm text-gray-800" id="totalAmount">${total.toFixed(2)}</td>
+      <td></td>
+    `;
+
+    summaryContent.appendChild(totalElement);
+
     document.getElementById('summary-modal').classList.remove('hidden');
+
+    // Actualizar cantidades al cambiar en el modal
+    document.querySelectorAll('.summary-quantity').forEach(input => {
+      input.addEventListener('change', function() {
+        const row = input.closest('tr');
+        const priceCell = row.querySelector('td:nth-child(3)');
+        const totalCell = row.querySelector('td:nth-child(4)');
+        const productPrice = parseFloat(priceCell.textContent);
+        const newQuantity = parseInt(input.value);
+        const newTotalPrice = productPrice * newQuantity;
+
+        total -= parseFloat(totalCell.textContent);
+        total += newTotalPrice;
+        totalCell.textContent = newTotalPrice.toFixed(2);
+
+        document.getElementById('totalAmount').textContent = total.toFixed(2);
+      });
+    });
+
+    // Eliminar producto del resumen
+    document.querySelectorAll('.delete-product').forEach(button => {
+      button.addEventListener('click', function() {
+        const row = button.closest('tr');
+        const totalPrice = parseFloat(row.querySelector('td:nth-child(4)').textContent);
+        const quantity = parseInt(row.querySelector('.summary-quantity').value);
+
+        total -= totalPrice;
+        row.remove();
+
+        document.getElementById('totalAmount').textContent = total.toFixed(2);
+      });
+    });
   });
 
   document.getElementById('close-summary').addEventListener('click', function() {
     document.getElementById('summary-modal').classList.add('hidden');
+  });
+
+  document.getElementById('print-summary').addEventListener('click', function() {
+    const printContents = document.getElementById('summary-modal').innerHTML;
+    const originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+  });
+
+  document.getElementById('send-whatsapp').addEventListener('click', function() {
+    const summaryText = '¡Hola! Aquí está mi resumen de pedido:\n';
+    const products = document.querySelectorAll('input[name="products[]"]:checked');
+
+    let message = summaryText;
+    let total = 0;
+    let totalQuantity = 0;
+
+    products.forEach(product => {
+      const productId = product.value;
+      const productElement = product.closest('.p-4');
+      const productName = productElement.querySelector('.font-semibold').textContent.trim();
+      const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
+      const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
+      let quantity = quantityInput && quantityInput.value.trim() !== '' ? parseInt(quantityInput.value) : 1;
+
+      const totalPrice = productPrice * quantity;
+      total += totalPrice;
+      totalQuantity += quantity;
+
+      message += `- ${productName} x ${quantity}: $${productPrice.toFixed(2)}\n`;
+    });
+
+    message += `\nTotal: $${total.toFixed(2)} (${totalQuantity} productos)`;
+
+    const whatsappUrl = `https://wa.me/?phone=56975452897&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   });
 </script>
