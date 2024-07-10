@@ -419,6 +419,14 @@ def create_admin():
         return redirect(url_for('login'))
     return render_template('create_admin.html')
 
+# error de pagina
+# Definir el manejador de errores 404
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('notpage/404.html'), 404
+
 
 # Crear tablas si no existen
 with app.app_context():
