@@ -1,17 +1,28 @@
-<div class="py-8 ">
-  <div class="max-w-4xl mx-auto px-6">
-    <h1 class="text-4xl font-bold text-center mb-8 ">Promociones</h1>
-
+<!-- Formulario de productos -->
+<form id="product-form" action="{{ url_for('order_summary') }}" method="POST">
+  <div class="space-y-12">
+    {% for category, products in products_by_category.items() %}
     <div>
-      <h3 class="text-2xl font-bold mb-4 text-white">{{ category.name }}</h3>
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-2xl font-bold text-white">{{ category }}</h3>
+        <button
+          type="button"
+          class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+        >
+          Mostrar/Ocultar
+        </button>
+      </div>
       <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-6"
+        class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
       >
-        {% for product in category.products %}
+        {% for product in products %}
         <div class="p-4 border rounded-lg bg-gray-50">
           <div class="flex justify-between items-center mb-2">
             <span class="font-semibold">{{ product.name }}</span>
             <div class="text-right">
+              <span class="line-through text-red-500"
+                >${{ product.price * 2 }}</span
+              ><br />
               <span class="text-orange-500">${{ product.price }}</span>
             </div>
           </div>
@@ -46,80 +57,99 @@
         {% endfor %}
       </div>
     </div>
+    {% endfor %}
   </div>
-</div>
 
-<!-- Floating Button -->
-<button
-  type="button"
-  id="view-summary"
-  class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
->
-  Simula tu pedido
-</button>
+  <!-- Botón flotante para ver el resumen del pedido -->
+  <button
+    type="button"
+    id="view-summary"
+    class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
+  >
+    Simula tu pedido
+  </button>
 
-<!-- Modal -->
-<div
-  id="summary-modal"
-  class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex justify-center items-center z-50"
->
-  <div class="bg-white rounded-lg p-8 max-w-3xl w-full">
-    <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
-    <div class="overflow-x-auto">
-      <table class="min-w-full divide-y divide-gray-200">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-              Nombre del Producto
-            </th>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-              Cantidad
-            </th>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-              Precio por Unidad
-            </th>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-              Precio Total
-            </th>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody
-          id="summary-content"
-          class="bg-white divide-y divide-gray-200"
-        ></tbody>
-      </table>
-    </div>
-    <div class="mt-6 flex justify-end">
-      <button
-        type="button"
-        id="close-summary"
-        class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
-      >
-        Cancelar
-      </button>
-      <button
-        type="button"
-        id="print-summary"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2"
-      >
-        Imprimir
-      </button>
-      <button
-        type="button"
-        id="send-whatsapp"
-        class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-      >
-        Enviar por WhatsApp
-      </button>
+  <!-- Modal para el resumen del pedido -->
+  <div
+    id="summary-modal"
+    class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex justify-center items-center z-50"
+  >
+    <div class="bg-white rounded-lg p-8 max-w-3xl w-full">
+      <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Nombre del Producto
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Cantidad
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Precio por Unidad
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Precio Total
+              </th>
+              <th
+                class="px-4 py-2 text-left text-sm font-semibold text-gray-700"
+              >
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody
+            id="summary-content"
+            class="bg-white divide-y divide-gray-200"
+          ></tbody>
+        </table>
+      </div>
+      <div class="mt-6 flex justify-end">
+        <button
+          type="button"
+          id="close-summary"
+          class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Cancelar
+        </button>
+        <button
+          type="button"
+          id="print-summary"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2"
+        >
+          Imprimir
+        </button>
+        <button
+          type="button"
+          id="send-whatsapp"
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+        >
+          Enviar por WhatsApp
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</form>
 
+<!-- Script JavaScript para la funcionalidad dinámica -->
 <script>
-  document.getElementById('view-summary').addEventListener('click', function() {
+  document.querySelectorAll('.toggle-category').forEach(button => {
+    button.addEventListener('click', function () {
+      const categoryDiv = button.parentElement.nextElementSibling;
+      categoryDiv.classList.toggle('hidden');
+    });
+  });
+
+  document.getElementById('view-summary').addEventListener('click', function () {
     const products = document.querySelectorAll('input[name="products[]"]:checked');
     const summaryContent = document.getElementById('summary-content');
 
@@ -165,9 +195,8 @@
 
     document.getElementById('summary-modal').classList.remove('hidden');
 
-    // Actualizar cantidades al cambiar en el modal
     document.querySelectorAll('.summary-quantity').forEach(input => {
-      input.addEventListener('change', function() {
+      input.addEventListener('change', function () {
         const row = input.closest('tr');
         const priceCell = row.querySelector('td:nth-child(3)');
         const totalCell = row.querySelector('td:nth-child(4)');
@@ -183,12 +212,10 @@
       });
     });
 
-    // Eliminar producto del resumen
     document.querySelectorAll('.delete-product').forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const row = button.closest('tr');
         const totalPrice = parseFloat(row.querySelector('td:nth-child(4)').textContent);
-        const quantity = parseInt(row.querySelector('.summary-quantity').value);
 
         total -= totalPrice;
         row.remove();
@@ -198,11 +225,11 @@
     });
   });
 
-  document.getElementById('close-summary').addEventListener('click', function() {
+  document.getElementById('close-summary').addEventListener('click', function () {
     document.getElementById('summary-modal').classList.add('hidden');
   });
 
-  document.getElementById('print-summary').addEventListener('click', function() {
+  document.getElementById('print-summary').addEventListener('click', function () {
     const printContents = document.getElementById('summary-modal').innerHTML;
     const originalContents = document.body.innerHTML;
 
@@ -213,7 +240,7 @@
     document.body.innerHTML = originalContents;
   });
 
-  document.getElementById('send-whatsapp').addEventListener('click', function() {
+  document.getElementById('send-whatsapp').addEventListener('click', function () {
     const summaryText = '¡Hola! Aquí está mi resumen de pedido:\n';
     const products = document.querySelectorAll('input[name="products[]"]:checked');
 
@@ -233,14 +260,12 @@
       total += totalPrice;
       totalQuantity += quantity;
 
-      message += `${productName}: ${quantity} x $${productPrice.toFixed(2)} = $${totalPrice.toFixed(2)}\n`;
+      message += `- ${productName} x ${quantity}: $${productPrice.toFixed(2)}\n`;
     });
 
-    message += `Total: $${total.toFixed(2)}\n`;
+    message += `\nTotal: $${total.toFixed(2)} (${totalQuantity} productos)`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappLink = `https://wa.me/?phone=56975452897&text=${encodedMessage}`;
-
-    window.open(whatsappLink, '_blank');
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
   });
 </script>

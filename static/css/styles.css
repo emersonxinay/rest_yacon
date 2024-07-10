@@ -23,6 +23,15 @@ body {
   background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03);
 
 }
+.gradiente-fondo1 {
+  /* background: linear-gradient(to right, #d0723f, #764BA2, #8A2387); */
+  /* background: linear-gradient(135deg, #f08c33, #ffae42, #1a472a); */
+  /* background: linear-gradient(135deg, #f08c33, #3b83bd, #00bfa6); */
+  /* background: linear-gradient(135deg, #f08c33, #f06292, #8e24aa); */
+  background: linear-gradient(to right, #f12e03, #f08c33, #ed9f04);
+  border-radius: 2em;
+  padding: 0.4em;
+}
 
 .div_carrousel {
   border-radius: 15px; /* Ajusta el radio según tus necesidades */

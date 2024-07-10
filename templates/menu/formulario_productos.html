@@ -1,57 +1,263 @@
 <form id="product-form" action="{{ url_for('order_summary') }}" method="POST">
   <div class="space-y-12">
-    {% for category, products in products_by_category.items() %}
+    <!-- Comida Peruana -->
+    <h2 class="text-2xl font-bold gradiente-fondo1 text-white mb-6">
+      Comida Peruana
+    </h2>
     <div>
-      <h3 class="text-2xl font-bold mb-4 text-white">{{ category }}</h3>
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
-      >
-        {% for product in products %}
-        <div class="p-4 border rounded-lg bg-gray-50">
-          <div class="flex justify-between items-center mb-2">
-            <span class="font-semibold">{{ product.name }}</span>
-            <div class="text-right">
-              <span class="line-through text-red-500"
-                >${{ product.price * 2 }}</span
-              ><br />
-              <span class="text-orange-500">${{ product.price }}</span>
-            </div>
-          </div>
-          <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-          <div class="flex items-center mb-2">
-            <input
-              type="checkbox"
-              id="product_{{ product.id }}"
-              name="products[]"
-              value="{{ product.id }}"
-              class="mr-2"
-            />
-            <label for="product_{{ product.id }}" class="cursor-pointer"
-              >Seleccionar</label
-            >
-          </div>
-          <label
-            for="quantity_{{ product.id }}"
-            class="block text-sm font-medium text-gray-700"
-            >Cantidad</label
+      {% for category, products in products_by_category.items() %} {% if
+      category[0].lower() == 'a' %}
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">{{ category }}</h3>
+          <button
+            type="button"
+            class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
           >
-          <input
-            type="number"
-            id="quantity_{{ product.id }}"
-            name="quantities[]"
-            value="1"
-            min="1"
-            max="10"
-            class="w-full border-gray-300 rounded-md mt-1 quantity-input"
-          />
+            Mostrar/Ocultar
+          </button>
         </div>
-        {% endfor %}
+        <div
+          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
+        >
+          {% for product in products %}
+          <div class="p-4 border rounded-lg bg-gray-50">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold">{{ product.name }}</span>
+              <div class="text-right">
+                <span class="line-through text-red-500"
+                  >${{ product.price * 2 }}</span
+                ><br />
+                <span class="text-orange-500">${{ product.price }}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
+            <div class="flex items-center mb-2">
+              <input
+                type="checkbox"
+                id="product_{{ product.id }}"
+                name="products[]"
+                value="{{ product.id }}"
+                class="mr-2"
+              />
+              <label for="product_{{ product.id }}" class="cursor-pointer"
+                >Seleccionar</label
+              >
+            </div>
+            <label
+              for="quantity_{{ product.id }}"
+              class="block text-sm font-medium text-gray-700"
+              >Cantidad</label
+            >
+            <input
+              type="number"
+              id="quantity_{{ product.id }}"
+              name="quantities[]"
+              value="1"
+              min="1"
+              max="10"
+              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+            />
+          </div>
+          {% endfor %}
+        </div>
       </div>
+      {% endif %} {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 
-  <!-- Floating Button -->
+    <!-- Sushi -->
+    <h2 class="text-2xl font-bold gradiente-fondo1 text-white mb-6">Sushi</h2>
+    <div>
+      {% for category, products in products_by_category.items() %} {% if
+      category[0].lower() != 'a' and category.lower() != 'promociones' and
+      category.lower() != 'bebidas y jugos' %}
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">{{ category }}</h3>
+          <button
+            type="button"
+            class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+          >
+            Mostrar/Ocultar
+          </button>
+        </div>
+        <div
+          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
+        >
+          {% for product in products %}
+          <div class="p-4 border rounded-lg bg-gray-50">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold">{{ product.name }}</span>
+              <div class="text-right">
+                <span class="line-through text-red-500"
+                  >${{ product.price * 2 }}</span
+                ><br />
+                <span class="text-orange-500">${{ product.price }}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
+            <div class="flex items-center mb-2">
+              <input
+                type="checkbox"
+                id="product_{{ product.id }}"
+                name="products[]"
+                value="{{ product.id }}"
+                class="mr-2"
+              />
+              <label for="product_{{ product.id }}" class="cursor-pointer"
+                >Seleccionar</label
+              >
+            </div>
+            <label
+              for="quantity_{{ product.id }}"
+              class="block text-sm font-medium text-gray-700"
+              >Cantidad</label
+            >
+            <input
+              type="number"
+              id="quantity_{{ product.id }}"
+              name="quantities[]"
+              value="1"
+              min="1"
+              max="10"
+              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+            />
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+
+    <!-- Promociones -->
+    <h2 class="text-2xl font-bold gradiente-fondo1 text-white mb-6">
+      Promociones
+    </h2>
+    <div>
+      {% for category, products in products_by_category.items() %} {% if
+      category.lower() == 'promociones' %}
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">{{ category }}</h3>
+          <button
+            type="button"
+            class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+          >
+            Mostrar/Ocultar
+          </button>
+        </div>
+        <div
+          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
+        >
+          {% for product in products %}
+          <div class="p-4 border rounded-lg bg-gray-50">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold">{{ product.name }}</span>
+              <div class="text-right">
+                <span class="line-through text-red-500"
+                  >${{ product.price * 2 }}</span
+                ><br />
+                <span class="text-orange-500">${{ product.price }}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
+            <div class="flex items-center mb-2">
+              <input
+                type="checkbox"
+                id="product_{{ product.id }}"
+                name="products[]"
+                value="{{ product.id }}"
+                class="mr-2"
+              />
+              <label for="product_{{ product.id }}" class="cursor-pointer"
+                >Seleccionar</label
+              >
+            </div>
+            <label
+              for="quantity_{{ product.id }}"
+              class="block text-sm font-medium text-gray-700"
+              >Cantidad</label
+            >
+            <input
+              type="number"
+              id="quantity_{{ product.id }}"
+              name="quantities[]"
+              value="1"
+              min="1"
+              max="10"
+              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+            />
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+
+    <!-- Bebidas -->
+    <h2 class="text-2xl font-bold gradiente-fondo1 text-white mb-6">Bebidas</h2>
+    <div>
+      {% for category, products in products_by_category.items() %} {% if
+      category.lower() == 'bebidas y jugos' %}
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">{{ category }}</h3>
+          <button
+            type="button"
+            class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+          >
+            Mostrar/Ocultar
+          </button>
+        </div>
+        <div
+          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
+        >
+          {% for product in products %}
+          <div class="p-4 border rounded-lg bg-gray-50">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold">{{ product.name }}</span>
+              <div class="text-right">
+                <span class="line-through text-red-500"
+                  >${{ product.price * 2 }}</span
+                ><br />
+                <span class="text-orange-500">${{ product.price }}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
+            <div class="flex items-center mb-2">
+              <input
+                type="checkbox"
+                id="product_{{ product.id }}"
+                name="products[]"
+                value="{{ product.id }}"
+                class="mr-2"
+              />
+              <label for="product_{{ product.id }}" class="cursor-pointer"
+                >Seleccionar</label
+              >
+            </div>
+            <label
+              for="quantity_{{ product.id }}"
+              class="block text-sm font-medium text-gray-700"
+              >Cantidad</label
+            >
+            <input
+              type="number"
+              id="quantity_{{ product.id }}"
+              name="quantities[]"
+              value="1"
+              min="1"
+              max="10"
+              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+            />
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+  <!-- Botón flotante para ver el resumen del pedido -->
   <button
     type="button"
     id="view-summary"
@@ -59,14 +265,15 @@
   >
     Simula tu pedido
   </button>
-
-  <!-- Modal -->
+  <!-- Modal para el resumen del pedido -->
   <div
     id="summary-modal"
     class="fixed inset-0 hidden bg-gray-800 bg-opacity-75 flex justify-center items-center z-50"
   >
     <div class="bg-white rounded-lg p-8 max-w-3xl w-full">
-      <h2 class="text-2xl font-bold mb-4">Resumen del Pedido</h2>
+      <h2 class="text-2xl font-bold gradiente-fondo1 mb-4 text-white">
+        Simulación del Pedido
+      </h2>
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
@@ -132,7 +339,14 @@
 </form>
 
 <script>
-  document.getElementById('view-summary').addEventListener('click', function() {
+  document.querySelectorAll('.toggle-category').forEach(button => {
+    button.addEventListener('click', function () {
+      const categoryDiv = button.parentElement.nextElementSibling;
+      categoryDiv.classList.toggle('hidden');
+    });
+  });
+
+  document.getElementById('view-summary').addEventListener('click', function () {
     const products = document.querySelectorAll('input[name="products[]"]:checked');
     const summaryContent = document.getElementById('summary-content');
 
@@ -178,9 +392,8 @@
 
     document.getElementById('summary-modal').classList.remove('hidden');
 
-    // Actualizar cantidades al cambiar en el modal
     document.querySelectorAll('.summary-quantity').forEach(input => {
-      input.addEventListener('change', function() {
+      input.addEventListener('change', function () {
         const row = input.closest('tr');
         const priceCell = row.querySelector('td:nth-child(3)');
         const totalCell = row.querySelector('td:nth-child(4)');
@@ -196,12 +409,10 @@
       });
     });
 
-    // Eliminar producto del resumen
     document.querySelectorAll('.delete-product').forEach(button => {
-      button.addEventListener('click', function() {
+      button.addEventListener('click', function () {
         const row = button.closest('tr');
         const totalPrice = parseFloat(row.querySelector('td:nth-child(4)').textContent);
-        const quantity = parseInt(row.querySelector('.summary-quantity').value);
 
         total -= totalPrice;
         row.remove();
@@ -211,11 +422,11 @@
     });
   });
 
-  document.getElementById('close-summary').addEventListener('click', function() {
+  document.getElementById('close-summary').addEventListener('click', function () {
     document.getElementById('summary-modal').classList.add('hidden');
   });
 
-  document.getElementById('print-summary').addEventListener('click', function() {
+  document.getElementById('print-summary').addEventListener('click', function () {
     const printContents = document.getElementById('summary-modal').innerHTML;
     const originalContents = document.body.innerHTML;
 
@@ -226,7 +437,7 @@
     document.body.innerHTML = originalContents;
   });
 
-  document.getElementById('send-whatsapp').addEventListener('click', function() {
+  document.getElementById('send-whatsapp').addEventListener('click', function () {
     const summaryText = '¡Hola! Aquí está mi resumen de pedido:\n';
     const products = document.querySelectorAll('input[name="products[]"]:checked');
 
@@ -251,7 +462,7 @@
 
     message += `\nTotal: $${total.toFixed(2)} (${totalQuantity} productos)`;
 
-    const whatsappUrl = `https://wa.me/?phone=56975452897&text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   });
 </script>
