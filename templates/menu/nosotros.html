@@ -1,46 +1,528 @@
-{% extends 'base.html' %} {% block title %}Yacon | Nosotros{% endblock %} {%
-block content %}
-<div class="py-8 ">
-  <div class="max-w-4xl mx-auto px-6">
-    <h1 class="text-4xl font-bold text-center mb-8 text-white">Nosotros</h1>
-    <div class="flex flex-wrap items-center justify-between">
-      <div class="w-full md:w-1/2 mb-4 md:mb-0">
-        <img
-          src="{{ url_for('static', filename='img/logofavicon.png') }}"
-          alt="Logo de Yacon"
-          class="rounded-lg shadow-md mb-4 bg-gray-100"
-        />
+{% extends 'base.html' %} 
+{% block title %}Nuestra Historia - Yacon Restaurant{% endblock %}
+{% block description %}Conoce la historia de Yacon Restaurant, donde la tradición peruana se encuentra con el arte japonés para crear una experiencia culinaria única{% endblock %}
+
+{% block content %}
+<!-- Hero Section Nosotros -->
+<section class="hero-section">
+  <div class="hero-content">
+    <div class="hero-badge fade-in-up">
+      <i class="fas fa-heart"></i>
+      <span>Nuestra Pasión</span>
+    </div>
+    <h1 class="hero-title fade-in-up" style="animation-delay: 0.2s;">
+      Nuestra <span class="text-gradient">Historia</span>
+    </h1>
+    <p class="hero-subtitle fade-in-up" style="animation-delay: 0.4s;">
+      Donde la tradición peruana se encuentra con el arte japonés para crear una experiencia culinaria única e inolvidable.
+    </p>
+    <div class="hero-actions fade-in-up" style="animation-delay: 0.6s;">
+      <a href="#historia" class="btn-primary ripple-effect">
+        <i class="fas fa-book-open"></i>
+        Conoce Nuestra Historia
+      </a>
+      <a href="{{ url_for('menu_carta') }}" class="btn-secondary ripple-effect">
+        <i class="fas fa-utensils"></i>
+        Ver Nuestra Carta
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Historia -->
+<section class="section-modern" id="historia">
+  <div class="container">
+    <div class="story-container">
+      
+      <!-- Timeline de Historia -->
+      <div class="story-timeline fade-in-up">
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-seedling"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>2019 - El Inicio</h3>
+            <p>Yacon nació del sueño de fusionar dos culturas gastronómicas extraordinarias: la delicadeza japonesa y la riqueza peruana.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>2020 - Innovación</h3>
+            <p>Desarrollamos nuestras recetas únicas, combinando técnicas tradicionales con ingredientes frescos y auténticos.</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <div class="timeline-content">
+            <h3>2021 - Reconocimiento</h3>
+            <p>Nos convertimos en el destino preferido para quienes buscan la mejor fusión nikkei de la región.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Misión y Visión -->
+      <div class="mission-vision-grid">
+        <div class="mission-card fade-in-up">
+          <div class="card-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h3>Nuestra Misión</h3>
+          <p>
+            Convertirnos en el destino preferido de quienes buscan disfrutar de lo mejor de la gastronomía japonesa y peruana. 
+            Con un servicio excepcional y un ambiente acogedor, queremos ser reconocidos por nuestra pasión por la calidad y la innovación en cada plato que servimos.
+          </p>
+        </div>
+        
+        <div class="vision-card fade-in-up" style="animation-delay: 0.2s;">
+          <div class="card-icon">
+            <i class="fas fa-eye"></i>
+          </div>
+          <h3>Nuestra Visión</h3>
+          <p>
+            Ser líderes en la industria restaurantera, ofreciendo siempre una experiencia memorable que resalte por su excelencia y creatividad. 
+            Cada visita a Yacon es una experiencia gastronómica inolvidable.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Galería de Imágenes -->
+<section class="section-modern gallery-section">
+  <div class="container">
+    <h2 class="section-title fade-in-up">
+      Nuestra <span class="text-gradient">Galería</span>
+    </h2>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item large fade-in-up">
         <img
           src="{{ url_for('static', filename='img/cevicheroll-yacon.jpg') }}"
-          alt="Ceviche Roll"
-          class="rounded-lg shadow-md"
+          alt="Ceviche Roll Yacon - Fusión Nikkei"
+          class="gallery-image"
         />
+        <div class="gallery-overlay">
+          <div class="gallery-content">
+            <h4>Ceviche Roll Yacon</h4>
+            <p>Nuestra especialidad de la casa</p>
+          </div>
+        </div>
       </div>
-      <div class="w-full md:w-1/2 md:pl-8">
-        <p class="text-lg leading-relaxed text-gray-200 text-justify">
-          En Yacon - Sushi y Comida Peruana, nos enorgullece ofrecer una
-          experiencia culinaria única que fusiona la delicadeza del sushi con la
-          riqueza y variedad de la cocina peruana. Nuestros platos están
-          elaborados con ingredientes frescos y auténticos, combinando sabores
-          tradicionales con presentaciones modernas para sorprender y satisfacer
-          a nuestros comensales.
-        </p>
-        <p class="text-lg leading-relaxed mt-4 text-gray-200 text-justify">
-          Nuestra misión es convertirnos en el destino preferido de quienes
-          buscan disfrutar de lo mejor de la gastronomía japonesa y peruana. Con
-          un servicio excepcional y un ambiente acogedor, queremos ser
-          reconocidos por nuestra pasión por la calidad y la innovación en cada
-          plato que servimos.
-        </p>
-        <p class="text-lg leading-relaxed mt-4 text-gray-200 text-justify">
-          Nos guía una visión de ser líderes en la industria restaurantera,
-          ofreciendo siempre una experiencia memorable que resalte por su
-          excelencia y creatividad. Bienvenidos a Yacon - Sushi y Comida
-          Peruana, donde cada visita es una experiencia gastronómica
-          inolvidable.
-        </p>
+      
+      <div class="gallery-item fade-in-up" style="animation-delay: 0.1s;">
+        <img
+          src="{{ url_for('static', filename='img/sashimi.jpg') }}"
+          alt="Sashimi Fresco"
+          class="gallery-image"
+        />
+        <div class="gallery-overlay">
+          <div class="gallery-content">
+            <h4>Sashimi Premium</h4>
+            <p>Pescado fresco del día</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-item fade-in-up" style="animation-delay: 0.2s;">
+        <img
+          src="{{ url_for('static', filename='img/tempuras.jpg') }}"
+          alt="Tempuras Tradicionales"
+          class="gallery-image"
+        />
+        <div class="gallery-overlay">
+          <div class="gallery-content">
+            <h4>Tempuras</h4>
+            <p>Crujientes y deliciosas</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="gallery-item fade-in-up" style="animation-delay: 0.3s;">
+        <img
+          src="{{ url_for('static', filename='img/aji_de_gallina.jpg') }}"
+          alt="Ají de Gallina Peruano"
+          class="gallery-image"
+        />
+        <div class="gallery-overlay">
+          <div class="gallery-content">
+            <h4>Ají de Gallina</h4>
+            <p>Tradición peruana auténtica</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Valores -->
+<section class="section-modern values-section">
+  <div class="container">
+    <h2 class="section-title fade-in-up">
+      Nuestros <span class="text-gradient">Valores</span>
+    </h2>
+    
+    <div class="values-grid">
+      <div class="value-card fade-in-up">
+        <div class="value-icon">
+          <i class="fas fa-leaf"></i>
+        </div>
+        <h3>Frescura</h3>
+        <p>Ingredientes frescos seleccionados diariamente para garantizar la máxima calidad en cada plato.</p>
+      </div>
+      
+      <div class="value-card fade-in-up" style="animation-delay: 0.1s;">
+        <div class="value-icon">
+          <i class="fas fa-hands-helping"></i>
+        </div>
+        <h3>Tradición</h3>
+        <p>Respetamos las técnicas ancestrales tanto peruanas como japonesas en cada preparación.</p>
+      </div>
+      
+      <div class="value-card fade-in-up" style="animation-delay: 0.2s;">
+        <div class="value-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h3>Innovación</h3>
+        <p>Creamos constantemente nuevas combinaciones que sorprenden y deleitan a nuestros comensales.</p>
+      </div>
+      
+      <div class="value-card fade-in-up" style="animation-delay: 0.3s;">
+        <div class="value-icon">
+          <i class="fas fa-heart"></i>
+        </div>
+        <h3>Pasión</h3>
+        <p>Cada plato está preparado con amor y dedicación para brindar una experiencia memorable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="section-modern cta-section">
+  <div class="container">
+    <div class="cta-content fade-in-up">
+      <h2>¿Listo para vivir la experiencia <span class="text-gradient">Yacon</span>?</h2>
+      <p>Te invitamos a descubrir por qué somos el restaurante favorito para la fusión nikkei.</p>
+      <div class="cta-actions">
+        <a href="{{ url_for('menu_carta') }}" class="btn-primary ripple-effect">
+          <i class="fas fa-utensils"></i>
+          Ver Nuestra Carta
+        </a>
+        <a href="{{ url_for('reserve') }}" class="btn-secondary ripple-effect">
+          <i class="fas fa-calendar-alt"></i>
+          Hacer Reserva
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+/* Estilos específicos para Nosotros */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.story-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.story-timeline {
+  margin-bottom: var(--space-3xl);
+}
+
+.timeline-item {
+  display: flex;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-2xl);
+  position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 30px;
+  top: 80px;
+  width: 2px;
+  height: calc(100% + var(--space-lg));
+  background: linear-gradient(to bottom, var(--primary-gradient));
+  opacity: 0.3;
+}
+
+.timeline-icon {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.timeline-content h3 {
+  font-family: var(--font-display);
+  color: var(--gray-800);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+.mission-vision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: var(--space-xl);
+  margin-bottom: var(--space-3xl);
+}
+
+.mission-card, .vision-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-2xl);
+  text-align: center;
+  transition: all var(--transition-normal);
+}
+
+.mission-card:hover, .vision-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.card-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-lg);
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+}
+
+.gallery-section {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-2xl);
+}
+
+.gallery-item {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.gallery-item.large {
+  grid-column: span 2;
+}
+
+.gallery-item:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-2xl);
+}
+
+.gallery-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: all var(--transition-normal);
+}
+
+.gallery-item.large .gallery-image {
+  height: 350px;
+}
+
+.gallery-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: var(--space-lg);
+  transform: translateY(100%);
+  transition: all var(--transition-normal);
+}
+
+.gallery-item:hover .gallery-overlay {
+  transform: translateY(0);
+}
+
+.gallery-content h4 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.gallery-content p {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-2xl);
+}
+
+.value-card {
+  text-align: center;
+  padding: var(--space-xl);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 107, 107, 0.1);
+  transition: all var(--transition-normal);
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  background: rgba(255, 107, 107, 0.05);
+}
+
+.value-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto var(--space-lg);
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.value-card h3 {
+  color: var(--gray-800);
+  margin-bottom: var(--space-md);
+}
+
+.value-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+.cta-section {
+  background: var(--primary-gradient);
+  color: white;
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: var(--space-lg);
+}
+
+.cta-content p {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-2xl);
+  opacity: 0.9;
+}
+
+.cta-actions {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-section .btn-primary {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.cta-section .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.cta-section .btn-secondary {
+  background: white;
+  color: var(--gray-800);
+}
+
+.cta-section .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .gallery-item.large {
+    grid-column: span 1;
+  }
+  
+  .gallery-item.large .gallery-image {
+    height: 250px;
+  }
+  
+  .mission-vision-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .values-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .timeline-item {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .timeline-item::after {
+    display: none;
+  }
+}
+</style>
+
 {% endblock %}

@@ -1,33 +1,324 @@
-{% extends 'base.html' %} {% block title %}Iniciar Sesión{% endblock %} {% block
-content %}
-<h1 class="text-3xl font-bold mb-4">Iniciar Sesión</h1>
-<form method="POST" action="{{ url_for('login') }}">
-  <div class="mb-4">
-    <label for="username" class="block text-sm font-medium text-gray-700"
-      >Nombre de usuario</label
-    >
-    <input
-      type="text"
-      name="username"
-      id="username"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
+{% extends 'base.html' %} 
+{% block title %}Iniciar Sesión - Yacon Restaurant{% endblock %}
+{% block description %}Inicia sesión en tu cuenta de Yacon Restaurant para acceder a funciones exclusivas y realizar pedidos{% endblock %}
+
+{% block content %}
+<!-- Sección de Login Moderna -->
+<section class="section-modern" style="min-height: 80vh; display: flex; align-items: center;">
+  <div class="container">
+    <div class="login-container fade-in-up">
+      
+      <!-- Header de Login -->
+      <div class="login-header">
+        <div class="login-icon">
+          <i class="fas fa-user-circle"></i>
+        </div>
+        <h1 class="section-title">
+          Bienvenido de <span class="text-gradient">Nuevo</span>
+        </h1>
+        <p class="login-subtitle">
+          Inicia sesión para acceder a tu cuenta y disfrutar de todas nuestras funciones exclusivas.
+        </p>
+      </div>
+
+      <!-- Formulario Moderno -->
+      <div class="form-modern">
+        <form method="POST" action="{{ url_for('login') }}" class="login-form">
+          
+          <!-- Campo Usuario -->
+          <div class="input-group">
+            <label for="username" class="input-label">
+              <i class="fas fa-user"></i>
+              Nombre de usuario
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="input-modern"
+              placeholder="Ingresa tu nombre de usuario"
+              required
+            />
+            <div class="input-highlight"></div>
+          </div>
+
+          <!-- Campo Contraseña -->
+          <div class="input-group">
+            <label for="password" class="input-label">
+              <i class="fas fa-lock"></i>
+              Contraseña
+            </label>
+            <div class="password-field">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="input-modern"
+                placeholder="Ingresa tu contraseña"
+                required
+              />
+              <button type="button" class="password-toggle" onclick="togglePassword()">
+                <i class="fas fa-eye" id="password-icon"></i>
+              </button>
+            </div>
+            <div class="input-highlight"></div>
+          </div>
+
+          <!-- Recordar sesión -->
+          <div class="checkbox-group">
+            <label class="checkbox-modern">
+              <input type="checkbox" name="remember_me">
+              <span class="checkmark"></span>
+              <span class="checkbox-text">Recordar mi sesión</span>
+            </label>
+          </div>
+
+          <!-- Botón de Login -->
+          <button type="submit" class="btn-primary btn-login ripple-effect">
+            <i class="fas fa-sign-in-alt"></i>
+            Iniciar Sesión
+          </button>
+
+          <!-- Separador -->
+          <div class="login-divider">
+            <span>¿No tienes cuenta?</span>
+          </div>
+
+          <!-- Link de Registro -->
+          <a href="{{ url_for('register') }}" class="btn-secondary btn-register ripple-effect">
+            <i class="fas fa-user-plus"></i>
+            Crear Nueva Cuenta
+          </a>
+
+        </form>
+      </div>
+
+      <!-- Footer del Login -->
+      <div class="login-footer">
+        <p class="help-text">
+          <i class="fas fa-question-circle"></i>
+          ¿Problemas para acceder? 
+          <a href="#" class="help-link">Contacta con soporte</a>
+        </p>
+      </div>
+
+    </div>
   </div>
-  <div class="mb-4">
-    <label for="password" class="block text-sm font-medium text-gray-700"
-      >Contraseña</label
-    >
-    <input
-      type="password"
-      name="password"
-      id="password"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-  </div>
-  <div class="mb-4">
-    <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">
-      Iniciar Sesión
-    </button>
-  </div>
-</form>
+</section>
+
+<style>
+/* Estilos específicos para Login */
+.login-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.login-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-lg);
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.login-subtitle {
+  color: var(--gray-600);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 600;
+  color: var(--gray-700);
+  margin-bottom: var(--space-sm);
+  font-size: 0.875rem;
+}
+
+.password-field {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--gray-500);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all var(--transition-normal);
+}
+
+.password-toggle:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--gray-700);
+}
+
+.checkbox-group {
+  margin: var(--space-md) 0;
+}
+
+.checkbox-modern {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-modern input[type="checkbox"] {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--gray-400);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-normal);
+  position: relative;
+}
+
+.checkbox-modern input[type="checkbox"]:checked + .checkmark {
+  background: var(--primary-gradient);
+  border-color: transparent;
+}
+
+.checkbox-modern input[type="checkbox"]:checked + .checkmark::after {
+  content: '\f00c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: white;
+  font-size: 12px;
+}
+
+.checkbox-text {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.btn-login, .btn-register {
+  width: 100%;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-xl);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.btn-register {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: var(--gray-700);
+  border: 2px solid rgba(255, 107, 107, 0.2);
+}
+
+.btn-register:hover {
+  background: rgba(255, 107, 107, 0.1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.login-divider {
+  text-align: center;
+  margin: var(--space-lg) 0;
+  position: relative;
+}
+
+.login-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gray-300);
+}
+
+.login-divider span {
+  background: white;
+  padding: 0 var(--space-md);
+  color: var(--gray-500);
+  font-size: 0.875rem;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: var(--space-xl);
+}
+
+.help-text {
+  color: var(--gray-500);
+  font-size: 0.875rem;
+}
+
+.help-link {
+  color: var(--gray-700);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--transition-normal);
+}
+
+.help-link:hover {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: var(--space-lg);
+  }
+  
+  .login-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+}
+</style>
+
+<script>
+function togglePassword() {
+  const passwordField = document.getElementById('password');
+  const passwordIcon = document.getElementById('password-icon');
+  
+  if (passwordField.type === 'password') {
+    passwordField.type = 'text';
+    passwordIcon.className = 'fas fa-eye-slash';
+  } else {
+    passwordField.type = 'password';
+    passwordIcon.className = 'fas fa-eye';
+  }
+}
+</script>
+
 {% endblock %}

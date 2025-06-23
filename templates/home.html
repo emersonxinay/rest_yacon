@@ -1,119 +1,328 @@
-{% extends 'base.html' %} {% block title %}Yacon | Inicio{% endblock %} {% block
-content %}
-<div
-  class="relative bg-cover bg-center h-screen"
-  style="background-image: url('{{ url_for('static', filename='img/hero-image.jpg') }}');"
->
-  <div class="absolute inset-0  opacity-50"></div>
-  <div class="relative z-10 flex items-center justify-center h-full">
-    <div class="text-center text-white max-w-2xl px-6">
-      <h1 class="text-5xl font-bold mb-4">Bienvenido a Yacon</h1>
-      <h2 class="text-3xl font-light mb-8">Sushi y Comida Peruana</h2>
-      <p class="text-lg leading-relaxed mb-8">
-        Disfruta de nuestros deliciosos platos de sushi y comida peruana.
-        Nuestra cocina combina sabores tradicionales con presentaciones modernas
-        para ofrecerte una experiencia gastronómica única. Ven y descubre por
-        qué somos tu destino culinario preferido para disfrutar con amigos y
-        familiares.
-      </p>
-      <a
-        href="{{ url_for('carta') }}"
-        class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg"
-        >Ver Carta</a
-      >
-    </div>
-  </div>
-</div>
+{% extends 'base.html' %} 
+{% block title %}Yacon | Inicio{% endblock %}
+{% block description %}Yacon Restaurant - Experiencia culinaria única con sushi y comida peruana. Sabores auténticos en un ambiente moderno.{% endblock %}
 
-<div class="py-16 ">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-4xl font-bold text-center mb-8 text-white">
-      Nuestros Destacados
+{% block content %}
+<!-- Hero Section Épico -->
+<section class="hero-section parallax-bg" data-speed="0.5">
+  <!-- Partículas flotantes -->
+  <div class="hero-particles" id="heroParticles"></div>
+  
+  <!-- Elementos decorativos -->
+  <div class="hero-decoration">
+    <div class="floating-element" style="top: 10%; left: 5%; animation-delay: 0s;">🍱</div>
+    <div class="floating-element" style="top: 20%; right: 10%; animation-delay: 1s;">🍣</div>
+    <div class="floating-element" style="bottom: 30%; left: 8%; animation-delay: 2s;">🥢</div>
+    <div class="floating-element" style="bottom: 15%; right: 5%; animation-delay: 0.5s;">🍜</div>
+  </div>
+  
+  <!-- Contenido principal -->
+  <div class="hero-content fade-in-up">
+    <h1 class="hero-title typewriter-effect">
+      Bienvenido a <span class="text-gradient">Yacon</span>
+    </h1>
+    <h2 class="hero-subtitle fade-in-up" style="animation-delay: 0.3s;">
+      Donde la tradición <span class="text-gradient">peruana</span> se encuentra con el arte <span class="text-gradient">japonés</span>
     </h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class=" rounded-lg shadow-lg overflow-hidden">
-        <img
-          src="{{ url_for('static', filename='img/cevicheroll-yacon.jpg') }}"
-          alt="Ceviche Roll"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-white">Ceviche Roll</h3>
-          <p class="text-lg leading-relaxed text-gray-700">
-            Delicioso rollo de sushi con los sabores frescos del ceviche
-            peruano.
-          </p>
-        </div>
+    <p class="hero-description fade-in-up" style="animation-delay: 0.6s;">
+      Sumérgete en una experiencia gastronómica única donde cada plato cuenta una historia. 
+      Nuestros chefs expertos fusionan los sabores auténticos de Perú con la precisión 
+      y elegancia de la cocina japonesa.
+    </p>
+    
+    <div class="hero-actions fade-in-up" style="animation-delay: 0.9s;">
+      <a href="{{ url_for('carta') }}" class="btn-primary ripple-effect">
+        <i class="fas fa-utensils"></i>
+        Explorar Menú
+      </a>
+      <a href="{{ url_for('reserve') }}" class="btn-secondary ripple-effect">
+        <i class="fas fa-calendar-plus"></i>
+        Reservar Mesa
+      </a>
+    </div>
+    
+    <!-- Estadísticas dinámicas -->
+    <div class="hero-stats fade-in-up" style="animation-delay: 1.2s;">
+      <div class="stat-item">
+        <div class="stat-number" data-count="500">0</div>
+        <div class="stat-label">Platos Únicos</div>
       </div>
-      <div class=" rounded-lg shadow-lg overflow-hidden">
-        <img
-          src="https://i.ytimg.com/vi/sWXRJbGi6yQ/maxresdefault.jpg"
-          alt="Lomo Saltado"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-white">Lomo Saltado</h3>
-          <p class="text-lg leading-relaxed text-gray-700">
-            Clásico plato peruano con trozos de lomo salteados con cebolla,
-            tomate y papas fritas.
-          </p>
-        </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="50">0</div>
+        <div class="stat-label">Chefs Expertos</div>
       </div>
-      <div class=" rounded-lg shadow-lg overflow-hidden">
-        <img
-          src="{{ url_for('static', filename='img/aji_de_gallina.jpg') }}"
-          alt="Ají de Gallina"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-white">Ají de Gallina</h3>
-          <p class="text-lg leading-relaxed text-gray-700">
-            Exquisito guiso de pollo desmenuzado en una cremosa salsa de ají
-            amarillo.
-          </p>
-        </div>
-      </div>
-      <div class=" rounded-lg shadow-lg overflow-hidden">
-        <img
-          src="{{ url_for('static', filename='img/40piezas.jpg') }}"
-          alt="40 Piezas Mixtas"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-white">40 Piezas Mixtas</h3>
-          <p class="text-lg leading-relaxed text-gray-700">
-            Una variedad de 40 piezas de sushi mixto para disfrutar y compartir.
-          </p>
-        </div>
-      </div>
-      <div class=" rounded-lg shadow-lg overflow-hidden">
-        <img
-          src="{{ url_for('static', filename='img/tempuras.jpg') }}"
-          alt="Roll Tempura"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-white">Roll Tempura</h3>
-          <p class="text-lg leading-relaxed text-gray-700">
-            Crujiente rollo de sushi tempura con ingredientes frescos y
-            deliciosos.
-          </p>
-        </div>
-      </div>
-      <div class=" rounded-lg shadow-lg overflow-hidden">
-        <img
-          src="{{ url_for('static', filename='img/sashimi.jpg') }}"
-          alt="Sashimi"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold mb-2 text-white">Sashimi</h3>
-          <p class="text-lg leading-relaxed text-gray-700">
-            Fresco y delicado sashimi, ideal para los amantes del pescado crudo.
-          </p>
-        </div>
+      <div class="stat-item">
+        <div class="stat-number" data-count="10000">0</div>
+        <div class="stat-label">Clientes Felices</div>
       </div>
     </div>
   </div>
-</div>
+  
+  <!-- Indicador de scroll -->
+  <div class="scroll-indicator">
+    <div class="scroll-text">Desliza para explorar</div>
+    <div class="scroll-arrow">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+</section>
+
+<!-- Sección de Platos Destacados -->
+<section class="section-modern">
+  <div class="container">
+    <h2 class="section-title fade-in-up">
+      Nuestros <span class="text-gradient">Destacados</span>
+    </h2>
+    
+    <div class="products-grid">
+      <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" data-product-name="Ceviche Roll" data-product-description="Delicioso rollo de sushi con los sabores frescos del ceviche peruano">
+        <div class="product-image-container">
+          <img
+            src="{{ url_for('static', filename='img/cevicheroll-yacon.jpg') }}"
+            alt="Ceviche Roll"
+            class="product-image lazy-load"
+            data-src="{{ url_for('static', filename='img/cevicheroll-yacon.jpg') }}"
+          />
+          <div class="product-overlay">
+            <div class="product-badges">
+              <span class="badge badge-popular">Popular</span>
+              <span class="badge badge-fusion">Fusión</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn" data-tooltip="Agregar a favoritos">
+                <i class="fas fa-heart"></i>
+              </button>
+              <button class="action-btn" data-tooltip="Vista rápida">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Ceviche Roll</h3>
+          <p class="product-description">
+            Fusión perfecta entre el ceviche peruano y el arte del sushi japonés. 
+            Pescado fresco marinado en leche de tigre con un toque especial.
+          </p>
+          <div class="product-footer">
+            <div class="product-price">$12.990</div>
+            <button class="btn-primary btn-sm ripple-effect" data-product-id="ceviche-roll">
+              <i class="fas fa-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" data-product-name="Lomo Saltado" data-product-description="Clásico plato peruano con trozos de lomo salteados">
+        <div class="product-image-container">
+          <img
+            src="https://i.ytimg.com/vi/sWXRJbGi6yQ/maxresdefault.jpg"
+            alt="Lomo Saltado"
+            class="product-image lazy-load"
+            data-src="https://i.ytimg.com/vi/sWXRJbGi6yQ/maxresdefault.jpg"
+          />
+          <div class="product-overlay">
+            <div class="product-badges">
+              <span class="badge badge-traditional">Tradicional</span>
+              <span class="badge badge-spicy">Picante</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn" data-tooltip="Agregar a favoritos">
+                <i class="fas fa-heart"></i>
+              </button>
+              <button class="action-btn" data-tooltip="Vista rápida">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Lomo Saltado</h3>
+          <p class="product-description">
+            El clásico peruano que conquistó el mundo. Lomo fino salteado 
+            con cebolla, tomate y papas fritas, servido con arroz.
+          </p>
+          <div class="product-footer">
+            <div class="product-price">$15.990</div>
+            <button class="btn-primary btn-sm ripple-effect" data-product-id="lomo-saltado">
+              <i class="fas fa-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" data-product-name="Ají de Gallina" data-product-description="Exquisito guiso de pollo en cremosa salsa de ají amarillo">
+        <div class="product-image-container">
+          <img
+            src="{{ url_for('static', filename='img/aji_de_gallina.jpg') }}"
+            alt="Ají de Gallina"
+            class="product-image lazy-load"
+            data-src="{{ url_for('static', filename='img/aji_de_gallina.jpg') }}"
+          />
+          <div class="product-overlay">
+            <div class="product-badges">
+              <span class="badge badge-comfort">Comfort Food</span>
+              <span class="badge badge-creamy">Cremoso</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn" data-tooltip="Agregar a favoritos">
+                <i class="fas fa-heart"></i>
+              </button>
+              <button class="action-btn" data-tooltip="Vista rápida">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Ají de Gallina</h3>
+          <p class="product-description">
+            Pollo desmenuzado en una cremosa y aromática salsa de ají amarillo, 
+            acompañado de papas y huevo duro.
+          </p>
+          <div class="product-footer">
+            <div class="product-price">$13.990</div>
+            <button class="btn-primary btn-sm ripple-effect" data-product-id="aji-gallina">
+              <i class="fas fa-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" data-product-name="40 Piezas Mixtas" data-product-description="Variedad de 40 piezas de sushi para compartir">
+        <div class="product-image-container">
+          <img
+            src="{{ url_for('static', filename='img/40piezas.jpg') }}"
+            alt="40 Piezas Mixtas"
+            class="product-image lazy-load"
+            data-src="{{ url_for('static', filename='img/40piezas.jpg') }}"
+          />
+          <div class="product-overlay">
+            <div class="product-badges">
+              <span class="badge badge-sharing">Para Compartir</span>
+              <span class="badge badge-variety">Variedad</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn" data-tooltip="Agregar a favoritos">
+                <i class="fas fa-heart"></i>
+              </button>
+              <button class="action-btn" data-tooltip="Vista rápida">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">40 Piezas Mixtas</h3>
+          <p class="product-description">
+            La experiencia completa de Yacon en un solo pedido. Una cuidadosa 
+            selección de nuestros mejores rollos y nigiri.
+          </p>
+          <div class="product-footer">
+            <div class="product-price">$25.990</div>
+            <button class="btn-primary btn-sm ripple-effect" data-product-id="40-piezas">
+              <i class="fas fa-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" data-product-name="Roll Tempura" data-product-description="Crujiente rollo de sushi tempura con ingredientes frescos">
+        <div class="product-image-container">
+          <img
+            src="{{ url_for('static', filename='img/tempuras.jpg') }}"
+            alt="Roll Tempura"
+            class="product-image lazy-load"
+            data-src="{{ url_for('static', filename='img/tempuras.jpg') }}"
+          />
+          <div class="product-overlay">
+            <div class="product-badges">
+              <span class="badge badge-crispy">Crujiente</span>
+              <span class="badge badge-hot">Caliente</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn" data-tooltip="Agregar a favoritos">
+                <i class="fas fa-heart"></i>
+              </button>
+              <button class="action-btn" data-tooltip="Vista rápida">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Roll Tempura</h3>
+          <p class="product-description">
+            La textura crujiente del tempura en perfecta armonía con ingredientes 
+            frescos. Una explosión de sabores y texturas.
+          </p>
+          <div class="product-footer">
+            <div class="product-price">$11.990</div>
+            <button class="btn-primary btn-sm ripple-effect" data-product-id="roll-tempura">
+              <i class="fas fa-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" data-product-name="Sashimi Premium" data-product-description="Fresco y delicado sashimi, ideal para los amantes del pescado">
+        <div class="product-image-container">
+          <img
+            src="{{ url_for('static', filename='img/sashimi.jpg') }}"
+            alt="Sashimi Premium"
+            class="product-image lazy-load"
+            data-src="{{ url_for('static', filename='img/sashimi.jpg') }}"
+          />
+          <div class="product-overlay">
+            <div class="product-badges">
+              <span class="badge badge-premium">Premium</span>
+              <span class="badge badge-fresh">Ultra Fresco</span>
+            </div>
+            <div class="product-actions">
+              <button class="action-btn" data-tooltip="Agregar a favoritos">
+                <i class="fas fa-heart"></i>
+              </button>
+              <button class="action-btn" data-tooltip="Vista rápida">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3 class="product-title">Sashimi Premium</h3>
+          <p class="product-description">
+            Pescado de la más alta calidad, cortado por maestros sushimen. 
+            La pureza del sabor del mar en cada bocado.
+          </p>
+          <div class="product-footer">
+            <div class="product-price">$18.990</div>
+            <button class="btn-primary btn-sm ripple-effect" data-product-id="sashimi-premium">
+              <i class="fas fa-plus"></i>
+              Agregar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Llamada a la acción -->
+    <div class="cta-section fade-in-up" style="margin-top: 4rem;">
+      <div class="cta-content glass-effect">
+        <h3 class="cta-title">¿Listo para una experiencia única?</h3>
+        <p class="cta-description">
+          Descubre todos nuestros platos y encuentra tu nuevo favorito
+        </p>
+        <a href="{{ url_for('carta') }}" class="btn-primary btn-lg ripple-effect">
+          <i class="fas fa-utensils"></i>
+          Ver Menú Completo
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}

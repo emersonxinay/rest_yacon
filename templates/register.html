@@ -1,33 +1,534 @@
-{% extends 'base.html' %} {% block title %}Registrarse{% endblock %} {% block
-content %}
-<h1 class="text-3xl font-bold mb-4">Registrarse</h1>
-<form method="POST" action="{{ url_for('register') }}">
-  <div class="mb-4">
-    <label for="username" class="block text-sm font-medium text-gray-700"
-      >Nombre de usuario</label
-    >
-    <input
-      type="text"
-      name="username"
-      id="username"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
+{% extends 'base.html' %} 
+{% block title %}Crear Cuenta - Yacon Restaurant{% endblock %}
+{% block description %}Crea tu cuenta en Yacon Restaurant y disfruta de beneficios exclusivos, pedidos rápidos y experiencias personalizadas{% endblock %}
+
+{% block content %}
+<!-- Sección de Registro Moderna -->
+<section class="section-modern" style="min-height: 85vh; display: flex; align-items: center;">
+  <div class="container">
+    <div class="register-container fade-in-up">
+      
+      <!-- Header de Registro -->
+      <div class="register-header">
+        <div class="register-icon">
+          <i class="fas fa-user-plus"></i>
+        </div>
+        <h1 class="section-title">
+          Únete a <span class="text-gradient">Yacon</span>
+        </h1>
+        <p class="register-subtitle">
+          Crea tu cuenta y accede a beneficios exclusivos, pedidos rápidos y una experiencia gastronómica personalizada.
+        </p>
+      </div>
+
+      <!-- Formulario Moderno -->
+      <div class="form-modern">
+        <form method="POST" action="{{ url_for('register') }}" class="register-form" id="registerForm">
+          
+          <!-- Campo Nombre Completo -->
+          <div class="input-group">
+            <label for="full_name" class="input-label">
+              <i class="fas fa-user"></i>
+              Nombre Completo
+            </label>
+            <input
+              type="text"
+              name="full_name"
+              id="full_name"
+              class="input-modern"
+              placeholder="Ingresa tu nombre completo"
+              required
+            />
+            <div class="input-highlight"></div>
+          </div>
+
+          <!-- Campo Email -->
+          <div class="input-group">
+            <label for="email" class="input-label">
+              <i class="fas fa-envelope"></i>
+              Correo Electrónico
+            </label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="input-modern"
+              placeholder="tu@email.com"
+              required
+            />
+            <div class="input-highlight"></div>
+          </div>
+
+          <!-- Campo Usuario -->
+          <div class="input-group">
+            <label for="username" class="input-label">
+              <i class="fas fa-at"></i>
+              Nombre de Usuario
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="input-modern"
+              placeholder="Elige un nombre de usuario único"
+              required
+              minlength="3"
+            />
+            <div class="input-highlight"></div>
+            <small class="input-help">Mínimo 3 caracteres, solo letras y números</small>
+          </div>
+
+          <!-- Campo Teléfono -->
+          <div class="input-group">
+            <label for="phone" class="input-label">
+              <i class="fas fa-phone"></i>
+              Teléfono (Opcional)
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              id="phone"
+              class="input-modern"
+              placeholder="+56 9 1234 5678"
+            />
+            <div class="input-highlight"></div>
+          </div>
+
+          <!-- Campo Contraseña -->
+          <div class="input-group">
+            <label for="password" class="input-label">
+              <i class="fas fa-lock"></i>
+              Contraseña
+            </label>
+            <div class="password-field">
+              <input
+                type="password"
+                name="password"
+                id="password"
+                class="input-modern"
+                placeholder="Mínimo 8 caracteres"
+                required
+                minlength="8"
+              />
+              <button type="button" class="password-toggle" onclick="togglePasswordRegister('password', 'password-icon')">
+                <i class="fas fa-eye" id="password-icon"></i>
+              </button>
+            </div>
+            <div class="input-highlight"></div>
+            <div class="password-strength">
+              <div class="strength-bar">
+                <div class="strength-fill" id="strength-fill"></div>
+              </div>
+              <small class="strength-text" id="strength-text">Ingresa una contraseña</small>
+            </div>
+          </div>
+
+          <!-- Confirmar Contraseña -->
+          <div class="input-group">
+            <label for="confirm_password" class="input-label">
+              <i class="fas fa-lock"></i>
+              Confirmar Contraseña
+            </label>
+            <div class="password-field">
+              <input
+                type="password"
+                name="confirm_password"
+                id="confirm_password"
+                class="input-modern"
+                placeholder="Repite tu contraseña"
+                required
+              />
+              <button type="button" class="password-toggle" onclick="togglePasswordRegister('confirm_password', 'confirm-password-icon')">
+                <i class="fas fa-eye" id="confirm-password-icon"></i>
+              </button>
+            </div>
+            <div class="input-highlight"></div>
+            <small class="password-match" id="password-match"></small>
+          </div>
+
+          <!-- Términos y Condiciones -->
+          <div class="checkbox-group">
+            <label class="checkbox-modern">
+              <input type="checkbox" name="accept_terms" required>
+              <span class="checkmark"></span>
+              <span class="checkbox-text">
+                Acepto los <a href="#" class="terms-link">términos y condiciones</a> 
+                y la <a href="#" class="terms-link">política de privacidad</a>
+              </span>
+            </label>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="checkbox-group">
+            <label class="checkbox-modern">
+              <input type="checkbox" name="newsletter" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-text">
+                Quiero recibir ofertas especiales y novedades por email
+              </span>
+            </label>
+          </div>
+
+          <!-- Botón de Registro -->
+          <button type="submit" class="btn-primary btn-register ripple-effect">
+            <i class="fas fa-user-plus"></i>
+            Crear Mi Cuenta
+          </button>
+
+          <!-- Separador -->
+          <div class="register-divider">
+            <span>¿Ya tienes cuenta?</span>
+          </div>
+
+          <!-- Link de Login -->
+          <a href="{{ url_for('login') }}" class="btn-secondary btn-login-link ripple-effect">
+            <i class="fas fa-sign-in-alt"></i>
+            Iniciar Sesión
+          </a>
+
+        </form>
+      </div>
+
+      <!-- Beneficios -->
+      <div class="register-benefits">
+        <h3>¿Por qué crear una cuenta?</h3>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <i class="fas fa-shipping-fast"></i>
+            <span>Pedidos más rápidos</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-heart"></i>
+            <span>Favoritos guardados</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-gift"></i>
+            <span>Ofertas exclusivas</span>
+          </div>
+          <div class="benefit-item">
+            <i class="fas fa-history"></i>
+            <span>Historial de pedidos</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <div class="mb-4">
-    <label for="password" class="block text-sm font-medium text-gray-700"
-      >Contraseña</label
-    >
-    <input
-      type="password"
-      name="password"
-      id="password"
-      class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-    />
-  </div>
-  <div class="mb-4">
-    <button type="submit" class="w-full bg-green-500 text-white p-2 rounded">
-      Registrarse
-    </button>
-  </div>
-</form>
+</section>
+
+<style>
+/* Estilos específicos para Registro */
+.register-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: var(--space-2xl);
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.register-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto var(--space-lg);
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 2rem;
+  box-shadow: var(--shadow-lg);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.register-subtitle {
+  color: var(--gray-600);
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.input-help {
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.password-strength {
+  margin-top: 0.5rem;
+}
+
+.strength-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.strength-text {
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.password-match {
+  color: var(--gray-500);
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.password-match.match {
+  color: #22c55e;
+}
+
+.password-match.no-match {
+  color: #ef4444;
+}
+
+.terms-link {
+  color: var(--gray-700);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--transition-normal);
+}
+
+.terms-link:hover {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-register, .btn-login-link {
+  width: 100%;
+  justify-content: center;
+  padding: var(--space-lg) var(--space-xl);
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.btn-login-link {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  color: var(--gray-700);
+  border: 2px solid rgba(255, 107, 107, 0.2);
+}
+
+.btn-login-link:hover {
+  background: rgba(255, 107, 107, 0.1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.register-divider {
+  text-align: center;
+  margin: var(--space-lg) 0;
+  position: relative;
+}
+
+.register-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--gray-300);
+}
+
+.register-divider span {
+  background: white;
+  padding: 0 var(--space-md);
+  color: var(--gray-500);
+  font-size: 0.875rem;
+}
+
+.register-benefits {
+  margin-top: var(--space-2xl);
+  text-align: center;
+}
+
+.register-benefits h3 {
+  color: var(--gray-700);
+  margin-bottom: var(--space-lg);
+  font-size: 1.125rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+}
+
+.benefit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 107, 107, 0.1);
+  transition: all var(--transition-normal);
+}
+
+.benefit-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: rgba(255, 107, 107, 0.05);
+}
+
+.benefit-item i {
+  font-size: 1.5rem;
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.benefit-item span {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    padding: var(--space-lg);
+  }
+  
+  .register-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+function togglePasswordRegister(fieldId, iconId) {
+  const passwordField = document.getElementById(fieldId);
+  const passwordIcon = document.getElementById(iconId);
+  
+  if (passwordField.type === 'password') {
+    passwordField.type = 'text';
+    passwordIcon.className = 'fas fa-eye-slash';
+  } else {
+    passwordField.type = 'password';
+    passwordIcon.className = 'fas fa-eye';
+  }
+}
+
+// Validación de fuerza de contraseña
+document.getElementById('password').addEventListener('input', function() {
+  const password = this.value;
+  const strengthFill = document.getElementById('strength-fill');
+  const strengthText = document.getElementById('strength-text');
+  
+  let strength = 0;
+  let text = '';
+  let color = '';
+  
+  if (password.length >= 8) strength++;
+  if (/[a-z]/.test(password)) strength++;
+  if (/[A-Z]/.test(password)) strength++;
+  if (/[0-9]/.test(password)) strength++;
+  if (/[^A-Za-z0-9]/.test(password)) strength++;
+  
+  switch (strength) {
+    case 0:
+    case 1:
+      text = 'Muy débil';
+      color = '#ef4444';
+      break;
+    case 2:
+      text = 'Débil';
+      color = '#f59e0b';
+      break;
+    case 3:
+      text = 'Regular';
+      color = '#eab308';
+      break;
+    case 4:
+      text = 'Fuerte';
+      color = '#22c55e';
+      break;
+    case 5:
+      text = 'Muy fuerte';
+      color = '#16a34a';
+      break;
+  }
+  
+  strengthFill.style.width = (strength * 20) + '%';
+  strengthFill.style.background = color;
+  strengthText.textContent = text;
+  strengthText.style.color = color;
+});
+
+// Validación de coincidencia de contraseñas
+document.getElementById('confirm_password').addEventListener('input', function() {
+  const password = document.getElementById('password').value;
+  const confirmPassword = this.value;
+  const matchText = document.getElementById('password-match');
+  
+  if (confirmPassword === '') {
+    matchText.textContent = '';
+    matchText.className = 'password-match';
+  } else if (password === confirmPassword) {
+    matchText.textContent = '✓ Las contraseñas coinciden';
+    matchText.className = 'password-match match';
+  } else {
+    matchText.textContent = '✗ Las contraseñas no coinciden';
+    matchText.className = 'password-match no-match';
+  }
+});
+
+// Validación del formulario
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirm_password').value;
+  
+  if (password !== confirmPassword) {
+    e.preventDefault();
+    alert('Las contraseñas no coinciden');
+    return;
+  }
+  
+  if (password.length < 8) {
+    e.preventDefault();
+    alert('La contraseña debe tener al menos 8 caracteres');
+    return;
+  }
+});
+</script>
+
 {% endblock %}

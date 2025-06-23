@@ -1,73 +1,451 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
-<nav class="nav1 bg-dark-600 text-white shadow p-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <!-- Sección de redes sociales izquierda -->
-    <div class="flex space-x-4">
-      <a href="tel:322111300" target="_blank" rel="noopener noreferrer" class="text-white">
+<!-- Barra superior con contacto -->
+<nav class="contact-bar">
+  <div class="container">
+    <div class="contact-links">
+      <a href="tel:322111300" class="contact-link fade-in-up" data-tooltip="Llámanos">
         <i class="fas fa-phone-alt"></i>
+        <span class="contact-text">322 111 300</span>
       </a>
-      <a href="https://wa.me/56975452897" target="_blank" rel="noopener noreferrer" class="text-white">
+      <a href="https://wa.me/56975452897" class="contact-link fade-in-up" data-tooltip="WhatsApp">
         <i class="fab fa-whatsapp"></i>
+        <span class="contact-text">WhatsApp</span>
       </a>
     </div>
-
-    <!-- Sección de redes sociales derecha -->
-    <div class="flex space-x-4">
-      <a href="https://www.facebook.com/profile.php?id=61559189617150" target="_blank" rel="noopener noreferrer"
-        class="text-white">
+    
+    <div class="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61559189617150" 
+         class="social-link fade-in-up" 
+         data-tooltip="Síguenos en Facebook">
         <i class="fab fa-facebook"></i>
       </a>
-      <a href="https://www.instagram.com/yaconsushi/" target="_blank" rel="noopener noreferrer" class="text-white">
+      <a href="https://www.instagram.com/yaconsushi/" 
+         class="social-link fade-in-up" 
+         data-tooltip="Síguenos en Instagram">
         <i class="fab fa-instagram"></i>
       </a>
     </div>
   </div>
 </nav>
 
-<nav id="mainNav" class="bg-dark-600 text-white shadow p-4">
-  <div class="container mx-auto flex justify-between items-center">
-    <a href="{{ url_for('home') }}" class="text-2xl font-bold logo_nav"> <img
-        src="{{url_for('static', filename='img/logofavicon.png')}}" class="img-with-shadow" alt=""> </a>
-    <div class="hidden md:flex space-x-4">
-      <a href="{{ url_for('home') }}" class="nav-link">Home</a>
-      <a href="{{ url_for('nosotros') }}" class="nav-link">Nosotros</a>
-      <a href="{{ url_for('carta') }}" class="nav-link">Carta</a>
-      <a href="{{ url_for('promociones') }}" class="nav-link">Promociones</a>
-    </div>
-    <div class="hidden md:flex space-x-2">
-      {% if current_user.is_authenticated %} {% if current_user.is_admin %}
-      <a href="{{ url_for('manage_products') }}" class="nav-link">Gestionar Productos</a>
-      <a href="{{ url_for('manage_categories') }}" class="nav-link">Gestionar Categorías</a>
-      {% endif %}
-      <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
-      {% else %}
-      <a href="{{ url_for('login') }}" class="nav-link">Login</a>
-      {% endif %}
-    </div>
-    <div class="md:hidden">
-      <button id="menuButton" class="text-white focus:outline-none">
-        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+<!-- Navegación principal moderna -->
+<nav id="mainNav" class="navbar-modern">
+  <div class="container">
+    <div class="nav-container">
+      <!-- Logo -->
+      <a href="{{ url_for('home') }}" class="nav-brand scale-in">
+        <img src="{{url_for('static', filename='img/logofavicon.png')}}" 
+             alt="Yacon Restaurant" 
+             class="brand-logo">
+        <span class="brand-text">Yacon</span>
+      </a>
+
+      <!-- Links de navegación -->
+      <div class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a href="{{ url_for('home') }}" class="nav-link ripple-effect">
+            <i class="fas fa-home"></i>Inicio</a></li>
+          <li><a href="{{ url_for('nosotros') }}" class="nav-link ripple-effect">
+            <i class="fas fa-users"></i>Nosotros</a></li>
+          <li><a href="{{ url_for('carta') }}" class="nav-link ripple-effect">
+            <i class="fas fa-utensils"></i>Carta</a></li>
+          <li><a href="{{ url_for('promociones') }}" class="nav-link ripple-effect">
+            <i class="fas fa-star"></i>Promociones</a></li>
+          
+          {% if current_user.is_authenticated %}
+            <li><a href="{{ url_for('reserve') }}" class="nav-link ripple-effect">
+              <i class="fas fa-calendar"></i>Reservar</a></li>
+            
+            {% if current_user.is_admin %}
+              <li class="nav-dropdown">
+                <a href="#" class="nav-link dropdown-toggle">
+                  <i class="fas fa-cog"></i>Admin<i class="fas fa-chevron-down"></i>
+                </a>
+                <ul class="dropdown-menu glass-effect">
+                  <li><a href="{{ url_for('manage_products') }}" class="dropdown-link">
+                    <i class="fas fa-box"></i>Productos</a></li>
+                  <li><a href="{{ url_for('manage_categories') }}" class="dropdown-link">
+                    <i class="fas fa-tags"></i>Categorías</a></li>
+                  <li><a href="{{ url_for('reservations') }}" class="dropdown-link">
+                    <i class="fas fa-list"></i>Reservas</a></li>
+                </ul>
+              </li>
+            {% endif %}
+            
+            <li><a href="{{ url_for('logout') }}" class="nav-link btn-secondary">
+              <i class="fas fa-sign-out-alt"></i>Salir</a></li>
+          {% else %}
+            <li><a href="{{ url_for('login') }}" class="nav-link btn-primary">
+              <i class="fas fa-sign-in-alt"></i>Ingresar</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Botón menú móvil -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menú">
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
       </button>
     </div>
   </div>
-  <div id="mobileMenu" class="hidden md:hidden">
-    <a href="{{ url_for('home') }}" class="nav-link block">Home</a>
-    <a href="{{ url_for('nosotros') }}" class="nav-link block">Nosotros</a>
-    <a href="{{ url_for('carta') }}" class="nav-link block">Carta</a>
-    <a href="{{ url_for('promociones') }}" class="nav-link block">Promociones</a>
-    {% if current_user.is_authenticated %} {% if current_user.is_admin %}
-    <a href="{{ url_for('manage_products') }}" class="nav-link block">Gestionar Productos</a>
-    <a href="{{ url_for('manage_categories') }}" class="nav-link block">Gestionar Categorías</a>
-    {% endif %}
-    <a href="{{ url_for('logout') }}" class="nav-link block">Logout</a>
-    {% else %}
-    <a href="{{ url_for('login') }}" class="nav-link block">Login</a>
-    {% endif %}
-  </div>
+
+  <!-- Overlay móvil -->
+  <div class="mobile-overlay" id="mobileOverlay"></div>
 </nav>
+
+<style>
+/* Barra de contacto */
+.contact-bar {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-bar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.contact-links, .social-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--gray-700);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-normal);
+  padding: 0.5rem;
+  border-radius: var(--radius-md);
+}
+
+.contact-link:hover {
+  color: var(--white);
+  background: rgba(255, 107, 107, 0.2);
+  transform: translateY(-1px);
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--gray-700);
+  text-decoration: none;
+  border-radius: 50%;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-gradient);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.social-link:hover::before {
+  opacity: 1;
+}
+
+.social-link:hover {
+  color: var(--white);
+  transform: translateY(-2px) scale(1.1);
+}
+
+.social-link i {
+  position: relative;
+  z-index: 1;
+}
+
+/* Navegación principal moderna */
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.brand-logo {
+  width: 3rem;
+  height: 2rem;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(255, 107, 107, 0.3));
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.5rem;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: var(--gray-700);
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-normal);
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.nav-link i {
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Dropdown */
+.nav-dropdown {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  margin-left: 0.5rem;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  padding: 0.5rem;
+  box-shadow: var(--shadow-xl);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--transition-normal);
+  z-index: 100;
+  list-style: none;
+  margin: 0.5rem 0 0 0;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: var(--gray-700);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal);
+  font-size: 0.9rem;
+}
+
+.dropdown-link:hover {
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--gray-800);
+  transform: translateX(4px);
+}
+
+/* Menú móvil */
+.mobile-menu-btn {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.menu-line {
+  width: 24px;
+  height: 2px;
+  background: var(--gray-700);
+  border-radius: 2px;
+  transition: all var(--transition-normal);
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(1) {
+  transform: rotate(45deg) translate(6px, 6px);
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-menu-btn.active .menu-line:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-text {
+    display: none;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 6rem 2rem 2rem;
+    transition: right var(--transition-normal);
+    z-index: 1000;
+  }
+  
+  .nav-menu.active {
+    right: 0;
+  }
+  
+  .mobile-overlay.active {
+    display: block;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .nav-link {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+  }
+  
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0.5rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-bar .container {
+    padding: 0 0.5rem;
+  }
+  
+  .contact-links {
+    gap: 0.5rem;
+  }
+  
+  .social-links {
+    gap: 0.25rem;
+  }
+  
+  .social-link {
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.875rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const navMenu = document.getElementById('navMenu');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  const navLinks = document.querySelectorAll('.nav-link');
+  
+  // Toggle menú móvil
+  mobileMenuBtn?.addEventListener('click', function() {
+    mobileMenuBtn.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    mobileOverlay.classList.toggle('active');
+    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+  });
+  
+  // Cerrar menú al hacer click en overlay
+  mobileOverlay?.addEventListener('click', function() {
+    mobileMenuBtn.classList.remove('active');
+    navMenu.classList.remove('active');
+    mobileOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+  
+  // Cerrar menú al hacer click en un link (móvil)
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      if (window.innerWidth <= 768) {
+        mobileMenuBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+  
+  // Marcar link activo
+  const currentPath = window.location.pathname;
+  navLinks.forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('active');
+    }
+  });
+});
+</script>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {

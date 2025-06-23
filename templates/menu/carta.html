@@ -1,17 +1,411 @@
-{% extends 'base.html' %} {% block title %}Yacon | Carta{% endblock %} {% block
-content %}
-<div class="p-4 sm:p-8">
+{% extends 'base.html' %} 
+{% block title %}Yacon | Carta{% endblock %}
+{% block description %}Descubre nuestra carta completa con sushi fresco, comida peruana auténtica y fusión nikkei. Los mejores sabores en Yacon Restaurant.{% endblock %}
 
-  <h1 class="text-4xl font-extrabold mb-6 text-center text-white">
-    Bienvenido al Menú de YaconSushi
-  </h1>
-  <p class="mb-6 text-lg text-center text-white-300">
-    Disfruta de nuestros deliciosos platos de sushi y comida peruana.
-  </p>
-  <a href="https://drive.google.com/file/d/1jbQ_UAmjT_ostAyKimOgqapBaFvhs8dy/view" target="_blank"
-    class="inline-block text-center mb-6 px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-blue-700 transition duration-300">
-    Ver Menú en PDF
-  </a>
-  <h2 class="text-3xl font-semibold mb-6 text-white-300">Nuestros Productos</h2>
+{% block content %}
+<!-- Header de la Carta -->
+<section class="section-modern" style="padding-top: 2rem;">
+  <div class="container">
+    <div class="carta-header fade-in-up">
+      <h1 class="section-title">
+        Nuestra <span class="text-gradient">Carta</span>
+      </h1>
+      <p class="carta-subtitle fade-in-up" style="animation-delay: 0.3s;">
+        Descubre la perfecta fusión entre la tradición peruana y el arte japonés. 
+        Cada plato es una experiencia única creada por nuestros chefs expertos.
+      </p>
+      
+      <div class="carta-actions fade-in-up" style="animation-delay: 0.6s;">
+        <a href="https://drive.google.com/file/d/1jbQ_UAmjT_ostAyKimOgqapBaFvhs8dy/view" 
+           target="_blank" 
+           class="btn-primary ripple-effect">
+          <i class="fas fa-file-pdf"></i>
+          Ver Menú Completo (PDF)
+        </a>
+        <button class="btn-secondary ripple-effect" onclick="scrollToProducts()">
+          <i class="fas fa-utensils"></i>
+          Explorar Productos
+        </button>
+      </div>
+      
+      <!-- Estadísticas de la carta -->
+      <div class="carta-stats fade-in-up" style="animation-delay: 0.9s;">
+        <div class="stat-item">
+          <div class="stat-number" data-count="{{ products_by_category.values() | list | length }}">0</div>
+          <div class="stat-label">Categorías</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="50">0</div>
+          <div class="stat-label">Platos Únicos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number" data-count="5">0</div>
+          <div class="stat-label">Años de Experiencia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filtros de categorías -->
+<section class="filters-section">
+  <div class="container">
+    <div class="category-filters fade-in-up">
+      <button class="filter-btn active" data-category="all">
+        <i class="fas fa-th-large"></i>
+        Todos
+      </button>
+      {% for category_name in products_by_category.keys() %}
+      <button class="filter-btn" data-category="{{ category_name|lower|replace(' ', '-') }}">
+        <i class="fas fa-{{ 'fish' if 'sushi' in category_name.lower() or 'sashimi' in category_name.lower() else 'pepper-hot' if 'tempura' in category_name.lower() else 'star' if 'promociones' in category_name.lower() else 'utensils' }}"></i>
+        {{ category_name }}
+      </button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Productos por categorías -->
+<section class="section-modern" id="productos">
+  <div class="container">
+    {% for category_name, products in products_by_category.items() %}
+    <div class="category-section fade-in-up" data-category="{{ category_name|lower|replace(' ', '-') }}">
+      <h3 class="category-title">
+        <span class="category-icon">
+          <i class="fas fa-{{ 'fish' if 'sushi' in category_name.lower() or 'sashimi' in category_name.lower() else 'pepper-hot' if 'tempura' in category_name.lower() else 'star' if 'promociones' in category_name.lower() else 'utensils' }}"></i>
+        </span>
+        {{ category_name }}
+        <span class="category-count">({{ products|length }} platos)</span>
+      </h3>
+      
+      <div class="products-grid">
+        {% for product in products %}
+        <div class="product-card magnetic-card floating-card fade-in-up stagger-animation" 
+             data-product-name="{{ product.name }}" 
+             data-product-description="{{ product.description }}"
+             data-category="{{ category_name|lower|replace(' ', '-') }}">
+          
+          <div class="product-image-container">
+            <!-- Imagen por defecto según categoría -->
+            {% if 'sushi' in category_name.lower() %}
+              {% set default_img = 'cevicheroll-yacon.jpg' %}
+            {% elif 'sashimi' in category_name.lower() %}
+              {% set default_img = 'sashimi.jpg' %}
+            {% elif 'tempura' in category_name.lower() %}
+              {% set default_img = 'tempuras.jpg' %}
+            {% elif 'promociones' in category_name.lower() %}
+              {% set default_img = '40piezas.jpg' %}
+            {% else %}
+              {% set default_img = 'aji_de_gallina.jpg' %}
+            {% endif %}
+            
+            <img src="{{ url_for('static', filename='img/' + default_img) }}"
+                 alt="{{ product.name }}"
+                 class="product-image lazy-load"
+                 data-src="{{ url_for('static', filename='img/' + default_img) }}" />
+            
+            <div class="product-overlay">
+              <div class="product-badges">
+                {% if 'promociones' in category_name.lower() %}
+                  <span class="badge badge-popular">Promoción</span>
+                {% elif 'premium' in product.name.lower() %}
+                  <span class="badge badge-premium">Premium</span>
+                {% elif 'roll' in product.name.lower() %}
+                  <span class="badge badge-fusion">Fusión</span>
+                {% else %}
+                  <span class="badge badge-traditional">Tradicional</span>
+                {% endif %}
+                
+                {% if product.price >= 15000 %}
+                  <span class="badge badge-premium">Premium</span>
+                {% elif product.price <= 8000 %}
+                  <span class="badge badge-comfort">Accesible</span>
+                {% endif %}
+              </div>
+              
+              <div class="product-actions">
+                <button class="action-btn" data-tooltip="Agregar a favoritos">
+                  <i class="fas fa-heart"></i>
+                </button>
+                <button class="action-btn" data-tooltip="Vista rápida">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="action-btn" data-tooltip="Compartir">
+                  <i class="fas fa-share"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="product-content">
+            <h4 class="product-title">{{ product.name }}</h4>
+            <p class="product-description">
+              {{ product.description if product.description else 'Delicioso plato preparado con ingredientes frescos y técnicas tradicionales.' }}
+            </p>
+            <div class="product-footer">
+              <div class="product-price">${{ "{:,.0f}".format(product.price) }}</div>
+              <button class="btn-primary btn-sm ripple-effect add-to-order" 
+                      data-product-id="{{ product.id }}"
+                      data-product-name="{{ product.name }}"
+                      data-product-price="{{ product.price }}">
+                <i class="fas fa-plus"></i>
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Resumen del pedido flotante -->
+<div id="order-summary" class="order-summary-float glass-effect">
+  <div class="order-header">
+    <h3><i class="fas fa-shopping-cart"></i> Tu Pedido</h3>
+    <button class="order-toggle" onclick="toggleOrderSummary()">
+      <i class="fas fa-chevron-up"></i>
+    </button>
+  </div>
+  <div class="order-content">
+    <p class="empty-order">No hay productos en tu pedido</p>
+  </div>
 </div>
-{% include "./menu/formulario_productos.html" %} {% endblock %}
+
+<style>
+.carta-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-2xl) 0;
+}
+
+.carta-subtitle {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  line-height: 1.7;
+  margin-bottom: var(--space-2xl);
+}
+
+.carta-actions {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--space-2xl);
+}
+
+.carta-stats {
+  display: flex;
+  gap: var(--space-xl);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-2xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filters-section {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: var(--space-lg) 0;
+  margin-bottom: var(--space-2xl);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.category-filters {
+  display: flex;
+  gap: var(--space-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  color: var(--gray-700);
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-gradient);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.category-section {
+  margin-bottom: var(--space-3xl);
+}
+
+.category-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  background: var(--primary-gradient);
+  border-radius: 50%;
+  color: var(--white);
+  font-size: 1.25rem;
+}
+
+.category-count {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--gray-500);
+  margin-left: auto;
+}
+
+.order-summary-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  max-height: 400px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-xl);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-2xl);
+  transform: translateY(calc(100% - 60px));
+  transition: transform var(--transition-normal);
+  z-index: 100;
+}
+
+.order-summary-float.expanded {
+  transform: translateY(0);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+  cursor: pointer;
+}
+
+.order-toggle {
+  background: none;
+  border: none;
+  color: var(--gray-700);
+  font-size: 1.25rem;
+  transition: transform var(--transition-normal);
+}
+
+.order-summary-float.expanded .order-toggle {
+  transform: rotate(180deg);
+}
+
+.order-content {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.empty-order {
+  text-align: center;
+  color: var(--gray-500);
+  font-style: italic;
+  padding: var(--space-lg) 0;
+}
+
+@media (max-width: 768px) {
+  .carta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .carta-stats {
+    gap: var(--space-md);
+  }
+  
+  .category-filters {
+    gap: var(--space-xs);
+  }
+  
+  .filter-btn {
+    font-size: 0.75rem;
+    padding: var(--space-xs) var(--space-sm);
+  }
+  
+  .category-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+  
+  .order-summary-float {
+    width: calc(100vw - 40px);
+    right: 20px;
+    left: 20px;
+  }
+}
+</style>
+
+<script>
+function scrollToProducts() {
+  document.getElementById('productos').scrollIntoView({
+    behavior: 'smooth'
+  });
+}
+
+function toggleOrderSummary() {
+  document.querySelector('.order-summary-float').classList.toggle('expanded');
+}
+
+// Filtros de categorías
+document.addEventListener('DOMContentLoaded', function() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const categorySection = document.querySelectorAll('.category-section');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Remover clase activa
+      filterBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      
+      const category = this.dataset.category;
+      
+      // Mostrar/ocultar categorías
+      categorySection.forEach(section => {
+        if (category === 'all' || section.dataset.category === category) {
+          section.style.display = 'block';
+          section.classList.add('fade-in-up');
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+{% endblock %}

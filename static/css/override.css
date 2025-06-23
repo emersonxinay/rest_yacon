@@ -1,0 +1,273 @@
+/* ========================================
+   OVERRIDE CSS - MÁXIMA PRIORIDAD
+   Estilos que deben sobrescribir Tailwind
+======================================== */
+
+/* Reset de Tailwind y aplicación de nuestro diseño */
+* {
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Desactivar fondos conflictivos de modern-styles.css */
+body::before {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Optimización de body y contenedores principales */
+body, 
+.gradiente-fondo {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  background: #ffffff !important;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(255, 107, 107, 0.02) 0%, transparent 50%), 
+    radial-gradient(circle at 80% 20%, rgba(255, 142, 83, 0.02) 0%, transparent 50%), 
+    radial-gradient(circle at 40% 80%, rgba(255, 107, 157, 0.02) 0%, transparent 50%) !important;
+  min-height: 100vh !important;
+  position: relative !important;
+  color: #1f2937 !important;
+  overflow-x: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html {
+  height: 100% !important;
+}
+
+/* Body ya está definido arriba con .gradiente-fondo */
+
+/* Contenedores principales */
+.container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 1rem !important;
+}
+
+.main-content {
+  position: relative !important;
+  z-index: 1 !important;
+  min-height: calc(100vh - 200px) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Anulación específica de Tailwind */
+.mx-auto {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.mt-10 {
+  margin-top: 0 !important;
+}
+
+.p-4, .p-6, .p-8 {
+  padding: 0 !important;
+}
+
+.sm\\:p-8 {
+  padding: 0 !important;
+}
+
+/* Forzar aplicación del sistema de colores */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
+  margin: 0 0 1rem 0 !important;
+}
+
+.text-white {
+  color: #374151 !important;
+}
+
+.text-gray-700 {
+  color: #4b5563 !important;
+}
+
+/* Botones modernos con máxima prioridad */
+.btn-primary, .bg-blue-500, .bg-orange-500 {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 1rem 2rem !important;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ff6b9d 50%, #c44569 75%, #f8b500 100%) !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  border-radius: 9999px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 1rem !important;
+}
+
+.btn-primary:hover, .bg-blue-500:hover, .bg-orange-500:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04), 0 0 30px rgba(255, 107, 107, 0.3) !important;
+}
+
+/* Asegurar que las animaciones funcionen */
+.fade-in-up {
+  opacity: 0 !important;
+  transform: translateY(30px) !important;
+  transition: all 0.5s ease !important;
+}
+
+.fade-in-up.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Text gradient forzado */
+.text-gradient {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ff6b9d 50%, #c44569 75%, #f8b500 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Section title forzado */
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(2rem, 5vw, 3.5rem) !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  margin-bottom: 3rem !important;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ff6b9d 50%, #c44569 75%, #f8b500 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  position: relative !important;
+}
+
+.section-title::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -10px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 80px !important;
+  height: 4px !important;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ff6b9d 50%, #c44569 75%, #f8b500 100%) !important;
+  border-radius: 9999px !important;
+}
+
+/* Hero section con prioridad máxima */
+.hero-section {
+  min-height: 90vh !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  background-image: 
+    radial-gradient(circle at 30% 40%, rgba(255, 107, 107, 0.08) 0%, transparent 50%), 
+    radial-gradient(circle at 70% 60%, rgba(255, 142, 83, 0.08) 0%, transparent 50%) !important;
+  padding: 2rem !important;
+}
+
+.hero-title {
+  font-family: 'Playfair Display', Georgia, serif !important;
+  font-size: clamp(2.5rem, 8vw, 5rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 1.5rem !important;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ff6b9d 50%, #c44569 75%, #f8b500 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem !important;
+  color: #4b5563 !important;
+  margin-bottom: 3rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Cards de productos con prioridad */
+.products-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+  gap: 2rem !important;
+  padding: 3rem 0 !important;
+  max-width: 1400px !important;
+  margin: 0 auto !important;
+}
+
+.product-card {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 107, 107, 0.2) !important;
+  border-radius: 1.5rem !important;
+  padding: 2rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.product-card:hover {
+  transform: translateY(-10px) scale(1.02) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Asegurar que las variables CSS se apliquen */
+:root {
+  --primary-gradient: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 25%, #ff6b9d 50%, #c44569 75%, #f8b500 100%);
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --white: #ffffff;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+}
+
+/* Responsive específico */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem !important;
+  }
+  
+  .container {
+    padding: 0 0.5rem !important;
+  }
+}
+
+/* Forzar que las clases Tailwind no interfieran */
+.text-4xl { font-size: clamp(2rem, 5vw, 3.5rem) !important; }
+.text-3xl { font-size: clamp(1.5rem, 4vw, 2rem) !important; }
+.text-2xl { font-size: clamp(1.25rem, 3vw, 1.5rem) !important; }
+.text-lg { font-size: 1.125rem !important; }
+.text-center { text-align: center !important; }
+.font-bold, .font-extrabold { font-weight: 700 !important; }
+.mb-6 { margin-bottom: 1.5rem !important; }
+.mb-4 { margin-bottom: 1rem !important; }
+.mb-8 { margin-bottom: 2rem !important; }
