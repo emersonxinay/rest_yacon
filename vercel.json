@@ -8,6 +8,14 @@
     }
   ],
   "env": {
-    "FLASK_ENV": "production"
+    "FLASK_ENV": "production",
+    "SECRET_KEY": "@secret_key",
+    "DATABASE_URL": "@database_url",
+    "SECURITY_PASSWORD_SALT": "@security_password_salt"
+  },
+  "functions": {
+    "app.py": {
+      "maxDuration": 10
+    }
   }
 }

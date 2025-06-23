@@ -1,4 +1,6 @@
 import datetime
+import logging
+import os
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
@@ -6,12 +8,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import qrcode
 from io import BytesIO
 import base64
+from config import Config
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Configuración de la aplicación Flask
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key_here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.from_object(Config)
 
 # Configuración de SQLAlchemy y LoginManager
 db = SQLAlchemy(app)
@@ -106,11 +111,16 @@ def load_user(user_id):
 # Definición de rutas y vistas
 @app.route('/')
 def home():
-    categories = Category.query.all()
-    products_by_category = {
-        category.name: category.products for category in categories}
-    print("Products by Category:", products_by_category)  # Debugging line
-    return render_template('home.html', products_by_category=products_by_category)
+    try:
+        categories = Category.query.all()
+        products_by_category = {
+            category.name: category.products for category in categories}
+        logger.info(f"Loaded {len(categories)} categories for home page")
+        return render_template('home.html', products_by_category=products_by_category)
+    except Exception as e:
+        logger.error(f"Error loading home page: {e}")
+        flash('Error al cargar la página principal.', 'error')
+        return render_template('home.html', products_by_category={})
 
 # ruta nosotros, carta, promociones
 
@@ -122,11 +132,16 @@ def nosotros():
 
 @app.route('/carta')
 def carta():
-    categories = Category.query.all()
-    products_by_category = {
-        category.name: category.products for category in categories}
-    print("Products by Category:", products_by_category)  # Debugging line
-    return render_template('menu/carta.html', products_by_category=products_by_category)
+    try:
+        categories = Category.query.all()
+        products_by_category = {
+            category.name: category.products for category in categories}
+        logger.info(f"Loaded {len(categories)} categories for carta page")
+        return render_template('menu/carta.html', products_by_category=products_by_category)
+    except Exception as e:
+        logger.error(f"Error loading carta page: {e}")
+        flash('Error al cargar la carta.', 'error')
+        return render_template('menu/carta.html', products_by_category={})
 
 
 # Ruta para promociones
