@@ -57,27 +57,27 @@
               class="sr-only quantity-input"
             />
             
-            <!-- Nueva interfaz mejorada -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
+            <!-- Nueva interfaz mejorada responsive -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div class="flex items-center space-x-2 justify-center sm:justify-start">
                 <span class="text-sm font-medium text-gray-700">Cantidad:</span>
                 <div class="flex items-center border rounded-lg">
                   <button
                     type="button"
-                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn minus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', -1)"
                   >
                     -
                   </button>
                   <span
                     id="display_quantity_{{ product.id }}"
-                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                    class="px-3 py-2 font-medium min-w-[2rem] text-center select-none"
                   >
                     1
                   </span>
                   <button
                     type="button"
-                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn plus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', 1)"
                   >
                     +
@@ -87,14 +87,14 @@
               
               <button
                 type="button"
-                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 touch-manipulation"
                 onclick="toggleProduct('{{ product.id }}')"
                 data-product-id="{{ product.id }}"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                <span>Agregar</span>
+                <span class="whitespace-nowrap">Agregar</span>
               </button>
             </div>
           </div>
@@ -160,27 +160,27 @@
               class="sr-only quantity-input"
             />
             
-            <!-- Nueva interfaz mejorada -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
+            <!-- Nueva interfaz mejorada responsive -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div class="flex items-center space-x-2 justify-center sm:justify-start">
                 <span class="text-sm font-medium text-gray-700">Cantidad:</span>
                 <div class="flex items-center border rounded-lg">
                   <button
                     type="button"
-                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn minus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', -1)"
                   >
                     -
                   </button>
                   <span
                     id="display_quantity_{{ product.id }}"
-                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                    class="px-3 py-2 font-medium min-w-[2rem] text-center select-none"
                   >
                     1
                   </span>
                   <button
                     type="button"
-                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn plus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', 1)"
                   >
                     +
@@ -190,14 +190,14 @@
               
               <button
                 type="button"
-                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 touch-manipulation"
                 onclick="toggleProduct('{{ product.id }}')"
                 data-product-id="{{ product.id }}"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                <span>Agregar</span>
+                <span class="whitespace-nowrap">Agregar</span>
               </button>
             </div>
           </div>
@@ -264,27 +264,27 @@
               class="sr-only quantity-input"
             />
             
-            <!-- Nueva interfaz mejorada -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
+            <!-- Nueva interfaz mejorada responsive -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div class="flex items-center space-x-2 justify-center sm:justify-start">
                 <span class="text-sm font-medium text-gray-700">Cantidad:</span>
                 <div class="flex items-center border rounded-lg">
                   <button
                     type="button"
-                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn minus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', -1)"
                   >
                     -
                   </button>
                   <span
                     id="display_quantity_{{ product.id }}"
-                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                    class="px-3 py-2 font-medium min-w-[2rem] text-center select-none"
                   >
                     1
                   </span>
                   <button
                     type="button"
-                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn plus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', 1)"
                   >
                     +
@@ -294,14 +294,14 @@
               
               <button
                 type="button"
-                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 touch-manipulation"
                 onclick="toggleProduct('{{ product.id }}')"
                 data-product-id="{{ product.id }}"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                <span>Agregar</span>
+                <span class="whitespace-nowrap">Agregar</span>
               </button>
             </div>
           </div>
@@ -366,27 +366,27 @@
               class="sr-only quantity-input"
             />
             
-            <!-- Nueva interfaz mejorada -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-2">
+            <!-- Nueva interfaz mejorada responsive -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div class="flex items-center space-x-2 justify-center sm:justify-start">
                 <span class="text-sm font-medium text-gray-700">Cantidad:</span>
                 <div class="flex items-center border rounded-lg">
                   <button
                     type="button"
-                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn minus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', -1)"
                   >
                     -
                   </button>
                   <span
                     id="display_quantity_{{ product.id }}"
-                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                    class="px-3 py-2 font-medium min-w-[2rem] text-center select-none"
                   >
                     1
                   </span>
                   <button
                     type="button"
-                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    class="qty-btn plus px-3 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors touch-manipulation"
                     onclick="changeQuantity('{{ product.id }}', 1)"
                   >
                     +
@@ -396,14 +396,14 @@
               
               <button
                 type="button"
-                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center justify-center space-x-2 touch-manipulation"
                 onclick="toggleProduct('{{ product.id }}')"
                 data-product-id="{{ product.id }}"
               >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                 </svg>
-                <span>Agregar</span>
+                <span class="whitespace-nowrap">Agregar</span>
               </button>
             </div>
           </div>
