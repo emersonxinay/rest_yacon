@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Crear Producto | Admin - Yacon Restaurant{% endblock %}
+{% block title %}Crear Producto | Admin - Hazuki Restaurant{% endblock %}
 
 {% block content %}
 <div class="max-w-4xl mx-auto">
     <!-- Header -->
     <div class="gradiente-fondo1 text-white p-6 rounded-lg mb-8">
         <h1 class="text-3xl font-bold mb-2">Crear Nuevo Producto</h1>
-        <p class="text-white-200">Añade un nuevo producto al menú del restaurante</p>
+        <p class="text-white-200">Aï¿½ade un nuevo producto al menï¿½ del restaurante</p>
     </div>
 
-    <!-- Botón Volver -->
+    <!-- Botï¿½n Volver -->
     <div class="mb-6">
         <a href="{{ url_for('manage_products') }}" class="inline-flex items-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-md transition duration-200">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -19,7 +19,7 @@
         </a>
     </div>
 
-    <!-- Formulario de Creación -->
+    <!-- Formulario de Creaciï¿½n -->
     <div class="bg-white rounded-lg shadow-md p-8">
         <form method="POST" action="{{ url_for('manage_products') }}" id="create-product-form">
             <div class="space-y-6">
@@ -38,13 +38,13 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Ej: Sushi Roll California"
                     >
-                    <p class="text-xs text-gray-500 mt-1">Máximo 100 caracteres</p>
+                    <p class="text-xs text-gray-500 mt-1">Mï¿½ximo 100 caracteres</p>
                 </div>
 
-                <!-- Descripción -->
+                <!-- Descripciï¿½n -->
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                        Descripción
+                        Descripciï¿½n
                     </label>
                     <textarea
                         id="description"
@@ -52,9 +52,9 @@
                         rows="4"
                         maxlength="500"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        placeholder="Describe el producto, ingredientes, preparación, etc."
+                        placeholder="Describe el producto, ingredientes, preparaciï¿½n, etc."
                     ></textarea>
-                    <p class="text-xs text-gray-500 mt-1">Máximo 500 caracteres</p>
+                    <p class="text-xs text-gray-500 mt-1">Mï¿½ximo 500 caracteres</p>
                 </div>
 
                 <!-- Precio -->
@@ -72,13 +72,13 @@
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="15.99"
                     >
-                    <p class="text-xs text-gray-500 mt-1">Ingrese el precio sin el símbolo $</p>
+                    <p class="text-xs text-gray-500 mt-1">Ingrese el precio sin el sï¿½mbolo $</p>
                 </div>
 
-                <!-- Categoría -->
+                <!-- Categorï¿½a -->
                 <div>
                     <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">
-                        Categoría *
+                        Categorï¿½a *
                     </label>
                     <select
                         id="category_id"
@@ -86,14 +86,14 @@
                         required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
-                        <option value="">Selecciona una categoría</option>
+                        <option value="">Selecciona una categorï¿½a</option>
                         {% for category in categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
                     </select>
                     <p class="text-xs text-gray-500 mt-1">
-                        Si no existe la categoría deseada, 
-                        <a href="{{ url_for('manage_categories') }}" class="text-blue-600 hover:text-blue-800">créala primero</a>
+                        Si no existe la categorï¿½a deseada, 
+                        <a href="{{ url_for('manage_categories') }}" class="text-blue-600 hover:text-blue-800">crï¿½ala primero</a>
                     </p>
                 </div>
 
@@ -149,7 +149,7 @@
 </div>
 
 <script>
-// Validación en tiempo real
+// Validaciï¿½n en tiempo real
 document.getElementById('name').addEventListener('input', function() {
     const maxLength = 100;
     const currentLength = this.value.length;
@@ -160,7 +160,7 @@ document.getElementById('name').addEventListener('input', function() {
         helpText.textContent = `${currentLength}/${maxLength} caracteres`;
         helpText.className = 'text-xs text-yellow-600 mt-1';
     } else {
-        helpText.textContent = 'Máximo 100 caracteres';
+        helpText.textContent = 'Mï¿½ximo 100 caracteres';
         helpText.className = 'text-xs text-gray-500 mt-1';
     }
 });
@@ -175,12 +175,12 @@ document.getElementById('description').addEventListener('input', function() {
         helpText.textContent = `${currentLength}/${maxLength} caracteres`;
         helpText.className = 'text-xs text-yellow-600 mt-1';
     } else {
-        helpText.textContent = 'Máximo 500 caracteres';
+        helpText.textContent = 'Mï¿½ximo 500 caracteres';
         helpText.className = 'text-xs text-gray-500 mt-1';
     }
 });
 
-// Validación del precio
+// Validaciï¿½n del precio
 document.getElementById('price').addEventListener('input', function() {
     const value = parseFloat(this.value);
     const parent = this.parentElement;
@@ -193,7 +193,7 @@ document.getElementById('price').addEventListener('input', function() {
         helpText.textContent = 'El precio parece muy alto, verifique';
         helpText.className = 'text-xs text-yellow-600 mt-1';
     } else {
-        helpText.textContent = 'Ingrese el precio sin el símbolo $';
+        helpText.textContent = 'Ingrese el precio sin el sï¿½mbolo $';
         helpText.className = 'text-xs text-gray-500 mt-1';
     }
 });
@@ -206,7 +206,7 @@ function showPreview() {
     const categoryId = document.getElementById('category_id').value;
     
     if (!name || !price || !categoryId) {
-        alert('Por favor complete los campos obligatorios (nombre, precio y categoría)');
+        alert('Por favor complete los campos obligatorios (nombre, precio y categorï¿½a)');
         return;
     }
     
@@ -217,7 +217,7 @@ function showPreview() {
     const previewOriginalPrice = document.getElementById('preview-original-price');
     
     previewName.textContent = name;
-    previewDescription.textContent = description || 'Sin descripción';
+    previewDescription.textContent = description || 'Sin descripciï¿½n';
     previewPrice.textContent = `$${parseFloat(price).toFixed(2)}`;
     previewOriginalPrice.textContent = `$${(parseFloat(price) * 2).toFixed(2)}`;
     
@@ -227,7 +227,7 @@ function showPreview() {
 
 // Limpiar formulario
 function resetForm() {
-    if (confirm('¿Estás seguro de que quieres limpiar el formulario?')) {
+    if (confirm('ï¿½Estï¿½s seguro de que quieres limpiar el formulario?')) {
         document.getElementById('create-product-form').reset();
         document.getElementById('preview-section').classList.add('hidden');
         
@@ -238,7 +238,7 @@ function resetForm() {
     }
 }
 
-// Validación antes de enviar
+// Validaciï¿½n antes de enviar
 document.getElementById('create-product-form').addEventListener('submit', function(e) {
     const name = document.getElementById('name').value.trim();
     const price = parseFloat(document.getElementById('price').value);
@@ -252,18 +252,18 @@ document.getElementById('create-product-form').addEventListener('submit', functi
     
     if (isNaN(price) || price <= 0) {
         e.preventDefault();
-        alert('El precio debe ser un número válido mayor a 0');
+        alert('El precio debe ser un nï¿½mero vï¿½lido mayor a 0');
         return;
     }
     
     if (!categoryId) {
         e.preventDefault();
-        alert('Debe seleccionar una categoría');
+        alert('Debe seleccionar una categorï¿½a');
         return;
     }
     
-    // Confirmación final
-    if (!confirm('¿Estás seguro de que quieres crear este producto?')) {
+    // Confirmaciï¿½n final
+    if (!confirm('ï¿½Estï¿½s seguro de que quieres crear este producto?')) {
         e.preventDefault();
     }
 });

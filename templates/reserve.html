@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block title %}Reservar - Yacon Restaurant{%
+{% extends 'base.html' %} {% block title %}Reservar - Hazuki Restaurant Restaurant{%
 endblock %} {% block content %}
 <h1 class="text-3xl font-bold mb-4">Reservar Mesa</h1>
 <form method="POST">
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
         maxDate.setDate(today.getDate() + 60);
         
         if (selectedDate < today || selectedDate > maxDate) {
-            YaconApp.showNotification('La fecha debe estar entre hoy y los próximos 60 días', 'error');
+            Hazuki RestaurantApp.showNotification('La fecha debe estar entre hoy y los próximos 60 días', 'error');
             this.value = '';
         }
     });
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
             (hour === 21 && minute <= 30);
         
         if (!isValidTime) {
-            YaconApp.showNotification('Horario disponible: 13:00-17:00 y 18:00-21:30', 'error');
+            Hazuki RestaurantApp.showNotification('Horario disponible: 13:00-17:00 y 18:00-21:30', 'error');
             this.value = '';
         }
     });
@@ -128,16 +128,16 @@ document.addEventListener('DOMContentLoaded', function() {
     peopleInput.addEventListener('change', function() {
         const people = parseInt(this.value);
         if (people < 1 || people > 20) {
-            YaconApp.showNotification('El número de personas debe estar entre 1 y 20', 'error');
+            Hazuki RestaurantApp.showNotification('El número de personas debe estar entre 1 y 20', 'error');
             this.value = '';
         }
     });
     
     // Validación al enviar
     form.addEventListener('submit', function(e) {
-        if (!YaconApp.validateForm(form)) {
+        if (!Hazuki RestaurantApp.validateForm(form)) {
             e.preventDefault();
-            YaconApp.showNotification('Por favor complete todos los campos obligatorios', 'error');
+            Hazuki RestaurantApp.showNotification('Por favor complete todos los campos obligatorios', 'error');
         }
     });
 });

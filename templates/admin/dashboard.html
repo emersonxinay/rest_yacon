@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}Admin Dashboard | Yacon Restaurant{% endblock %}
+{% block title %}Admin Dashboard | Hazuki Restaurant{% endblock %}
 
 {% block content %}
 <div class="min-h-screen bg-gray-50">
     <!-- Header del Dashboard -->
     <div class="gradiente-fondo1 text-white p-6 mb-8">
-        <h1 class="text-3xl font-bold mb-2">Panel de Administración</h1>
-        <p class="text-white-200">Gestiona el contenido del restaurante Yacon</p>
+        <h1 class="text-3xl font-bold mb-2">Panel de Administraciï¿½n</h1>
+        <p class="text-white-200">Gestiona el contenido del restaurante Hazuki Restaurant</p>
     </div>
 
-    <!-- Estadísticas Rápidas -->
+    <!-- Estadï¿½sticas Rï¿½pidas -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <!-- Total de Productos -->
         <div class="bg-white p-6 rounded-lg shadow-md">
@@ -26,11 +26,11 @@
             </div>
         </div>
 
-        <!-- Total de Categorías -->
+        <!-- Total de Categorï¿½as -->
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-gray-600">Total Categorías</p>
+                    <p class="text-sm text-gray-600">Total Categorï¿½as</p>
                     <p class="text-2xl font-bold text-gray-800">{{ categories|length if categories else 0 }}</p>
                 </div>
                 <div class="bg-green-100 p-3 rounded-full">
@@ -72,11 +72,11 @@
         </div>
     </div>
 
-    <!-- Acciones Rápidas -->
+    <!-- Acciones Rï¿½pidas -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        <!-- Gestión de Productos -->
+        <!-- Gestiï¿½n de Productos -->
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-lg font-semibold mb-4 text-gray-800">Gestión de Productos</h3>
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Gestiï¿½n de Productos</h3>
             <div class="space-y-3">
                 <a href="{{ url_for('manage_products') }}" class="block w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-center transition duration-200">
                     Ver Todos los Productos
@@ -87,22 +87,22 @@
             </div>
         </div>
 
-        <!-- Gestión de Categorías -->
+        <!-- Gestiï¿½n de Categorï¿½as -->
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-lg font-semibold mb-4 text-gray-800">Gestión de Categorías</h3>
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Gestiï¿½n de Categorï¿½as</h3>
             <div class="space-y-3">
                 <a href="{{ url_for('manage_categories') }}" class="block w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-center transition duration-200">
-                    Ver Todas las Categorías
+                    Ver Todas las Categorï¿½as
                 </a>
                 <a href="{{ url_for('admin_create_category') }}" class="block w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md text-center transition duration-200">
-                    Crear Nueva Categoría
+                    Crear Nueva Categorï¿½a
                 </a>
             </div>
         </div>
 
-        <!-- Gestión de Reservas -->
+        <!-- Gestiï¿½n de Reservas -->
         <div class="bg-white p-6 rounded-lg shadow-md">
-            <h3 class="text-lg font-semibold mb-4 text-gray-800">Gestión de Reservas</h3>
+            <h3 class="text-lg font-semibold mb-4 text-gray-800">Gestiï¿½n de Reservas</h3>
             <div class="space-y-3">
                 <a href="{{ url_for('reservations') }}" class="block w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md text-center transition duration-200">
                     Ver Todas las Reservas
@@ -123,7 +123,7 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categorï¿½a</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                     </tr>
@@ -137,7 +137,7 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <a href="{{ url_for('edit_product', id=product.id) }}" class="text-blue-600 hover:text-blue-900 mr-4">Editar</a>
                             <form method="POST" action="{{ url_for('delete_product', id=product.id) }}" class="inline">
-                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?')">
+                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('ï¿½Estï¿½s seguro de que quieres eliminar este producto?')">
                                     Eliminar
                                 </button>
                             </form>
@@ -148,7 +148,7 @@
             </table>
         </div>
         {% else %}
-        <p class="text-gray-500 text-center py-8">No hay productos registrados aún.</p>
+        <p class="text-gray-500 text-center py-8">No hay productos registrados aï¿½n.</p>
         {% endif %}
     </div>
 
@@ -191,15 +191,15 @@
             </table>
         </div>
         {% else %}
-        <p class="text-gray-500 text-center py-8">No hay reservas registradas aún.</p>
+        <p class="text-gray-500 text-center py-8">No hay reservas registradas aï¿½n.</p>
         {% endif %}
     </div>
 </div>
 
 <script>
 function exportReservations() {
-    // Implementar funcionalidad de exportación
-    alert('Funcionalidad de exportación en desarrollo');
+    // Implementar funcionalidad de exportaciï¿½n
+    alert('Funcionalidad de exportaciï¿½n en desarrollo');
 }
 </script>
 {% endblock %}

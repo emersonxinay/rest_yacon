@@ -1,4 +1,4 @@
-// Funciones comunes para la aplicación Yacon Restaurant
+// Funciones comunes para la aplicación Hazuki Restaurant
 
 // Configuración de WhatsApp
 const WHATSAPP_CONFIG = {
@@ -189,7 +189,7 @@ function printSummary() {
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Resumen de Pedido - Yacon Restaurant</title>
+            <title>Resumen de Pedido - Hazuki Restaurant</title>
             <style>
                 body { font-family: Arial, sans-serif; margin: 20px; }
                 table { width: 100%; border-collapse: collapse; margin-top: 20px; }
@@ -202,7 +202,7 @@ function printSummary() {
         </head>
         <body>
             <div class="header">
-                <h1>Yacon Restaurant</h1>
+                <h1>Hazuki Restaurant</h1>
                 <h2>Resumen de Pedido</h2>
             </div>
             <div class="date">
@@ -227,7 +227,7 @@ function sendProductSummaryWhatsApp() {
         return;
     }
     
-    let message = '🍣 *Pedido - Yacon Restaurant* 🍣\n\n';
+    let message = '🍣 *Pedido - Hazuki Restaurant* 🍣\n\n';
     let total = 0;
     let totalQuantity = 0;
     
@@ -357,7 +357,7 @@ function handleError(error, userMessage = 'Ha ocurrido un error') {
 }
 
 // Exportar funciones principales para uso global
-window.YaconApp = {
+window.HazukiRestaurantApp = {
     sendWhatsAppMessage,
     showNotification,
     validateForm,

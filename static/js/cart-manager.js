@@ -1,7 +1,7 @@
 // Cart Manager Global - Gestión unificada del carrito
 class CartManager {
     constructor() {
-        this.storageKey = 'yacon_cart_data';
+        this.storageKey = 'hazuki_cart_data';
         this.cartItems = new Map();
         this.cartCount = 0;
         this.loadCartFromStorage();
@@ -347,8 +347,8 @@ class CartManager {
 
     // Función de notificación
     showNotification(message, type = 'info') {
-        if (typeof YaconApp !== 'undefined' && YaconApp.showNotification) {
-            YaconApp.showNotification(message, type);
+        if (typeof HazukiRestaurantApp !== 'undefined' && HazukiRestaurantApp.showNotification) {
+            HazukiRestaurantApp.showNotification(message, type);
         } else {
             console.log(`[${type.toUpperCase()}] ${message}`);
         }
