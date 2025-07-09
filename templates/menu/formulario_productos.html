@@ -21,6 +21,16 @@
         <div class="product-category grid-responsive">
           {% for product in products %}
           <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <!-- Imagen del producto -->
+            <div class="mb-3">
+              <img 
+                src="{% if product.image_url and product.image_url != 'default_product.jpg' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/default_product.jpg') }}{% endif %}" 
+                alt="{{ product.name }}"
+                class="w-full h-32 object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
+            
             <div class="flex justify-between items-start mb-3">
               <div class="flex-1">
                 <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
@@ -124,6 +134,16 @@
         <div class="product-category grid-responsive">
           {% for product in products %}
           <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <!-- Imagen del producto -->
+            <div class="mb-3">
+              <img 
+                src="{% if product.image_url and product.image_url != 'default_product.jpg' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/default_product.jpg') }}{% endif %}" 
+                alt="{{ product.name }}"
+                class="w-full h-32 object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
+            
             <div class="flex justify-between items-start mb-3">
               <div class="flex-1">
                 <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
@@ -228,6 +248,16 @@
         <div class="product-category grid-responsive">
           {% for product in products %}
           <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <!-- Imagen del producto -->
+            <div class="mb-3">
+              <img 
+                src="{% if product.image_url and product.image_url != 'default_product.jpg' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/default_product.jpg') }}{% endif %}" 
+                alt="{{ product.name }}"
+                class="w-full h-32 object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
+            
             <div class="flex justify-between items-start mb-3">
               <div class="flex-1">
                 <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
@@ -330,6 +360,16 @@
         <div class="product-category grid-responsive">
           {% for product in products %}
           <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <!-- Imagen del producto -->
+            <div class="mb-3">
+              <img 
+                src="{% if product.image_url and product.image_url != 'default_product.jpg' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/default_product.jpg') }}{% endif %}" 
+                alt="{{ product.name }}"
+                class="w-full h-32 object-cover rounded-lg"
+                loading="lazy"
+              />
+            </div>
+            
             <div class="flex justify-between items-start mb-3">
               <div class="flex-1">
                 <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
@@ -505,187 +545,13 @@
 </form>
 
 <script>
-// Funcionalidad específica para la carta mejorada
-let cartItems = new Set();
-let cartCount = 0;
-
-// Función de fallback para notificaciones
-function showNotification(message, type = 'info') {
-    if (typeof YaconApp !== 'undefined' && YaconApp.showNotification) {
-        YaconApp.showNotification(message, type);
-    } else {
-        // Fallback simple
-        alert(message);
-    }
-}
-
-// Función para cambiar cantidad
-function changeQuantity(productId, change) {
-    const displayQty = document.getElementById(`display_quantity_${productId}`);
-    const hiddenQty = document.getElementById(`quantity_${productId}`);
-    
-    let currentQty = parseInt(displayQty.textContent);
-    let newQty = currentQty + change;
-    
-    // Validar límites
-    if (newQty < 1) newQty = 1;
-    if (newQty > 10) newQty = 10;
-    
-    // Actualizar display
-    displayQty.textContent = newQty;
-    hiddenQty.value = newQty;
-    
-    // Si el producto ya está agregado, actualizar contador
-    if (cartItems.has(productId)) {
-        updateCartCounter();
-    }
-}
-
-// Función para agregar/quitar producto
-function toggleProduct(productId) {
-    const checkbox = document.getElementById(`product_${productId}`);
-    const button = document.querySelector(`button[data-product-id="${productId}"]`);
-    const card = document.querySelector(`div[data-product-id="${productId}"]`);
-    const buttonText = button.querySelector('span');
-    const buttonIcon = button.querySelector('svg path');
-    
-    if (!checkbox || !button || !card) {
-        console.error('Elementos no encontrados para producto:', productId);
-        return;
-    }
-    
-    if (cartItems.has(productId)) {
-        // Quitar producto
-        cartItems.delete(productId);
-        checkbox.checked = false;
-        
-        // Cambiar apariencia a "Agregar"
-        button.classList.remove('bg-red-500', 'hover:bg-red-600');
-        button.classList.add('bg-blue-500', 'hover:bg-blue-600');
-        buttonText.textContent = 'Agregar';
-        buttonIcon.setAttribute('d', 'M12 6v6m0 0v6m0-6h6m-6 0H6');
-        
-        // Remover estado visual del card
-        card.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-50');
-        card.classList.add('bg-gray-50');
-        
-        showNotification('Producto eliminado del pedido', 'info');
-    } else {
-        // Agregar producto
-        cartItems.add(productId);
-        checkbox.checked = true;
-        
-        // Cambiar apariencia a "Quitar"
-        button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-        button.classList.add('bg-red-500', 'hover:bg-red-600');
-        buttonText.textContent = 'Quitar';
-        buttonIcon.setAttribute('d', 'M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16');
-        
-        // Agregar estado visual al card
-        card.classList.remove('bg-gray-50');
-        card.classList.add('ring-2', 'ring-blue-500', 'bg-blue-50');
-        
-        showNotification('Producto agregado al pedido', 'success');
-    }
-    
-    updateCartCounter();
-}
-
-// Función para actualizar contador del carrito
-function updateCartCounter() {
-    const counter = document.getElementById('cart-counter');
-    cartCount = 0;
-    
-    // Calcular total de productos
-    cartItems.forEach(productId => {
-        const qty = parseInt(document.getElementById(`quantity_${productId}`).value);
-        cartCount += qty;
-    });
-    
-    if (cartCount > 0) {
-        counter.textContent = cartCount;
-        counter.classList.remove('hidden');
-        
-        // Animación del contador
-        counter.classList.add('animate-bounce');
-        setTimeout(() => {
-            counter.classList.remove('animate-bounce');
-        }, 600);
-    } else {
-        counter.classList.add('hidden');
-    }
-}
-
-// Función mejorada para mostrar resumen (override de common.js)
-function showProductSummary() {
-    const products = document.querySelectorAll('input[name="products[]"]:checked');
-    const summaryContent = document.getElementById('summary-content');
-    
-    if (products.length === 0) {
-        showNotification('Por favor selecciona al menos un producto', 'warning');
-        return;
-    }
-    
-    summaryContent.innerHTML = '';
-    let total = 0;
-    let totalQuantity = 0;
-    
-    products.forEach(product => {
-        const productId = product.value;
-        const productElement = product.closest('.product-card');
-        const productName = productElement.querySelector('h4').textContent.trim();
-        const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
-        const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
-        let quantity = quantityInput ? parseInt(quantityInput.value) : 1;
-        
-        const totalPrice = productPrice * quantity;
-        total += totalPrice;
-        totalQuantity += quantity;
-        
-        const productSummary = document.createElement('tr');
-        productSummary.innerHTML = `
-            <td class="px-4 py-2 text-sm text-gray-800">${productName}</td>
-            <td class="px-4 py-2 text-sm text-gray-800">
-                <input type="number" value="${quantity}" min="1" max="10" 
-                       class="w-16 border-gray-300 rounded-md text-center summary-quantity"
-                       data-product-id="${productId}">
-            </td>
-            <td class="px-4 py-2 text-sm text-gray-800">$${productPrice.toFixed(2)}</td>
-            <td class="px-4 py-2 text-sm text-gray-800">$${totalPrice.toFixed(2)}</td>
-            <td class="px-4 py-2">
-                <button type="button" class="text-red-500 hover:text-red-700 font-medium delete-product"
-                        onclick="removeFromSummary('${productId}')">
-                    Eliminar
-                </button>
-            </td>
-        `;
-        
-        summaryContent.appendChild(productSummary);
-    });
-    
-    const totalElement = document.createElement('tr');
-    totalElement.classList.add('font-bold', 'bg-gray-100');
-    totalElement.innerHTML = `
-        <td colspan="3" class="px-4 py-2 text-sm text-gray-800 text-right">Total:</td>
-        <td class="px-4 py-2 text-sm text-gray-800" id="totalAmount">$${total.toFixed(2)}</td>
-        <td></td>
-    `;
-    
-    summaryContent.appendChild(totalElement);
-    
-    document.getElementById('summary-modal').classList.remove('hidden');
-    
-    // Reinicializar event listeners para el modal
-    initializeSummaryEventListeners();
-}
+// Funcionalidad específica para la carta mejorada - Usando CartManager global
 
 // Función para eliminar producto desde el resumen
 function removeFromSummary(productId) {
-    // Eliminar del carrito
-    toggleProduct(productId);
-    
-    // Recargar el resumen
-    showProductSummary();
+    if (window.cartManager) {
+        window.cartManager.removeFromSummary(productId);
+    }
 }
 
 // Función para inicializar toggles personalizados
@@ -732,8 +598,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Remover event listeners existentes
         viewSummaryBtn.replaceWith(viewSummaryBtn.cloneNode(true));
         
-        // Añadir nuevo event listener
-        document.getElementById('view-summary').addEventListener('click', showProductSummary);
+        // Añadir nuevo event listener usando CartManager
+        document.getElementById('view-summary').addEventListener('click', () => {
+            if (window.cartManager) {
+                window.cartManager.showProductSummary();
+            }
+        });
     }
     
     // Inicializar event listeners para botones de cerrar, imprimir y whatsapp
@@ -763,50 +633,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-
-// Función para inicializar event listeners del modal de resumen
-function initializeSummaryEventListeners() {
-    document.querySelectorAll('.summary-quantity').forEach(input => {
-        input.addEventListener('change', function () {
-            const productId = this.dataset.productId;
-            const newQuantity = parseInt(this.value);
-            
-            // Actualizar cantidad en el formulario principal
-            document.getElementById(`quantity_${productId}`).value = newQuantity;
-            document.getElementById(`display_quantity_${productId}`).textContent = newQuantity;
-            
-            // Actualizar total del producto
-            const row = this.closest('tr');
-            const priceCell = row.querySelector('td:nth-child(3)');
-            const totalCell = row.querySelector('td:nth-child(4)');
-            const productPrice = parseFloat(priceCell.textContent.replace('$', ''));
-            const newTotalPrice = productPrice * newQuantity;
-            
-            totalCell.textContent = `$${newTotalPrice.toFixed(2)}`;
-            
-            // Actualizar total general
-            updateGrandTotal();
-            updateCartCounter();
-        });
-    });
-}
-
-// Función para actualizar total general en el modal
-function updateGrandTotal() {
-    const summaryContent = document.getElementById('summary-content');
-    const productRows = summaryContent.querySelectorAll('tr:not(.bg-gray-100)');
-    let total = 0;
-    
-    productRows.forEach(row => {
-        const totalCell = row.querySelector('td:nth-child(4)');
-        if (totalCell) {
-            total += parseFloat(totalCell.textContent.replace('$', ''));
-        }
-    });
-    
-    const totalAmount = document.getElementById('totalAmount');
-    if (totalAmount) {
-        totalAmount.textContent = `$${total.toFixed(2)}`;
-    }
-}
 </script>

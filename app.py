@@ -45,6 +45,8 @@ class Product(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.Float, nullable=False)
+    image_url = db.Column(db.String(255), nullable=True,
+                          default='./static/img/logofavicon.png')
     category_id = db.Column(db.Integer, db.ForeignKey(
         'category.id'), nullable=False)
 
@@ -420,23 +422,26 @@ def create_admin():
     return render_template('create_admin.html')
 
 # Nuevas rutas para admin
+
+
 @app.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
     if not current_user.is_admin:
         flash('No tienes permiso para acceder a esta página.')
         return redirect(url_for('home'))
-    
+
     categories = Category.query.all()
     products = Product.query.all()
     reservations = Reservation.query.all()
     users = User.query.all()
-    
-    return render_template('admin/dashboard.html', 
-                         categories=categories, 
-                         products=products, 
-                         reservations=reservations,
-                         users=users)
+
+    return render_template('admin/dashboard.html',
+                           categories=categories,
+                           products=products,
+                           reservations=reservations,
+                           users=users)
+
 
 @app.route('/admin/create-product', methods=['GET', 'POST'])
 @login_required
@@ -444,9 +449,10 @@ def admin_create_product():
     if not current_user.is_admin:
         flash('No tienes permiso para acceder a esta página.')
         return redirect(url_for('home'))
-    
+
     categories = Category.query.all()
     return render_template('admin/create_product.html', categories=categories)
+
 
 @app.route('/admin/create-category', methods=['GET', 'POST'])
 @login_required
@@ -454,7 +460,7 @@ def admin_create_category():
     if not current_user.is_admin:
         flash('No tienes permiso para acceder a esta página.')
         return redirect(url_for('home'))
-    
+
     return render_template('admin/create_category.html')
 
 # error de pagina

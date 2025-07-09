@@ -37,6 +37,16 @@
           class="p-4 border rounded-lg bg-gradient-to-br from-yellow-50 to-orange-50 product-card transition-all duration-300 border-orange-200"
           data-product-id="{{ product.id }}"
         >
+          <!-- Imagen del producto -->
+          <div class="mb-3">
+            <img 
+              src="{% if product.image_url and product.image_url != 'default_product.jpg' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/default_product.jpg') }}{% endif %}" 
+              alt="{{ product.name }}"
+              class="w-full h-32 object-cover rounded-lg"
+              loading="lazy"
+            />
+          </div>
+          
           <div class="flex justify-between items-start mb-3">
             <div class="flex-1">
               <h4 class="font-semibold text-gray-800 mb-1">
@@ -241,164 +251,13 @@
 </form>
 
 <script>
-  // Funcionalidad específica para promociones (similar a la carta)
-  let cartItems = new Set();
-  let cartCount = 0;
-
-  // Función de fallback para notificaciones
-  function showNotification(message, type = 'info') {
-      if (typeof YaconApp !== 'undefined' && YaconApp.showNotification) {
-          YaconApp.showNotification(message, type);
-      } else {
-          alert(message);
-      }
-  }
-
-  // Función para cambiar cantidad
-  function changeQuantity(productId, change) {
-      const displayQty = document.getElementById(`display_quantity_${productId}`);
-      const hiddenQty = document.getElementById(`quantity_${productId}`);
-
-      let currentQty = parseInt(displayQty.textContent);
-      let newQty = currentQty + change;
-
-      if (newQty < 1) newQty = 1;
-      if (newQty > 10) newQty = 10;
-
-      displayQty.textContent = newQty;
-      hiddenQty.value = newQty;
-
-      if (cartItems.has(productId)) {
-          updateCartCounter();
-      }
-  }
-
-  // Función para agregar/quitar producto
-  function toggleProduct(productId) {
-      const checkbox = document.getElementById(`product_${productId}`);
-      const button = document.querySelector(`button[data-product-id="${productId}"]`);
-      const card = document.querySelector(`div[data-product-id="${productId}"]`);
-      const buttonText = button.querySelector('span');
-      const buttonIcon = button.querySelector('svg path');
-
-      if (!checkbox || !button || !card) {
-          console.error('Elementos no encontrados para producto:', productId);
-          return;
-      }
-
-      if (cartItems.has(productId)) {
-          cartItems.delete(productId);
-          checkbox.checked = false;
-
-          button.classList.remove('bg-red-500', 'hover:bg-red-600');
-          button.classList.add('bg-orange-500', 'hover:bg-orange-600');
-          buttonText.textContent = 'Agregar Oferta';
-          buttonIcon.setAttribute('d', 'M12 6v6m0 0v6m0-6h6m-6 0H6');
-
-          card.classList.remove('ring-2', 'ring-orange-500', 'bg-gradient-to-br', 'from-orange-100', 'to-yellow-100');
-          card.classList.add('bg-gradient-to-br', 'from-yellow-50', 'to-orange-50');
-
-          showNotification('Promoción eliminada del pedido', 'info');
-      } else {
-          cartItems.add(productId);
-          checkbox.checked = true;
-
-          button.classList.remove('bg-orange-500', 'hover:bg-orange-600');
-          button.classList.add('bg-red-500', 'hover:bg-red-600');
-          buttonText.textContent = 'Quitar Oferta';
-          buttonIcon.setAttribute('d', 'M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16');
-
-          card.classList.remove('bg-gradient-to-br', 'from-yellow-50', 'to-orange-50');
-          card.classList.add('ring-2', 'ring-orange-500', 'bg-gradient-to-br', 'from-orange-100', 'to-yellow-100');
-
-          showNotification('¡Promoción agregada al pedido!', 'success');
-      }
-
-      updateCartCounter();
-  }
-
-  // Función para actualizar contador del carrito
-  function updateCartCounter() {
-      const counter = document.getElementById('cart-counter');
-      cartCount = 0;
-
-      cartItems.forEach(productId => {
-          const qty = parseInt(document.getElementById(`quantity_${productId}`).value);
-          cartCount += qty;
-      });
-
-      if (cartCount > 0) {
-          counter.textContent = cartCount;
-          counter.classList.remove('hidden');
-      } else {
-          counter.classList.add('hidden');
-      }
-  }
-
-  // Función para mostrar resumen
-  function showProductSummary() {
-      const products = document.querySelectorAll('input[name="products[]"]:checked');
-      const summaryContent = document.getElementById('summary-content');
-
-      if (products.length === 0) {
-          showNotification('Por favor selecciona al menos una promoción', 'warning');
-          return;
-      }
-
-      summaryContent.innerHTML = '';
-      let total = 0;
-      let totalQuantity = 0;
-
-      products.forEach(product => {
-          const productId = product.value;
-          const productElement = product.closest('.product-card');
-          const productName = productElement.querySelector('h4').textContent.trim();
-          const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
-          const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
-          let quantity = quantityInput ? parseInt(quantityInput.value) : 1;
-
-          const totalPrice = productPrice * quantity;
-          total += totalPrice;
-          totalQuantity += quantity;
-
-          const productSummary = document.createElement('tr');
-          productSummary.innerHTML = `
-              <td class="px-4 py-2 text-sm text-gray-800">${productName}</td>
-              <td class="px-4 py-2 text-sm text-gray-800">
-                  <input type="number" value="${quantity}" min="1" max="10"
-                         class="w-16 border-gray-300 rounded-md text-center summary-quantity"
-                         data-product-id="${productId}">
-              </td>
-              <td class="px-4 py-2 text-sm text-gray-800">$${productPrice.toFixed(2)}</td>
-              <td class="px-4 py-2 text-sm text-gray-800">$${totalPrice.toFixed(2)}</td>
-              <td class="px-4 py-2">
-                  <button type="button" class="text-red-500 hover:text-red-700 font-medium delete-product"
-                          onclick="removeFromSummary('${productId}')">
-                      Eliminar
-                  </button>
-              </td>
-          `;
-
-          summaryContent.appendChild(productSummary);
-      });
-
-      const totalElement = document.createElement('tr');
-      totalElement.classList.add('font-bold', 'bg-gray-100');
-      totalElement.innerHTML = `
-          <td colspan="3" class="px-4 py-2 text-sm text-gray-800 text-right">Total:</td>
-          <td class="px-4 py-2 text-sm text-gray-800" id="totalAmount">$${total.toFixed(2)}</td>
-          <td></td>
-      `;
-
-      summaryContent.appendChild(totalElement);
-
-      document.getElementById('summary-modal').classList.remove('hidden');
-  }
+  // Funcionalidad específica para promociones - Usando CartManager global
 
   // Función para eliminar producto desde el resumen
   function removeFromSummary(productId) {
-      toggleProduct(productId);
-      showProductSummary();
+      if (window.cartManager) {
+          window.cartManager.removeFromSummary(productId);
+      }
   }
 
   // Función para inicializar toggles personalizados
@@ -428,7 +287,11 @@
       const viewSummaryBtn = document.getElementById('view-summary');
       if (viewSummaryBtn) {
           viewSummaryBtn.replaceWith(viewSummaryBtn.cloneNode(true));
-          document.getElementById('view-summary').addEventListener('click', showProductSummary);
+          document.getElementById('view-summary').addEventListener('click', () => {
+              if (window.cartManager) {
+                  window.cartManager.showProductSummary();
+              }
+          });
       }
 
       const closeSummaryBtn = document.getElementById('close-summary');
