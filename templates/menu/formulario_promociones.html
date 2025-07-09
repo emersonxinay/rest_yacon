@@ -40,7 +40,7 @@
           <!-- Imagen del producto -->
           <div class="mb-3">
             <img 
-              src="{% if product.image_url and product.image_url != 'default_product.jpg' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/default_product.jpg') }}{% endif %}" 
+              src="{% if product.image_url and product.image_url != 'logofavicon.png' %}{{ url_for('static', filename='img/' + product.image_url) }}{% else %}{{ url_for('static', filename='img/logofavicon.png') }}{% endif %}" 
               alt="{{ product.name }}"
               class="w-full h-32 object-cover rounded-lg"
               loading="lazy"

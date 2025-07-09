@@ -199,7 +199,15 @@ class CartManager {
             card.classList.add('ring-2', 'ring-blue-500', 'bg-blue-50');
         } else {
             card.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-50', 'ring-orange-500', 'from-orange-100', 'to-yellow-100');
-            card.classList.add('bg-gray-50');
+            
+            // Restaurar el estilo original según el tipo de card
+            if (card.classList.contains('border-orange-200')) {
+                // Es un card de promoción
+                card.classList.add('bg-gradient-to-br', 'from-yellow-50', 'to-orange-50');
+            } else {
+                // Es un card de producto normal
+                card.classList.add('bg-gray-50');
+            }
         }
     }
 
