@@ -13,42 +13,40 @@
           <button
             type="button"
             class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+            aria-expanded="true"
           >
-            Mostrar/Ocultar
+            Ocultar
           </button>
         </div>
-        <div
-          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
-        >
+        <div class="product-category grid-responsive">
           {% for product in products %}
-          <div class="p-4 border rounded-lg bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <span class="font-semibold">{{ product.name }}</span>
-              <div class="text-right">
-                <span class="line-through text-red-500"
-                  >${{ product.price * 2 }}</span
-                ><br />
-                <span class="text-orange-500">${{ product.price }}</span>
+          <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
+                <p
+                  id="product_{{ product.id }}_desc"
+                  class="text-sm text-gray-600 mb-2"
+                >
+                  {{ product.description }}
+                </p>
+              </div>
+              <div class="text-right ml-4">
+                <span class="line-through text-red-500 text-sm block"
+                  >${{ product.price * 2 }}</span>
+                <span class="text-orange-500 font-bold text-lg">${{ product.price }}</span>
               </div>
             </div>
-            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-            <div class="flex items-center mb-2">
-              <input
-                type="checkbox"
-                id="product_{{ product.id }}"
-                name="products[]"
-                value="{{ product.id }}"
-                class="mr-2"
-              />
-              <label for="product_{{ product.id }}" class="cursor-pointer"
-                >Seleccionar</label
-              >
-            </div>
-            <label
-              for="quantity_{{ product.id }}"
-              class="block text-sm font-medium text-gray-700"
-              >Cantidad</label
-            >
+            
+            <!-- Campos ocultos para mantener compatibilidad -->
+            <input
+              type="checkbox"
+              id="product_{{ product.id }}"
+              name="products[]"
+              value="{{ product.id }}"
+              class="sr-only product-checkbox"
+              aria-describedby="product_{{ product.id }}_desc"
+            />
             <input
               type="number"
               id="quantity_{{ product.id }}"
@@ -56,8 +54,49 @@
               value="1"
               min="1"
               max="10"
-              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+              class="sr-only quantity-input"
             />
+            
+            <!-- Nueva interfaz mejorada -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-700">Cantidad:</span>
+                <div class="flex items-center border rounded-lg">
+                  <button
+                    type="button"
+                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', -1)"
+                  >
+                    -
+                  </button>
+                  <span
+                    id="display_quantity_{{ product.id }}"
+                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                  >
+                    1
+                  </span>
+                  <button
+                    type="button"
+                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', 1)"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              
+              <button
+                type="button"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                onclick="toggleProduct('{{ product.id }}')"
+                data-product-id="{{ product.id }}"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Agregar</span>
+              </button>
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -77,42 +116,40 @@
           <button
             type="button"
             class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+            aria-expanded="true"
           >
-            Mostrar/Ocultar
+            Ocultar
           </button>
         </div>
-        <div
-          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
-        >
+        <div class="product-category grid-responsive">
           {% for product in products %}
-          <div class="p-4 border rounded-lg bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <span class="font-semibold">{{ product.name }}</span>
-              <div class="text-right">
-                <span class="line-through text-red-500"
-                  >${{ product.price * 2 }}</span
-                ><br />
-                <span class="text-orange-500">${{ product.price }}</span>
+          <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
+                <p
+                  id="product_{{ product.id }}_desc"
+                  class="text-sm text-gray-600 mb-2"
+                >
+                  {{ product.description }}
+                </p>
+              </div>
+              <div class="text-right ml-4">
+                <span class="line-through text-red-500 text-sm block"
+                  >${{ product.price * 2 }}</span>
+                <span class="text-orange-500 font-bold text-lg">${{ product.price }}</span>
               </div>
             </div>
-            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-            <div class="flex items-center mb-2">
-              <input
-                type="checkbox"
-                id="product_{{ product.id }}"
-                name="products[]"
-                value="{{ product.id }}"
-                class="mr-2"
-              />
-              <label for="product_{{ product.id }}" class="cursor-pointer"
-                >Seleccionar</label
-              >
-            </div>
-            <label
-              for="quantity_{{ product.id }}"
-              class="block text-sm font-medium text-gray-700"
-              >Cantidad</label
-            >
+            
+            <!-- Campos ocultos para mantener compatibilidad -->
+            <input
+              type="checkbox"
+              id="product_{{ product.id }}"
+              name="products[]"
+              value="{{ product.id }}"
+              class="sr-only product-checkbox"
+              aria-describedby="product_{{ product.id }}_desc"
+            />
             <input
               type="number"
               id="quantity_{{ product.id }}"
@@ -120,8 +157,49 @@
               value="1"
               min="1"
               max="10"
-              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+              class="sr-only quantity-input"
             />
+            
+            <!-- Nueva interfaz mejorada -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-700">Cantidad:</span>
+                <div class="flex items-center border rounded-lg">
+                  <button
+                    type="button"
+                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', -1)"
+                  >
+                    -
+                  </button>
+                  <span
+                    id="display_quantity_{{ product.id }}"
+                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                  >
+                    1
+                  </span>
+                  <button
+                    type="button"
+                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', 1)"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              
+              <button
+                type="button"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                onclick="toggleProduct('{{ product.id }}')"
+                data-product-id="{{ product.id }}"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Agregar</span>
+              </button>
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -142,42 +220,40 @@
           <button
             type="button"
             class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+            aria-expanded="true"
           >
-            Mostrar/Ocultar
+            Ocultar
           </button>
         </div>
-        <div
-          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
-        >
+        <div class="product-category grid-responsive">
           {% for product in products %}
-          <div class="p-4 border rounded-lg bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <span class="font-semibold">{{ product.name }}</span>
-              <div class="text-right">
-                <span class="line-through text-red-500"
-                  >${{ product.price * 2 }}</span
-                ><br />
-                <span class="text-orange-500">${{ product.price }}</span>
+          <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
+                <p
+                  id="product_{{ product.id }}_desc"
+                  class="text-sm text-gray-600 mb-2"
+                >
+                  {{ product.description }}
+                </p>
+              </div>
+              <div class="text-right ml-4">
+                <span class="line-through text-red-500 text-sm block"
+                  >${{ product.price * 2 }}</span>
+                <span class="text-orange-500 font-bold text-lg">${{ product.price }}</span>
               </div>
             </div>
-            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-            <div class="flex items-center mb-2">
-              <input
-                type="checkbox"
-                id="product_{{ product.id }}"
-                name="products[]"
-                value="{{ product.id }}"
-                class="mr-2"
-              />
-              <label for="product_{{ product.id }}" class="cursor-pointer"
-                >Seleccionar</label
-              >
-            </div>
-            <label
-              for="quantity_{{ product.id }}"
-              class="block text-sm font-medium text-gray-700"
-              >Cantidad</label
-            >
+            
+            <!-- Campos ocultos para mantener compatibilidad -->
+            <input
+              type="checkbox"
+              id="product_{{ product.id }}"
+              name="products[]"
+              value="{{ product.id }}"
+              class="sr-only product-checkbox"
+              aria-describedby="product_{{ product.id }}_desc"
+            />
             <input
               type="number"
               id="quantity_{{ product.id }}"
@@ -185,8 +261,49 @@
               value="1"
               min="1"
               max="10"
-              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+              class="sr-only quantity-input"
             />
+            
+            <!-- Nueva interfaz mejorada -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-700">Cantidad:</span>
+                <div class="flex items-center border rounded-lg">
+                  <button
+                    type="button"
+                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', -1)"
+                  >
+                    -
+                  </button>
+                  <span
+                    id="display_quantity_{{ product.id }}"
+                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                  >
+                    1
+                  </span>
+                  <button
+                    type="button"
+                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', 1)"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              
+              <button
+                type="button"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                onclick="toggleProduct('{{ product.id }}')"
+                data-product-id="{{ product.id }}"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Agregar</span>
+              </button>
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -205,42 +322,40 @@
           <button
             type="button"
             class="toggle-category text-white bg-blue-500 hover:bg-blue-700 px-3 py-1 rounded"
+            aria-expanded="true"
           >
-            Mostrar/Ocultar
+            Ocultar
           </button>
         </div>
-        <div
-          class="product-category grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 hidden"
-        >
+        <div class="product-category grid-responsive">
           {% for product in products %}
-          <div class="p-4 border rounded-lg bg-gray-50">
-            <div class="flex justify-between items-center mb-2">
-              <span class="font-semibold">{{ product.name }}</span>
-              <div class="text-right">
-                <span class="line-through text-red-500"
-                  >${{ product.price * 2 }}</span
-                ><br />
-                <span class="text-orange-500">${{ product.price }}</span>
+          <div class="p-4 border rounded-lg bg-gray-50 product-card transition-all duration-300" data-product-id="{{ product.id }}">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex-1">
+                <h4 class="font-semibold text-gray-800 mb-1">{{ product.name }}</h4>
+                <p
+                  id="product_{{ product.id }}_desc"
+                  class="text-sm text-gray-600 mb-2"
+                >
+                  {{ product.description }}
+                </p>
+              </div>
+              <div class="text-right ml-4">
+                <span class="line-through text-red-500 text-sm block"
+                  >${{ product.price * 2 }}</span>
+                <span class="text-orange-500 font-bold text-lg">${{ product.price }}</span>
               </div>
             </div>
-            <p class="text-sm text-gray-600 mb-2">{{ product.description }}</p>
-            <div class="flex items-center mb-2">
-              <input
-                type="checkbox"
-                id="product_{{ product.id }}"
-                name="products[]"
-                value="{{ product.id }}"
-                class="mr-2"
-              />
-              <label for="product_{{ product.id }}" class="cursor-pointer"
-                >Seleccionar</label
-              >
-            </div>
-            <label
-              for="quantity_{{ product.id }}"
-              class="block text-sm font-medium text-gray-700"
-              >Cantidad</label
-            >
+            
+            <!-- Campos ocultos para mantener compatibilidad -->
+            <input
+              type="checkbox"
+              id="product_{{ product.id }}"
+              name="products[]"
+              value="{{ product.id }}"
+              class="sr-only product-checkbox"
+              aria-describedby="product_{{ product.id }}_desc"
+            />
             <input
               type="number"
               id="quantity_{{ product.id }}"
@@ -248,8 +363,49 @@
               value="1"
               min="1"
               max="10"
-              class="w-full border-gray-300 rounded-md mt-1 quantity-input"
+              class="sr-only quantity-input"
             />
+            
+            <!-- Nueva interfaz mejorada -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-700">Cantidad:</span>
+                <div class="flex items-center border rounded-lg">
+                  <button
+                    type="button"
+                    class="qty-btn minus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', -1)"
+                  >
+                    -
+                  </button>
+                  <span
+                    id="display_quantity_{{ product.id }}"
+                    class="px-3 py-1 font-medium min-w-[2rem] text-center"
+                  >
+                    1
+                  </span>
+                  <button
+                    type="button"
+                    class="qty-btn plus px-3 py-1 text-gray-600 hover:text-gray-800 hover:bg-gray-100 transition-colors"
+                    onclick="changeQuantity('{{ product.id }}', 1)"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              
+              <button
+                type="button"
+                class="add-to-cart-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2"
+                onclick="toggleProduct('{{ product.id }}')"
+                data-product-id="{{ product.id }}"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Agregar</span>
+              </button>
+            </div>
           </div>
           {% endfor %}
         </div>
@@ -261,9 +417,19 @@
   <button
     type="button"
     id="view-summary"
-    class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg"
+    class="fixed bottom-8 right-8 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center space-x-2"
+    aria-label="Ver resumen del pedido"
   >
-    Simula tu pedido
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01"></path>
+    </svg>
+    <span>Ver Pedido</span>
+    <span
+      id="cart-counter"
+      class="hidden bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full ml-2"
+    >
+      0
+    </span>
   </button>
   <!-- Modal para el resumen del pedido -->
   <div
@@ -339,130 +505,308 @@
 </form>
 
 <script>
-  document.querySelectorAll('.toggle-category').forEach(button => {
-    button.addEventListener('click', function () {
-      const categoryDiv = button.parentElement.nextElementSibling;
-      categoryDiv.classList.toggle('hidden');
-    });
-  });
+// Funcionalidad específica para la carta mejorada
+let cartItems = new Set();
+let cartCount = 0;
 
-  document.getElementById('view-summary').addEventListener('click', function () {
+// Función de fallback para notificaciones
+function showNotification(message, type = 'info') {
+    if (typeof YaconApp !== 'undefined' && YaconApp.showNotification) {
+        YaconApp.showNotification(message, type);
+    } else {
+        // Fallback simple
+        alert(message);
+    }
+}
+
+// Función para cambiar cantidad
+function changeQuantity(productId, change) {
+    const displayQty = document.getElementById(`display_quantity_${productId}`);
+    const hiddenQty = document.getElementById(`quantity_${productId}`);
+    
+    let currentQty = parseInt(displayQty.textContent);
+    let newQty = currentQty + change;
+    
+    // Validar límites
+    if (newQty < 1) newQty = 1;
+    if (newQty > 10) newQty = 10;
+    
+    // Actualizar display
+    displayQty.textContent = newQty;
+    hiddenQty.value = newQty;
+    
+    // Si el producto ya está agregado, actualizar contador
+    if (cartItems.has(productId)) {
+        updateCartCounter();
+    }
+}
+
+// Función para agregar/quitar producto
+function toggleProduct(productId) {
+    const checkbox = document.getElementById(`product_${productId}`);
+    const button = document.querySelector(`button[data-product-id="${productId}"]`);
+    const card = document.querySelector(`div[data-product-id="${productId}"]`);
+    const buttonText = button.querySelector('span');
+    const buttonIcon = button.querySelector('svg path');
+    
+    if (!checkbox || !button || !card) {
+        console.error('Elementos no encontrados para producto:', productId);
+        return;
+    }
+    
+    if (cartItems.has(productId)) {
+        // Quitar producto
+        cartItems.delete(productId);
+        checkbox.checked = false;
+        
+        // Cambiar apariencia a "Agregar"
+        button.classList.remove('bg-red-500', 'hover:bg-red-600');
+        button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+        buttonText.textContent = 'Agregar';
+        buttonIcon.setAttribute('d', 'M12 6v6m0 0v6m0-6h6m-6 0H6');
+        
+        // Remover estado visual del card
+        card.classList.remove('ring-2', 'ring-blue-500', 'bg-blue-50');
+        card.classList.add('bg-gray-50');
+        
+        showNotification('Producto eliminado del pedido', 'info');
+    } else {
+        // Agregar producto
+        cartItems.add(productId);
+        checkbox.checked = true;
+        
+        // Cambiar apariencia a "Quitar"
+        button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+        button.classList.add('bg-red-500', 'hover:bg-red-600');
+        buttonText.textContent = 'Quitar';
+        buttonIcon.setAttribute('d', 'M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16');
+        
+        // Agregar estado visual al card
+        card.classList.remove('bg-gray-50');
+        card.classList.add('ring-2', 'ring-blue-500', 'bg-blue-50');
+        
+        showNotification('Producto agregado al pedido', 'success');
+    }
+    
+    updateCartCounter();
+}
+
+// Función para actualizar contador del carrito
+function updateCartCounter() {
+    const counter = document.getElementById('cart-counter');
+    cartCount = 0;
+    
+    // Calcular total de productos
+    cartItems.forEach(productId => {
+        const qty = parseInt(document.getElementById(`quantity_${productId}`).value);
+        cartCount += qty;
+    });
+    
+    if (cartCount > 0) {
+        counter.textContent = cartCount;
+        counter.classList.remove('hidden');
+        
+        // Animación del contador
+        counter.classList.add('animate-bounce');
+        setTimeout(() => {
+            counter.classList.remove('animate-bounce');
+        }, 600);
+    } else {
+        counter.classList.add('hidden');
+    }
+}
+
+// Función mejorada para mostrar resumen (override de common.js)
+function showProductSummary() {
     const products = document.querySelectorAll('input[name="products[]"]:checked');
     const summaryContent = document.getElementById('summary-content');
-
+    
+    if (products.length === 0) {
+        showNotification('Por favor selecciona al menos un producto', 'warning');
+        return;
+    }
+    
     summaryContent.innerHTML = '';
     let total = 0;
     let totalQuantity = 0;
-
+    
     products.forEach(product => {
-      const productId = product.value;
-      const productElement = product.closest('.p-4');
-      const productName = productElement.querySelector('.font-semibold').textContent.trim();
-      const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
-      const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
-      let quantity = quantityInput && quantityInput.value.trim() !== '' ? parseInt(quantityInput.value) : 1;
-
-      const totalPrice = productPrice * quantity;
-      total += totalPrice;
-      totalQuantity += quantity;
-
-      const productSummary = document.createElement('tr');
-      productSummary.innerHTML = `
-        <td class="px-4 py-2 text-sm text-gray-800">${productName}</td>
-        <td class="px-4 py-2 text-sm text-gray-800"><input type="number" value="${quantity}" min="1" max="10" class="w-16 border-gray-300 rounded-md text-center summary-quantity"></td>
-        <td class="px-4 py-2 text-sm text-gray-800">${productPrice.toFixed(2)}</td>
-        <td class="px-4 py-2 text-sm text-gray-800">${totalPrice.toFixed(2)}</td>
-        <td class="px-4 py-2">
-          <button type="button" class="text-red-500 hover:text-red-700 font-medium delete-product">Eliminar</button>
-        </td>
-      `;
-
-      summaryContent.appendChild(productSummary);
+        const productId = product.value;
+        const productElement = product.closest('.product-card');
+        const productName = productElement.querySelector('h4').textContent.trim();
+        const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
+        const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
+        let quantity = quantityInput ? parseInt(quantityInput.value) : 1;
+        
+        const totalPrice = productPrice * quantity;
+        total += totalPrice;
+        totalQuantity += quantity;
+        
+        const productSummary = document.createElement('tr');
+        productSummary.innerHTML = `
+            <td class="px-4 py-2 text-sm text-gray-800">${productName}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">
+                <input type="number" value="${quantity}" min="1" max="10" 
+                       class="w-16 border-gray-300 rounded-md text-center summary-quantity"
+                       data-product-id="${productId}">
+            </td>
+            <td class="px-4 py-2 text-sm text-gray-800">$${productPrice.toFixed(2)}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">$${totalPrice.toFixed(2)}</td>
+            <td class="px-4 py-2">
+                <button type="button" class="text-red-500 hover:text-red-700 font-medium delete-product"
+                        onclick="removeFromSummary('${productId}')">
+                    Eliminar
+                </button>
+            </td>
+        `;
+        
+        summaryContent.appendChild(productSummary);
     });
-
+    
     const totalElement = document.createElement('tr');
-    totalElement.classList.add('font-bold', 'mt-4');
+    totalElement.classList.add('font-bold', 'bg-gray-100');
     totalElement.innerHTML = `
-      <td colspan="2" class="px-4 py-2 text-sm text-gray-800 text-right">Total:</td>
-      <td colspan="2" class="px-4 py-2 text-sm text-gray-800" id="totalAmount">${total.toFixed(2)}</td>
-      <td></td>
+        <td colspan="3" class="px-4 py-2 text-sm text-gray-800 text-right">Total:</td>
+        <td class="px-4 py-2 text-sm text-gray-800" id="totalAmount">$${total.toFixed(2)}</td>
+        <td></td>
     `;
-
+    
     summaryContent.appendChild(totalElement);
-
+    
     document.getElementById('summary-modal').classList.remove('hidden');
+    
+    // Reinicializar event listeners para el modal
+    initializeSummaryEventListeners();
+}
 
+// Función para eliminar producto desde el resumen
+function removeFromSummary(productId) {
+    // Eliminar del carrito
+    toggleProduct(productId);
+    
+    // Recargar el resumen
+    showProductSummary();
+}
+
+// Función para inicializar toggles personalizados
+function initializeCustomToggles() {
+    console.log('Inicializando toggle de categorías personalizado');
+    document.querySelectorAll('.toggle-category').forEach((button, index) => {
+        console.log(`Inicializando botón ${index + 1}`);
+        
+        // Remover event listeners existentes
+        button.replaceWith(button.cloneNode(true));
+        
+        // Obtener el botón recién clonado
+        const newButton = document.querySelectorAll('.toggle-category')[index];
+        
+        // Establecer estado inicial
+        newButton.setAttribute('aria-expanded', 'true');
+        newButton.textContent = 'Ocultar';
+        
+        newButton.addEventListener('click', function () {
+            console.log('Toggle clicked');
+            const categoryDiv = newButton.parentElement.nextElementSibling;
+            const isCurrentlyVisible = !categoryDiv.classList.contains('hidden');
+            
+            console.log('Categoría visible:', isCurrentlyVisible);
+            categoryDiv.classList.toggle('hidden');
+            
+            // Actualizar aria-expanded
+            newButton.setAttribute('aria-expanded', !isCurrentlyVisible);
+            
+            // Actualizar texto del botón
+            newButton.textContent = isCurrentlyVisible ? 'Mostrar' : 'Ocultar';
+        });
+    });
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    // Esperar un poco para que common.js se ejecute primero
+    setTimeout(initializeCustomToggles, 100);
+    
+    // Sobrescribir el event listener del botón de resumen
+    const viewSummaryBtn = document.getElementById('view-summary');
+    if (viewSummaryBtn) {
+        // Remover event listeners existentes
+        viewSummaryBtn.replaceWith(viewSummaryBtn.cloneNode(true));
+        
+        // Añadir nuevo event listener
+        document.getElementById('view-summary').addEventListener('click', showProductSummary);
+    }
+    
+    // Inicializar event listeners para botones de cerrar, imprimir y whatsapp
+    const closeSummaryBtn = document.getElementById('close-summary');
+    const printSummaryBtn = document.getElementById('print-summary');
+    const sendWhatsAppBtn = document.getElementById('send-whatsapp');
+    
+    if (closeSummaryBtn) {
+        closeSummaryBtn.addEventListener('click', () => {
+            document.getElementById('summary-modal').classList.add('hidden');
+        });
+    }
+    
+    if (printSummaryBtn) {
+        printSummaryBtn.addEventListener('click', () => {
+            if (typeof printSummary === 'function') {
+                printSummary();
+            }
+        });
+    }
+    
+    if (sendWhatsAppBtn) {
+        sendWhatsAppBtn.addEventListener('click', () => {
+            if (typeof sendProductSummaryWhatsApp === 'function') {
+                sendProductSummaryWhatsApp();
+            }
+        });
+    }
+});
+
+// Función para inicializar event listeners del modal de resumen
+function initializeSummaryEventListeners() {
     document.querySelectorAll('.summary-quantity').forEach(input => {
-      input.addEventListener('change', function () {
-        const row = input.closest('tr');
-        const priceCell = row.querySelector('td:nth-child(3)');
-        const totalCell = row.querySelector('td:nth-child(4)');
-        const productPrice = parseFloat(priceCell.textContent);
-        const newQuantity = parseInt(input.value);
-        const newTotalPrice = productPrice * newQuantity;
-
-        total -= parseFloat(totalCell.textContent);
-        total += newTotalPrice;
-        totalCell.textContent = newTotalPrice.toFixed(2);
-
-        document.getElementById('totalAmount').textContent = total.toFixed(2);
-      });
+        input.addEventListener('change', function () {
+            const productId = this.dataset.productId;
+            const newQuantity = parseInt(this.value);
+            
+            // Actualizar cantidad en el formulario principal
+            document.getElementById(`quantity_${productId}`).value = newQuantity;
+            document.getElementById(`display_quantity_${productId}`).textContent = newQuantity;
+            
+            // Actualizar total del producto
+            const row = this.closest('tr');
+            const priceCell = row.querySelector('td:nth-child(3)');
+            const totalCell = row.querySelector('td:nth-child(4)');
+            const productPrice = parseFloat(priceCell.textContent.replace('$', ''));
+            const newTotalPrice = productPrice * newQuantity;
+            
+            totalCell.textContent = `$${newTotalPrice.toFixed(2)}`;
+            
+            // Actualizar total general
+            updateGrandTotal();
+            updateCartCounter();
+        });
     });
+}
 
-    document.querySelectorAll('.delete-product').forEach(button => {
-      button.addEventListener('click', function () {
-        const row = button.closest('tr');
-        const totalPrice = parseFloat(row.querySelector('td:nth-child(4)').textContent);
-
-        total -= totalPrice;
-        row.remove();
-
-        document.getElementById('totalAmount').textContent = total.toFixed(2);
-      });
-    });
-  });
-
-  document.getElementById('close-summary').addEventListener('click', function () {
-    document.getElementById('summary-modal').classList.add('hidden');
-  });
-
-  document.getElementById('print-summary').addEventListener('click', function () {
-    const printContents = document.getElementById('summary-modal').innerHTML;
-    const originalContents = document.body.innerHTML;
-
-    document.body.innerHTML = printContents;
-
-    window.print();
-
-    document.body.innerHTML = originalContents;
-  });
-
-  document.getElementById('send-whatsapp').addEventListener('click', function () {
-    const summaryText = '¡Hola! Aquí está mi resumen de pedido:\n';
-    const products = document.querySelectorAll('input[name="products[]"]:checked');
-
-    let message = summaryText;
+// Función para actualizar total general en el modal
+function updateGrandTotal() {
+    const summaryContent = document.getElementById('summary-content');
+    const productRows = summaryContent.querySelectorAll('tr:not(.bg-gray-100)');
     let total = 0;
-    let totalQuantity = 0;
-
-    products.forEach(product => {
-      const productId = product.value;
-      const productElement = product.closest('.p-4');
-      const productName = productElement.querySelector('.font-semibold').textContent.trim();
-      const productPrice = parseFloat(productElement.querySelector('.text-orange-500').textContent.replace('$', ''));
-      const quantityInput = document.querySelector(`input[name="quantities[]"][id="quantity_${productId}"]`);
-      let quantity = quantityInput && quantityInput.value.trim() !== '' ? parseInt(quantityInput.value) : 1;
-
-      const totalPrice = productPrice * quantity;
-      total += totalPrice;
-      totalQuantity += quantity;
-
-      message += `- ${productName} x ${quantity}: $${productPrice.toFixed(2)}\n`;
+    
+    productRows.forEach(row => {
+        const totalCell = row.querySelector('td:nth-child(4)');
+        if (totalCell) {
+            total += parseFloat(totalCell.textContent.replace('$', ''));
+        }
     });
-
-    message += `\nTotal: $${total.toFixed(2)} (${totalQuantity} productos)`;
-
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  });
+    
+    const totalAmount = document.getElementById('totalAmount');
+    if (totalAmount) {
+        totalAmount.textContent = `$${total.toFixed(2)}`;
+    }
+}
 </script>

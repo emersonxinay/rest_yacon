@@ -52,23 +52,85 @@ body {
 }
 
 /* navbar */
+/* Sistema de Colores Unificado */
+:root {
+  --primary-orange: #f08c33;
+  --secondary-orange: #ed9f04;
+  --accent-orange: #f12e03;
+  --text-light: #f8f9fa;
+  --text-dark: #1a1a1a;
+  --gray-light: #e5e7eb;
+  --gray-medium: #6b7280;
+  --gray-dark: #374151;
+}
+
 /* Tailwind CSS Personalizado */
 .bg-dark-600 {
-  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03); /* Color de fondo personalizado */
-  /* al pasar poner flotante el navbar */
-
+  background: linear-gradient(to right, var(--primary-orange), var(--secondary-orange), var(--accent-orange));
 }
 .bg-dark-700 {
-  background: linear-gradient(to right, #f12e03, #ed9f04, #f12e03); /* Color de fondo personalizado */
+  background: linear-gradient(to right, var(--accent-orange), var(--secondary-orange), var(--accent-orange));
   border-radius: 0.5em;
   padding: 0.2em;
-  transition: background-color 0.3s ease; 
+  transition: all 0.3s ease; 
 }
 .bg-dark-700:hover {
-  background-color: #d91ae0; /* Nuevo color de fondo al hacer hover */
+  background: linear-gradient(to right, #d91ae0, #b91ae0, #d91ae0);
+  transform: translateY(-2px);
 }
 .bg-dark-800 {
-  background: linear-gradient(to right, #f08c33, #ed9f04, #f12e03); /* Color de fondo personalizado */
+  background: linear-gradient(to right, var(--primary-orange), var(--secondary-orange), var(--accent-orange));
+}
+
+/* Clases de texto unificadas */
+.text-primary { color: var(--primary-orange); }
+.text-secondary { color: var(--secondary-orange); }
+.text-accent { color: var(--accent-orange); }
+.text-light { color: var(--text-light); }
+.text-dark { color: var(--text-dark); }
+
+/* Grid responsivo unificado */
+.grid-responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-responsive {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-responsive {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid-responsive {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Clase screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 .nav1{
     height: 0.35em;

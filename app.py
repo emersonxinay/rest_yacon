@@ -419,6 +419,44 @@ def create_admin():
         return redirect(url_for('login'))
     return render_template('create_admin.html')
 
+# Nuevas rutas para admin
+@app.route('/admin/dashboard')
+@login_required
+def admin_dashboard():
+    if not current_user.is_admin:
+        flash('No tienes permiso para acceder a esta página.')
+        return redirect(url_for('home'))
+    
+    categories = Category.query.all()
+    products = Product.query.all()
+    reservations = Reservation.query.all()
+    users = User.query.all()
+    
+    return render_template('admin/dashboard.html', 
+                         categories=categories, 
+                         products=products, 
+                         reservations=reservations,
+                         users=users)
+
+@app.route('/admin/create-product', methods=['GET', 'POST'])
+@login_required
+def admin_create_product():
+    if not current_user.is_admin:
+        flash('No tienes permiso para acceder a esta página.')
+        return redirect(url_for('home'))
+    
+    categories = Category.query.all()
+    return render_template('admin/create_product.html', categories=categories)
+
+@app.route('/admin/create-category', methods=['GET', 'POST'])
+@login_required
+def admin_create_category():
+    if not current_user.is_admin:
+        flash('No tienes permiso para acceder a esta página.')
+        return redirect(url_for('home'))
+    
+    return render_template('admin/create_category.html')
+
 # error de pagina
 # Definir el manejador de errores 404
 

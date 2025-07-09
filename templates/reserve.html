@@ -63,6 +63,8 @@ endblock %} {% block content %}
       name="people"
       placeholder="Número de personas"
       required
+      min="1"
+      max="20"
       class="px-3 py-2 border rounded-lg w-full"
     />
   </div>
@@ -77,8 +79,67 @@ endblock %} {% block content %}
       class="px-3 py-2 border rounded-lg w-full"
     ></textarea>
   </div>
-  <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg">
+  <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-200">
     Reservar
   </button>
 </form>
+
+<script>
+// Validación adicional del formulario de reservas
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const dateInput = document.getElementById('date');
+    const timeSelect = document.getElementById('time');
+    const peopleInput = document.getElementById('people');
+    
+    // Validación de fecha
+    dateInput.addEventListener('change', function() {
+        const selectedDate = new Date(this.value);
+        const today = new Date();
+        const maxDate = new Date();
+        maxDate.setDate(today.getDate() + 60);
+        
+        if (selectedDate < today || selectedDate > maxDate) {
+            YaconApp.showNotification('La fecha debe estar entre hoy y los próximos 60 días', 'error');
+            this.value = '';
+        }
+    });
+    
+    // Validación de hora
+    timeSelect.addEventListener('change', function() {
+        const selectedTime = this.value;
+        const hour = parseInt(selectedTime.split(':')[0]);
+        const minute = parseInt(selectedTime.split(':')[1]);
+        
+        // Validar horarios disponibles: 13:00-17:00 y 18:00-21:30
+        const isValidTime = 
+            (hour >= 13 && hour < 17) || 
+            (hour === 17 && minute === 0) ||
+            (hour >= 18 && hour < 21) ||
+            (hour === 21 && minute <= 30);
+        
+        if (!isValidTime) {
+            YaconApp.showNotification('Horario disponible: 13:00-17:00 y 18:00-21:30', 'error');
+            this.value = '';
+        }
+    });
+    
+    // Validación de personas
+    peopleInput.addEventListener('change', function() {
+        const people = parseInt(this.value);
+        if (people < 1 || people > 20) {
+            YaconApp.showNotification('El número de personas debe estar entre 1 y 20', 'error');
+            this.value = '';
+        }
+    });
+    
+    // Validación al enviar
+    form.addEventListener('submit', function(e) {
+        if (!YaconApp.validateForm(form)) {
+            e.preventDefault();
+            YaconApp.showNotification('Por favor complete todos los campos obligatorios', 'error');
+        }
+    });
+});
+</script>
 {% endblock %}
